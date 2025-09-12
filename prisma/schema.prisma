@@ -13,3 +13,228 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+enum MemberType {
+  UNCATEGORIZED
+  KIDS
+  MEN
+  WOMEN
+  YOUTH
+  YOUNGPRO
+}
+
+enum ChurchStatus {
+  NACS
+  ACS
+  REGULAR
+}
+
+enum CellStatus {
+  FIRST_TIMER
+  SECOND_TIMER
+  THIRD_TIMER
+  REGULAR
+}
+
+enum ProcessLevel {
+  NONE
+  PREENC
+  ENCOUNTER
+  LEADERSHIP_1
+  LEADERSHIP_2
+  LEADERSHIP_3
+}
+
+enum CellType {
+  SOULWINNING
+  OPEN
+  DISCIPLESHIP
+}
+
+enum ProcessLevelStatus {
+  NOT_STARTED
+  ON_GOING
+  PENDING_REQUIREMENTS
+  FINISHED
+  UNFINISHED
+  DROPPED
+}
+
+model User {
+  id      String @id @default(cuid())
+  clerkId String @unique
+  email   String @unique
+  name    String
+  role    Role   @default(USER)
+
+  discipleProfile Disciple?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Disciple {
+  id            String  @id @default(cuid())
+  userAccountId String? @unique // link to clerkId
+  userAccount   User?   @relation(fields: [userAccountId], references: [clerkId])
+
+  name      String
+  address   String
+  birthdate DateTime
+  gender    Gender
+
+  isPrimary   Boolean @default(false)
+  isActive    Boolean @default(true)
+  isDeleted   Boolean @default(false)
+  isMyPrimary Boolean @default(false)
+
+  leaderId String?
+  leader   Disciple? @relation("LeaderDisciples", fields: [leaderId], references: [id])
+
+  disciples Disciple[] @relation("LeaderDisciples")
+
+  memberType         MemberType         @default(UNCATEGORIZED)
+  processLevel       ProcessLevel       @default(NONE)
+  cellStatus         CellStatus         @default(FIRST_TIMER)
+  churchStatus       ChurchStatus       @default(NACS)
+  processLevelStatus ProcessLevelStatus @default(NOT_STARTED)
+
+  handledById      String?
+  handledBy        Disciple?  @relation("handledBy", fields: [handledById], references: [id])
+  handledDisciples Disciple[] @relation("handledBy")
+
+  handledCellGroups  CellReport[] @relation("handledCellGroups") // as primary leader
+  assistedCellGroups CellReport[] @relation("assistedCellGroups") // as assistant
+  attendedCellGroups CellReport[] @relation("attendedCellGroups") // as attendee
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([id, leaderId])
+  @@index([leaderId])
+  @@index([userAccountId])
+  @@index([handledById])
+  @@index([isPrimary])
+  @@index([isActive])
+}
+
+model LessonSeries {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  tags        String[]
+  lessons     Lesson[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Lesson {
+  id String @id @default(cuid())
+
+  lessonSeriesId String
+  lessonSeries   LessonSeries @relation(fields: [lessonSeriesId], references: [id], onDelete: Cascade)
+
+  title               String
+  description         String?
+  fileUrl             String?
+  scriptureReferences String[]
+
+  cellReports CellReport[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([lessonSeriesId])
+}
+
+model CellReport {
+  id    String   @id @default(cuid())
+  type  CellType @default(OPEN)
+  venue String
+  date  DateTime
+  time  String
+
+  lessonId        String?
+  lesson          Lesson? @relation(fields: [lessonId], references: [id])
+  lessonTitle     String? // if custom lesson
+  hasCustomLesson Boolean @default(false)
+
+  scriptureReferences String[]
+
+  // for CGs handled by a non-primary cell leader, e.g. 144-level disciples
+  assistantId String?
+  assistant   Disciple? @relation("assistedCellGroups", fields: [assistantId], references: [id])
+
+  // the primary leader who led/handled the cell group
+  leaderId String
+  leader   Disciple @relation("handledCellGroups", fields: [leaderId], references: [id])
+
+  attendees Disciple[] @relation("attendedCellGroups")
+
+  worship String[] // worship songs sang during the CG, comma-separated in UI
+  work    String[] // work to do, comma-separated in UI
+
+  cellReportAttendeeSnapshots CellReportAttendeeSnapshot[] // so we can track the attendees' status at the time of the CG, helpful for tracking new comers
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([leaderId])
+  @@index([assistantId])
+  @@index([lessonId])
+}
+
+model CellReportAttendeeSnapshot {
+  id String @id @default(cuid())
+
+  name   String
+  status CellStatus
+
+  cellReportId String
+  cellReport   CellReport @relation(fields: [cellReportId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([cellReportId])
+}
+
+model ProcessLessonSeries {
+  id           String       @id @default(cuid())
+  title        String
+  description  String?
+  tags         String[]
+  processLevel ProcessLevel
+
+  lessons ProcessLesson[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ProcessLesson {
+  id                  String   @id @default(cuid())
+  title               String
+  description         String?
+  fileUrl             String?
+  scriptureReferences String[]
+
+  processLessonSeriesId String
+  processLessonSeries   ProcessLessonSeries @relation(fields: [processLessonSeriesId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([processLessonSeriesId])
+}

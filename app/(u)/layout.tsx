@@ -16,7 +16,7 @@ function UserPagesLayout({ children }: { children: ReactNode }) {
       <AppSidebar variant="inset" />
       <SidebarInset>
         <AppHeader />
-        {children}
+        <div className="container max-w-6xl mx-auto">{children}</div>
       </SidebarInset>
     </SidebarProvider>
   );

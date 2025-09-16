@@ -2,7 +2,7 @@
 
 import { SearchIcon, XIcon } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,35 +24,58 @@ export function SearchField({
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
+  const debounceRef = useRef<NodeJS.Timeout>(undefined);
 
   const [searchValue, setSearchValue] = useState(
     searchParams.get(paramName) || "",
   );
 
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
+  const updateUrl = useCallback(
+    (value: string) => {
       const newParams = new URLSearchParams(searchParams);
 
-      if (searchValue.trim()) {
-        newParams.set(paramName, searchValue.trim());
+      if (value.trim()) {
+        // Reset to first page when searching
+        newParams.delete("page");
+        newParams.set(paramName, value.trim());
       } else {
         newParams.delete(paramName);
       }
 
-      // Reset to first page when searching
-      newParams.delete("page");
-
       // Update URL with new search params
       const newUrl = `${pathname}?${newParams.toString()}`;
       router.replace(newUrl);
-    }, debounceMs);
+    },
+    [searchParams, pathname, paramName, router],
+  );
 
-    return () => clearTimeout(timeoutId);
-  }, [searchValue, searchParams, router, pathname, paramName, debounceMs]);
+  const handleInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+      setSearchValue(value);
 
-  const handleClear = () => {
+      // Clear existing timeout
+      if (debounceRef.current) {
+        clearTimeout(debounceRef.current);
+      }
+
+      // Set new timeout
+      debounceRef.current = setTimeout(() => {
+        updateUrl(value);
+      }, debounceMs);
+    },
+    [updateUrl, debounceMs],
+  );
+
+  const handleClear = useCallback(() => {
     setSearchValue("");
-  };
+    // Clear debounce timeout
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+    }
+    // Immediately update URL
+    updateUrl("");
+  }, [updateUrl]);
 
   return (
     <div className={cn("relative w-full max-w-full md:max-w-xs", className)}>
@@ -61,7 +84,7 @@ export function SearchField({
         type="text"
         placeholder={placeholder}
         value={searchValue}
-        onChange={(e) => setSearchValue(e.target.value)}
+        onChange={handleInputChange}
         className="pr-9 pl-9"
       />
       {searchValue && (

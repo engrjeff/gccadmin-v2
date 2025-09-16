@@ -5,6 +5,7 @@ import {
   DEFAULT_SERVER_ERROR_MESSAGE,
 } from "next-safe-action";
 import * as z from "zod";
+import prisma from "./prisma";
 
 class ActionError extends Error {}
 
@@ -40,4 +41,19 @@ export const authActionClient = actionClient.use(async ({ next }) => {
   if (!user?.userId) throw new Error("Session not found.");
 
   return next({ ctx: { user } });
+});
+
+export const leaderActionClient = actionClient.use(async ({ next }) => {
+  const user = await auth();
+
+  if (!user?.userId) throw new Error("Session not found.");
+
+  // find the disciple leader
+  const leader = await prisma.disciple.findFirst({
+    where: { userAccountId: user.userId },
+  });
+
+  if (!leader) throw new Error("Unauthorized.");
+
+  return next({ ctx: { user, leader } });
 });

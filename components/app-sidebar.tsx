@@ -5,8 +5,10 @@ import {
   Grid2X2Icon,
   NotebookIcon,
   PlusIcon,
+  ShieldIcon,
   UsersIcon,
 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import type * as React from "react";
 import { NavCellGroup } from "@/components/nav-cellgroup";
@@ -21,6 +23,8 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import { app } from "@/lib/config";
+import { NavAdmin } from "./nav-admin";
 
 // This is sample data.
 const data = {
@@ -34,12 +38,20 @@ const data = {
     logo: GalleryVerticalEnd,
     subtitle: "Grace City Church",
   },
+  navAdmin: [
+    {
+      name: "Leaders",
+      url: "/leaders",
+      icon: ShieldIcon,
+    },
+  ],
   navCellGroup: [
     {
       name: "Dashboard",
       url: "/dashboard",
       icon: Grid2X2Icon,
     },
+
     {
       name: "Disciples",
       url: "/disciples",
@@ -69,18 +81,25 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <Link href="/dashboard">
-                <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                  <GalleryVerticalEnd className="size-4" />
-                </div>
+              <Link href="/dashboard" className="flex items-center">
+                <Image
+                  unoptimized
+                  src="/gcc-logo.svg"
+                  alt={app.title}
+                  width={40}
+                  height={40}
+                  className="-mt-1"
+                />
                 <div className="flex flex-col gap-0.5 leading-none">
-                  <span className="font-medium">{data.app.name}</span>
-                  <span className="">{data.app.subtitle}</span>
+                  <span className="font-semibold">{data.app.name}</span>
+                  <span className="text-xs text-muted-foreground">
+                    {data.app.subtitle}
+                  </span>
                 </div>
               </Link>
             </SidebarMenuButton>
@@ -89,6 +108,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavCellGroup menuItems={data.navCellGroup} />
+        <NavAdmin menuItems={data.navAdmin} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />

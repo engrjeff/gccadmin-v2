@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DataPagination } from "@/components/data-pagination";
+import { FilterField } from "@/components/filter-field";
 import { Button } from "@/components/ui/button";
 import { SearchField } from "@/components/ui/search-field";
 import { DisciplesTable } from "@/features/disciples/disciples-table";
@@ -8,6 +9,7 @@ import {
   type DisciplesQueryArgs,
   getDisciples,
 } from "@/features/disciples/queries";
+import { cellStatuses, churchStatuses, processLevels } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "Disciples",
@@ -33,6 +35,21 @@ export default async function DisciplesPage({ searchParams }: PageProps) {
       </div>
       <div className="flex items-center gap-3">
         <SearchField paramName="q" />
+        <FilterField
+          label="Cell Status"
+          options={cellStatuses}
+          queryName="cellStatus"
+        />
+        <FilterField
+          label="Church Status"
+          options={churchStatuses}
+          queryName="churchStatus"
+        />
+        <FilterField
+          label="Process Level"
+          options={processLevels}
+          queryName="processLevel"
+        />
       </div>
       <DisciplesTable disciples={disciples} />
       <DataPagination name="disciples" pageInfo={pageInfo} />

@@ -16,3 +16,8 @@ export type PageInfo = {
   totalPages: number;
   itemCount: number;
 };
+
+export type Option = {
+  label: string;
+  value: string;
+};

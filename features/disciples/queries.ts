@@ -1,6 +1,11 @@
 "use server";
 
 import { auth } from "@clerk/nextjs/server";
+import type {
+  CellStatus,
+  ChurchStatus,
+  ProcessLevel,
+} from "@/app/generated/prisma";
 import prisma from "@/lib/prisma";
 import { getSkip } from "@/lib/utils.server";
 
@@ -67,17 +72,17 @@ export async function getDisciples(args: DisciplesQueryArgs) {
     };
   }
 
-  // const cellStatusFilter = args?.cellStatus
-  //   ? (args.cellStatus.split(",") as Array<CellStatus>)
-  //   : undefined;
+  const cellStatusFilter = args?.cellStatus
+    ? (args.cellStatus.split(",") as Array<CellStatus>)
+    : undefined;
 
-  // const churchStatusFilter = args?.churchStatus
-  //   ? (args.churchStatus.split(",") as Array<ChurchStatus>)
-  //   : undefined;
+  const churchStatusFilter = args?.churchStatus
+    ? (args.churchStatus.split(",") as Array<ChurchStatus>)
+    : undefined;
 
-  // const processLevelFilter = args?.processLevel
-  //   ? (args.processLevel.split(",") as Array<ProcessLevel>)
-  //   : undefined;
+  const processLevelFilter = args?.processLevel
+    ? (args.processLevel.split(",") as Array<ProcessLevel>)
+    : undefined;
 
   // const processLevelStatusFilter = args?.processLevelStatus
   //   ? (args.processLevelStatus.split(",") as Array<ProcessLevelStatus>)
@@ -97,6 +102,15 @@ export async function getDisciples(args: DisciplesQueryArgs) {
             mode: "insensitive",
           }
         : undefined,
+      cellStatus: {
+        in: cellStatusFilter,
+      },
+      churchStatus: {
+        in: churchStatusFilter,
+      },
+      processLevel: {
+        in: processLevelFilter,
+      },
     },
   });
 
@@ -117,6 +131,15 @@ export async function getDisciples(args: DisciplesQueryArgs) {
             mode: "insensitive",
           }
         : undefined,
+      cellStatus: {
+        in: cellStatusFilter,
+      },
+      churchStatus: {
+        in: churchStatusFilter,
+      },
+      processLevel: {
+        in: processLevelFilter,
+      },
     },
     include: {
       leader: {

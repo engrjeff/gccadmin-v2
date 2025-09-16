@@ -1,3 +1,4 @@
+import { PackageIcon } from "lucide-react";
 import Link from "next/link";
 import type { Disciple } from "@/app/generated/prisma";
 import { SortLink } from "@/components/sort-link";
@@ -40,40 +41,54 @@ export function DisciplesTable({ disciples }: { disciples: Disciple[] }) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {disciples.map((d, index) => (
-            <TableRow key={d.id} className="hover:bg-transparent">
-              <TableCell className="bg-card w-4 border-r text-center">
-                {index + 1}
-              </TableCell>
-              <TableCell>
-                <div>
-                  <Link
-                    href={`/disciples/${d.id}`}
-                    className="font-semibold hover:underline"
-                  >
-                    {d.name}
-                  </Link>
-                  <p className="text-xs text-muted-foreground capitalize">
-                    {removeUnderscores(d.memberType)}, {d.gender.toLowerCase()}
+          {disciples.length === 0 ? (
+            <TableRow className="hover:bg-transparent">
+              <TableCell colSpan={6}>
+                <div className="min-h-[300px] flex flex-col items-center justify-center gap-3">
+                  <PackageIcon className="size-6 text-muted-foreground" />
+                  <p className="text-sm text-muted-foreground text-center">
+                    No disciple records found.
                   </p>
                 </div>
               </TableCell>
-              <TableCell>
-                <CellStatusBadge cellStatus={d.cellStatus} />
-              </TableCell>
-              <TableCell>
-                <ChurchStatusBadge churchStatus={d.churchStatus} />
-              </TableCell>
-              <TableCell>
-                <ProcessLevelBadge processLevel={d.processLevel} />
-              </TableCell>
-              <TableCell>
-                <ProcessLevelStatusStatusBadge
-                  processLevelStatus={d.processLevelStatus}
-                />
-              </TableCell>
             </TableRow>
-          ))}
+          ) : (
+            disciples.map((d, index) => (
+              <TableRow key={d.id} className="hover:bg-transparent">
+                <TableCell className="bg-card w-4 border-r text-center">
+                  {index + 1}
+                </TableCell>
+                <TableCell>
+                  <div>
+                    <Link
+                      href={`/disciples/${d.id}`}
+                      className="font-semibold hover:underline"
+                    >
+                      {d.name}
+                    </Link>
+                    <p className="text-xs text-muted-foreground capitalize">
+                      {removeUnderscores(d.memberType)},{" "}
+                      {d.gender.toLowerCase()}
+                    </p>
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <CellStatusBadge cellStatus={d.cellStatus} />
+                </TableCell>
+                <TableCell>
+                  <ChurchStatusBadge churchStatus={d.churchStatus} />
+                </TableCell>
+                <TableCell>
+                  <ProcessLevelBadge processLevel={d.processLevel} />
+                </TableCell>
+                <TableCell>
+                  <ProcessLevelStatusStatusBadge
+                    processLevelStatus={d.processLevelStatus}
+                  />
+                </TableCell>
+              </TableRow>
+            ))
+          )}
         </TableBody>
       </Table>
     </div>

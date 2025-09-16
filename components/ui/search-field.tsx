@@ -1,8 +1,8 @@
 "use client";
 
-import { SearchIcon, XIcon } from "lucide-react";
+import { Loader2, SearchIcon, XIcon } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useRef, useState, useTransition } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,6 +25,7 @@ export function SearchField({
   const router = useRouter();
   const pathname = usePathname();
   const debounceRef = useRef<NodeJS.Timeout>(undefined);
+  const [isPending, startTransition] = useTransition();
 
   const [searchValue, setSearchValue] = useState(
     searchParams.get(paramName) || "",
@@ -61,7 +62,9 @@ export function SearchField({
 
       // Set new timeout
       debounceRef.current = setTimeout(() => {
-        updateUrl(value);
+        startTransition(() => {
+          updateUrl(value);
+        });
       }, debounceMs);
     },
     [updateUrl, debounceMs],
@@ -74,7 +77,9 @@ export function SearchField({
       clearTimeout(debounceRef.current);
     }
     // Immediately update URL
-    updateUrl("");
+    startTransition(() => {
+      updateUrl("");
+    });
   }, [updateUrl]);
 
   return (
@@ -85,9 +90,12 @@ export function SearchField({
         placeholder={placeholder}
         value={searchValue}
         onChange={handleInputChange}
-        className="pr-9 pl-9"
+        className="pr-16 pl-9"
       />
-      {searchValue && (
+      {isPending && (
+        <Loader2 className="text-muted-foreground absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 animate-spin" />
+      )}
+      {searchValue && !isPending && (
         <Button
           variant="ghost"
           size="sm"

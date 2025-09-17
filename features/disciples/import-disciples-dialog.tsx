@@ -37,6 +37,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Label } from "@/components/ui/label";
+import { SelectNative } from "@/components/ui/select-native";
 import { SubmitButton } from "@/components/ui/submit-button";
 import {
   Table,
@@ -46,6 +48,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useIsAdmin } from "@/hooks/use-is-admin";
+import { useLeaders } from "@/hooks/use-leaders";
 import { removeUnderscores } from "@/lib/utils";
 import { bulkCreateDisciples } from "./actions";
 import { type DiscipleImportInputs, importDisciplesSchema } from "./schema";
@@ -124,6 +128,11 @@ function DisciplesImportContent({
   const [view, setView] = useState<"upload" | "success" | "error">("upload");
   const [fileLoading, setFileLoading] = useState(false);
   const fileInputId = useId();
+  const isAdmin = useIsAdmin();
+
+  const [leaderId, setLeaderId] = useState<string>();
+
+  const leadersQuery = useLeaders({ enabled: isAdmin });
 
   const [dataWithError, setDataWithError] = useState<DiscipleEntry[]>([]);
   const [entryErrors, setEntryErrors] = useState<EntryError>({});
@@ -153,7 +162,14 @@ function DisciplesImportContent({
 
   const onSubmit: SubmitHandler<DiscipleImportInputs> = async (data) => {
     try {
-      const result = await bulkCreateAction.executeAsync(data);
+      if (isAdmin && !leaderId) {
+        toast.error("Please select a leader.");
+        return;
+      }
+
+      const result = await bulkCreateAction.executeAsync({
+        disciples: data.disciples.map((d) => ({ ...d, leaderId: leaderId })),
+      });
 
       if (result.data?.disciples.count) {
         toast.success(`${result.data?.disciples.count} disciples were added!`);
@@ -333,6 +349,24 @@ function DisciplesImportContent({
 
         {view === "success" && discipleFields.fields.length ? (
           <div className="w-full space-y-6 max-w-full overflow-x-auto">
+            {isAdmin ? (
+              <div className="space-y-2 w-1/4 ml-1">
+                <Label>Leader</Label>
+                <SelectNative
+                  disabled={leadersQuery.isLoading}
+                  className="capitalize"
+                  value={leaderId}
+                  onChange={(e) => setLeaderId(e.currentTarget.value)}
+                >
+                  <option value="">Select a Leader</option>
+                  {leadersQuery.data?.map((leader) => (
+                    <option key={leader.id} value={leader.id}>
+                      {leader.name}
+                    </option>
+                  ))}
+                </SelectNative>
+              </div>
+            ) : null}
             <div className="[&>div]:max-h-[450px] [&>div]:rounded-md [&>div]:border">
               <Table>
                 <TableHeader className="bg-card sticky top-0 z-10 backdrop-blur-sm">

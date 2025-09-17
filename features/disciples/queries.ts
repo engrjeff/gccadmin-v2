@@ -28,7 +28,7 @@ const DEFAULT_PAGE_SIZE = 12;
 function getDiscipleSort(sortBy?: string, order?: "asc" | "desc") {
   if (!sortBy && !order)
     return {
-      name: "asc" as "asc" | "desc",
+      createdAt: "desc" as "asc" | "desc",
     };
 
   const acceptedSortKeys = [
@@ -40,7 +40,7 @@ function getDiscipleSort(sortBy?: string, order?: "asc" | "desc") {
   ];
 
   if (sortBy && !acceptedSortKeys.includes(sortBy))
-    return { name: order ?? "asc" };
+    return { createdAt: order ?? "desc" };
 
   const sortByValue = sortBy ? sortBy : "name";
   const sortOrderValue = order ? order : "asc";
@@ -55,13 +55,17 @@ export async function getDisciples(args: DisciplesQueryArgs) {
 
   if (!user?.userId) throw new Error("Session not found");
 
+  const isAdmin = user.sessionClaims.metadata.role === "admin";
+
   const leader = await prisma.disciple.findUnique({
     where: { userAccountId: user.userId },
   });
 
-  if (!leader) {
+  if (!leader && !isAdmin) {
     return {
       disciples: [],
+      user,
+      isAdmin: user.sessionClaims.metadata.role === "admin",
       pageInfo: {
         total: 0,
         page: 1,
@@ -93,7 +97,7 @@ export async function getDisciples(args: DisciplesQueryArgs) {
 
   const totalFiltered = await prisma.disciple.count({
     where: {
-      leaderId: leader.id,
+      leaderId: leader?.id,
       isDeleted: false,
       isActive,
       name: args.q
@@ -122,7 +126,7 @@ export async function getDisciples(args: DisciplesQueryArgs) {
 
   const disciples = await prisma.disciple.findMany({
     where: {
-      leaderId: leader.id,
+      leaderId: leader?.id,
       isDeleted: false,
       isActive,
       name: args.q
@@ -144,6 +148,7 @@ export async function getDisciples(args: DisciplesQueryArgs) {
     include: {
       leader: {
         select: {
+          id: true,
           name: true,
         },
       },
@@ -160,6 +165,8 @@ export async function getDisciples(args: DisciplesQueryArgs) {
 
   return {
     disciples,
+    user,
+    isAdmin: user.sessionClaims.metadata.role === "admin",
     pageInfo: {
       ...pageInfo,
       itemCount: disciples.length,

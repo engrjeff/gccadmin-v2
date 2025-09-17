@@ -16,7 +16,13 @@ import { ChurchStatusBadge } from "./church-status-badge";
 import { ProcessLevelBadge } from "./process-level-badge";
 import { ProcessLevelStatusStatusBadge } from "./process-level-status-badge";
 
-export function DisciplesTable({ disciples }: { disciples: Disciple[] }) {
+export function DisciplesTable({
+  isAdmin,
+  disciples,
+}: {
+  isAdmin: boolean;
+  disciples: Array<Disciple & { leader: { id: string; name: string } | null }>;
+}) {
   return (
     <div className="[&>div]:rounded-md rounded-md border flex-1 min-h-min overflow-hidden [&>div]:max-h-[490px]">
       <Table>
@@ -26,6 +32,11 @@ export function DisciplesTable({ disciples }: { disciples: Disciple[] }) {
             <TableHead>
               <SortLink sortValue="name" title="Name" />
             </TableHead>
+            {isAdmin ? (
+              <TableHead>
+                <SortLink sortValue="leader" title="Leader" />
+              </TableHead>
+            ) : null}
             <TableHead>
               <SortLink sortValue="cellStatus" title="Cell Status" />
             </TableHead>
@@ -43,7 +54,7 @@ export function DisciplesTable({ disciples }: { disciples: Disciple[] }) {
         <TableBody>
           {disciples.length === 0 ? (
             <TableRow className="hover:bg-transparent">
-              <TableCell colSpan={6}>
+              <TableCell colSpan={isAdmin ? 7 : 6}>
                 <div className="min-h-[300px] flex flex-col items-center justify-center gap-3">
                   <PackageIcon className="size-6 text-muted-foreground" />
                   <p className="text-sm text-muted-foreground text-center">
@@ -72,6 +83,16 @@ export function DisciplesTable({ disciples }: { disciples: Disciple[] }) {
                     </p>
                   </div>
                 </TableCell>
+                {isAdmin ? (
+                  <TableCell>
+                    <Link
+                      href={`/leaders/${d.leader?.id}`}
+                      className="hover:underline"
+                    >
+                      {d.leader?.name}
+                    </Link>
+                  </TableCell>
+                ) : null}
                 <TableCell>
                   <CellStatusBadge cellStatus={d.cellStatus} />
                 </TableCell>

@@ -23,6 +23,7 @@ export const discipleCreateSchema = z.object({
     error: "Invalid process status",
   }),
   handledById: z.string().optional(),
+  leaderId: z.string().optional(), // for admin
 });
 
 export const importDisciplesSchema = z.object({

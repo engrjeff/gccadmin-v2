@@ -48,12 +48,14 @@ export const leaderActionClient = actionClient.use(async ({ next }) => {
 
   if (!user?.userId) throw new Error("Session not found.");
 
+  const isAdmin = user.sessionClaims.metadata.role === "admin";
+
   // find the disciple leader
   const leader = await prisma.disciple.findFirst({
     where: { userAccountId: user.userId },
   });
 
-  if (!leader) throw new Error("Unauthorized.");
+  if (!leader && !isAdmin) throw new Error("Unauthorized.");
 
   return next({ ctx: { user, leader } });
 });

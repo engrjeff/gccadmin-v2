@@ -3,7 +3,35 @@
 import { revalidatePath } from "next/cache";
 import prisma from "@/lib/prisma";
 import { leaderActionClient } from "@/lib/safe-action";
-import { importDisciplesSchema } from "./schema";
+import { discipleCreateSchema, importDisciplesSchema } from "./schema";
+
+export const createDisciple = leaderActionClient
+  .metadata({ actionName: "createDisciple" })
+  .inputSchema(discipleCreateSchema)
+  .action(async ({ parsedInput, ctx: { leader } }) => {
+    const leaderId = leader === null ? parsedInput.leaderId : leader.id;
+
+    const disciple = await prisma.disciple.create({
+      data: {
+        name: parsedInput.name,
+        address: parsedInput.address,
+        birthdate: new Date(parsedInput.birthdate),
+        gender: parsedInput.gender,
+        cellStatus: parsedInput.cellStatus,
+        churchStatus: parsedInput.churchStatus,
+        memberType: parsedInput.memberType,
+        processLevel: parsedInput.processLevel,
+        processLevelStatus: parsedInput.processLevelStatus,
+        leaderId,
+      },
+    });
+
+    revalidatePath("/disciples");
+
+    return {
+      disciple,
+    };
+  });
 
 export const bulkCreateDisciples = leaderActionClient
   .metadata({ actionName: "bulkCreateDisciples" })
@@ -13,7 +41,7 @@ export const bulkCreateDisciples = leaderActionClient
       data: parsedInput.disciples.map((disciple) => ({
         ...disciple,
         birthdate: new Date(disciple.birthdate),
-        leaderId: leader.id,
+        leaderId: leader ? leader.id : disciple.leaderId,
       })),
     });
 

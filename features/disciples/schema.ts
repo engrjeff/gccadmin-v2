@@ -44,6 +44,19 @@ export const importDisciplesSchema = z.object({
   }),
 });
 
+export const discipleIdSchema = z.object({
+  id: z
+    .string({ error: "Disciple ID is required." })
+    .min(1, { error: "Disciple ID is required." }),
+});
+
+export const discipleStatusChangeSchema = z.object({
+  id: z
+    .string({ error: "Disciple ID is required." })
+    .min(1, { error: "Disciple ID is required." }),
+  isActive: z.boolean(),
+});
+
 export type DiscipleCreateInputs = z.infer<typeof discipleCreateSchema>;
 
 export type DiscipleImportInputs = z.infer<typeof importDisciplesSchema>;

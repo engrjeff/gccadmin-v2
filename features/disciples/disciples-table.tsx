@@ -13,6 +13,7 @@ import {
 import { removeUnderscores } from "@/lib/utils";
 import { CellStatusBadge } from "./cell-status-badge";
 import { ChurchStatusBadge } from "./church-status-badge";
+import { DiscipleRowActions } from "./disciple-row-actions";
 import { ProcessLevelBadge } from "./process-level-badge";
 import { ProcessLevelStatusStatusBadge } from "./process-level-status-badge";
 
@@ -49,12 +50,13 @@ export function DisciplesTable({
             <TableHead>
               <SortLink sortValue="processLevelStatus" title="Process Status" />
             </TableHead>
+            <TableHead className="text-center">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {disciples.length === 0 ? (
             <TableRow className="hover:bg-transparent">
-              <TableCell colSpan={isAdmin ? 7 : 6}>
+              <TableCell colSpan={isAdmin ? 8 : 7}>
                 <div className="min-h-[300px] flex flex-col items-center justify-center gap-3">
                   <PackageIcon className="size-6 text-muted-foreground" />
                   <p className="text-sm text-muted-foreground text-center">
@@ -106,6 +108,9 @@ export function DisciplesTable({
                   <ProcessLevelStatusStatusBadge
                     processLevelStatus={d.processLevelStatus}
                   />
+                </TableCell>
+                <TableCell className="text-center">
+                  <DiscipleRowActions disciple={d} />
                 </TableCell>
               </TableRow>
             ))

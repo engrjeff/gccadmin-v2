@@ -2,8 +2,13 @@
 
 import { revalidatePath } from "next/cache";
 import prisma from "@/lib/prisma";
-import { leaderActionClient } from "@/lib/safe-action";
-import { discipleCreateSchema, importDisciplesSchema } from "./schema";
+import { authActionClient, leaderActionClient } from "@/lib/safe-action";
+import {
+  discipleCreateSchema,
+  discipleIdSchema,
+  discipleStatusChangeSchema,
+  importDisciplesSchema,
+} from "./schema";
 
 export const createDisciple = leaderActionClient
   .metadata({ actionName: "createDisciple" })
@@ -49,5 +54,42 @@ export const bulkCreateDisciples = leaderActionClient
 
     return {
       disciples,
+    };
+  });
+
+export const deleteDisciple = authActionClient
+  .metadata({ actionName: "deleteDisciple" })
+  .inputSchema(discipleIdSchema)
+  .action(async ({ parsedInput }) => {
+    // soft delete
+    await prisma.disciple.update({
+      where: { id: parsedInput.id },
+      data: {
+        isDeleted: true,
+      },
+    });
+
+    revalidatePath("/disciples");
+
+    return {
+      success: true,
+    };
+  });
+
+export const updateDiscipleStatus = authActionClient
+  .metadata({ actionName: "updateDiscipleStatus" })
+  .inputSchema(discipleStatusChangeSchema)
+  .action(async ({ parsedInput }) => {
+    await prisma.disciple.update({
+      where: { id: parsedInput.id },
+      data: {
+        isActive: parsedInput.isActive,
+      },
+    });
+
+    revalidatePath("/disciples");
+
+    return {
+      success: true,
     };
   });

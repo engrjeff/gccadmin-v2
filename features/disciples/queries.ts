@@ -92,8 +92,7 @@ export async function getDisciples(args: DisciplesQueryArgs) {
   //   ? (args.processLevelStatus.split(",") as Array<ProcessLevelStatus>)
   //   : undefined;
 
-  const isActive =
-    args?.status === undefined ? undefined : args.status === "active";
+  const isActive = args?.status === undefined ? true : args.status === "active";
 
   const totalFiltered = await prisma.disciple.count({
     where: {

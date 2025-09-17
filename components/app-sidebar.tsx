@@ -4,7 +4,6 @@ import {
   GalleryVerticalEnd,
   Grid2X2Icon,
   NotebookIcon,
-  PlusIcon,
   ShieldIcon,
   UsersIcon,
 } from "lucide-react";
@@ -56,25 +55,25 @@ const data = {
       name: "Disciples",
       url: "/disciples",
       icon: UsersIcon,
-      quickActions: [
-        {
-          label: "Add Disciple",
-          url: "/disciples/new",
-          icon: PlusIcon,
-        },
-      ],
+      // quickActions: [
+      //   {
+      //     label: "Add Disciple",
+      //     url: "/disciples/new",
+      //     icon: PlusIcon,
+      //   },
+      // ],
     },
     {
       name: "Cell Reports",
       url: "/cell-reports",
       icon: NotebookIcon,
-      quickActions: [
-        {
-          label: "Create Report",
-          url: "/cell-reports/new",
-          icon: PlusIcon,
-        },
-      ],
+      // quickActions: [
+      //   {
+      //     label: "Create Report",
+      //     url: "/cell-reports/new",
+      //     icon: PlusIcon,
+      //   },
+      // ],
     },
   ],
 };

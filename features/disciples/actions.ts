@@ -7,6 +7,7 @@ import {
   discipleCreateSchema,
   discipleIdSchema,
   discipleStatusChangeSchema,
+  discipleUpdateSchema,
   importDisciplesSchema,
 } from "./schema";
 
@@ -91,5 +92,26 @@ export const updateDiscipleStatus = authActionClient
 
     return {
       success: true,
+    };
+  });
+
+export const updateDisciple = authActionClient
+  .metadata({ actionName: "updateDisciple" })
+  .inputSchema(discipleUpdateSchema)
+  .action(async ({ parsedInput: { id, ...data } }) => {
+    const disciple = await prisma.disciple.update({
+      where: {
+        id,
+      },
+      data: {
+        ...data,
+        birthdate: data.birthdate ? new Date(data.birthdate) : undefined,
+      },
+    });
+
+    revalidatePath("/disciples");
+
+    return {
+      disciple,
     };
   });

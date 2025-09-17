@@ -18,8 +18,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import { DiscipleChangeStatusDialog } from "./disciple-change-status-dialog";
 import { DiscipleDeleteDialog } from "./disciple-delete-dialog";
+import { DiscipleEditForm } from "./disciple-edit-form";
 
 type RowAction = "edit" | "delete" | "change-status";
 
@@ -43,7 +51,7 @@ export function DiscipleRowActions({ disciple }: { disciple: Disciple }) {
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setAction("edit")}>
             <PencilIcon />
-            Disciples
+            Update
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setAction("change-status")}>
@@ -82,6 +90,30 @@ export function DiscipleRowActions({ disciple }: { disciple: Disciple }) {
           }
         }}
       />
+
+      <Sheet
+        open={action === "edit"}
+        onOpenChange={(isOpen) => {
+          if (!isOpen) {
+            setAction(undefined);
+          }
+        }}
+      >
+        <SheetContent
+          side="right"
+          className="inset-y-2 right-2 flex h-auto w-[95%] flex-col gap-0 overflow-y-hidden rounded-lg border bg-background p-0 focus-visible:outline-none sm:max-w-lg"
+          onInteractOutside={(e) => e.preventDefault()}
+        >
+          <SheetHeader className="space-y-1 border-b p-4 text-left">
+            <SheetTitle>Update Disciple</SheetTitle>
+            <SheetDescription>Make sure to save your changes.</SheetDescription>
+          </SheetHeader>
+          <DiscipleEditForm
+            disciple={disciple}
+            onAfterSave={() => setAction(undefined)}
+          />
+        </SheetContent>
+      </Sheet>
     </>
   );
 }

@@ -57,6 +57,10 @@ export const discipleStatusChangeSchema = z.object({
   isActive: z.boolean(),
 });
 
+export const discipleUpdateSchema = discipleCreateSchema.extend(
+  discipleIdSchema.shape,
+);
+
 export type DiscipleCreateInputs = z.infer<typeof discipleCreateSchema>;
 
 export type DiscipleImportInputs = z.infer<typeof importDisciplesSchema>;

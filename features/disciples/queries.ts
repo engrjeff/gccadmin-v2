@@ -26,10 +26,19 @@ export type DisciplesQueryArgs = {
 const DEFAULT_PAGE_SIZE = 12;
 
 function getDiscipleSort(sortBy?: string, order?: "asc" | "desc") {
-  if (!sortBy && !order)
-    return {
+  const defaultSort = [
+    {
+      isPrimary: "desc" as "asc" | "desc",
+    },
+    {
+      name: "asc" as "asc" | "desc",
+    },
+    {
       createdAt: "desc" as "asc" | "desc",
-    };
+    },
+  ];
+
+  if (!sortBy && !order) return defaultSort;
 
   const acceptedSortKeys = [
     "name",
@@ -39,15 +48,13 @@ function getDiscipleSort(sortBy?: string, order?: "asc" | "desc") {
     "processLevelStatus",
   ];
 
-  if (sortBy && !acceptedSortKeys.includes(sortBy))
-    return { createdAt: order ?? "desc" };
+  if (sortBy && !acceptedSortKeys.includes(sortBy)) return defaultSort;
 
-  const sortByValue = sortBy ? sortBy : "name";
-  const sortOrderValue = order ? order : "asc";
-
-  return {
-    [sortByValue]: sortOrderValue,
-  };
+  return [
+    {
+      [sortBy as string]: order,
+    },
+  ];
 }
 
 export async function getDisciples(args: DisciplesQueryArgs) {
@@ -158,8 +165,12 @@ export async function getDisciples(args: DisciplesQueryArgs) {
 
     take: args?.pageSize ?? DEFAULT_PAGE_SIZE,
     skip: getSkip({ limit: DEFAULT_PAGE_SIZE, page: args?.page }),
-
-    orderBy: getDiscipleSort(args.sort, args.order),
+    orderBy: [
+      ...getDiscipleSort(args.sort, args.order),
+      {
+        id: "asc",
+      },
+    ],
   });
 
   return {

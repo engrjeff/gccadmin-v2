@@ -1,6 +1,7 @@
 "use server";
 
 import { auth } from "@clerk/nextjs/server";
+import { cache } from "react";
 import type {
   CellStatus,
   ChurchStatus,
@@ -184,3 +185,14 @@ export async function getDisciples(args: DisciplesQueryArgs) {
     },
   };
 }
+
+export async function getDiscipleById(discipleId: string) {
+  const disciple = await prisma.disciple.findUnique({
+    where: { id: discipleId },
+    include: { leader: true, handledBy: true },
+  });
+
+  return { disciple };
+}
+
+export const cachedGetDiscipleById = cache(getDiscipleById);

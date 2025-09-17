@@ -84,25 +84,25 @@ export function SearchField({
 
   return (
     <div className={cn("relative w-full max-w-full md:max-w-xs", className)}>
-      <SearchIcon className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
+      <SearchIcon className="text-muted-foreground absolute top-1/2 left-2 h-4 w-4 -translate-y-1/2" />
       <Input
         type="text"
         placeholder={placeholder}
         value={searchValue}
         onChange={handleInputChange}
-        className="pr-16 pl-9"
+        className="pr-16 pl-7 h-8"
       />
       {isPending && (
-        <Loader2 className="text-muted-foreground absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 animate-spin" />
+        <Loader2 className="text-muted-foreground absolute top-1/2 right-1 size-4 -translate-y-1/2 animate-spin" />
       )}
       {searchValue && !isPending && (
         <Button
           variant="ghost"
-          size="sm"
-          className="hover:bg-muted absolute top-1/2 right-1 h-7 w-7 -translate-y-1/2 p-0"
+          size="iconSm"
+          className="hover:bg-muted absolute top-1/2 right-1 size-6 -translate-y-1/2 p-0"
           onClick={handleClear}
         >
-          <XIcon className="h-3 w-3" />
+          <XIcon />
           <span className="sr-only">Clear search</span>
         </Button>
       )}

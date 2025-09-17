@@ -109,9 +109,10 @@ function FilterFieldComponent({
       <PopoverTrigger asChild>
         <Button
           variant="outline"
+          size="sm"
           className={cn(
             "border-dashed",
-            hasActiveFilters && "border-solid bg-accent",
+            hasActiveFilters && "border-solid bg-accent h-7",
             className,
           )}
         >
@@ -129,7 +130,7 @@ function FilterFieldComponent({
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-52 p-0 select-none" align="start">
-        <div className="border-b px-4 py-3">
+        <div className="border-b px-3 py-2">
           <h4 className="text-sm font-medium">{label}</h4>
         </div>
         <div className="max-h-64 overflow-y-auto p-1">
@@ -191,7 +192,7 @@ export function FilterField(props: FilterFieldProps) {
   return (
     <Suspense
       fallback={
-        <Button variant="outline" className="border-dashed" disabled>
+        <Button variant="outline" className="border-dashed h-7" disabled>
           <FilterIcon className="size-4" />
           {props.label}
         </Button>

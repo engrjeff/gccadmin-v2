@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowRightIcon, TrendingDownIcon, TrendingUpIcon } from "lucide-react";
+import Link from "next/link";
 import pluralize from "pluralize";
 import type { CellReport } from "@/app/generated/prisma";
 import { Badge } from "@/components/ui/badge";
@@ -89,9 +90,17 @@ export function CellGroupTrend({
         <Button
           size="sm"
           variant="link"
+          asChild
           className="text-blue-500 px-0 has-[>svg]:px-0"
         >
-          View Reports <ArrowRightIcon />
+          <Link
+            href={{
+              pathname: "/cell-reports",
+              query: { dateRange: selectedDateRange },
+            }}
+          >
+            View Reports <ArrowRightIcon />
+          </Link>
         </Button>
       </div>
     </div>

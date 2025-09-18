@@ -11,7 +11,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
+import { cn, removeUnderscores } from "@/lib/utils";
+import { Badge } from "./ui/badge";
 
 export interface FilterOption {
   value: string;
@@ -108,6 +109,8 @@ function FilterFieldComponent({
 
   const hasActiveFilters = selectedValues.length > 0;
 
+  const moreCount = selectedValues.length - 1;
+
   return (
     <Popover open={isOpen} onOpenChange={handleOpenChange}>
       <PopoverTrigger asChild>
@@ -116,20 +119,23 @@ function FilterFieldComponent({
           size="sm"
           className={cn(
             "border-dashed",
-            hasActiveFilters && "border-solid bg-accent h-7",
+            hasActiveFilters && "border-solid bg-accent has-[>svg]:px-1.5",
             className,
           )}
         >
-          <Icon className="size-4" />
-          {label}
           {isPending ? (
             <Loader2Icon className="size-4 animate-spin text-muted-foreground" />
           ) : (
-            hasActiveFilters && (
-              <span className="bg-primary text-primary-foreground ml-1 rounded px-1 text-xs font-medium">
-                {selectedValues.length}
+            <Icon className="size-4" />
+          )}
+          {label}
+          {hasActiveFilters && (
+            <Badge variant="MALE">
+              {removeUnderscores(selectedValues.at(0) as string)}{" "}
+              <span className="normal-case">
+                {moreCount > 0 ? `+${moreCount} more` : ""}
               </span>
-            )
+            </Badge>
           )}
         </Button>
       </PopoverTrigger>

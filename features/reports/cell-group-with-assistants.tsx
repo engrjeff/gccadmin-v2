@@ -34,7 +34,7 @@ export function CellGroupWithAssistants({
   );
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 p-4">
       <p className="text-sm font-semibold">Cell Groups Handled</p>
       <div className="flex flex-nowrap items-center gap-10 gap-y-4">
         <dd className="space-y-3">

@@ -1,0 +1,99 @@
+"use client";
+
+import { ArrowRightIcon, TrendingDownIcon, TrendingUpIcon } from "lucide-react";
+import pluralize from "pluralize";
+import type { CellReport } from "@/app/generated/prisma";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { useCellGroupStatistics } from "@/hooks/use-cell-group-statistics";
+import type { DateRange } from "@/types/globals";
+
+function getDateRangeLabel(dateRange: DateRange) {
+  switch (dateRange) {
+    case "this_week":
+      return "this week";
+    case "last_week":
+      return "last week";
+    case "this_month":
+      return "this month";
+    case "last_month":
+      return "last month";
+    case "last_last_month":
+      return "last month";
+    default:
+      return "";
+  }
+}
+
+function getPreviousDateRangeType(currentDateRange: DateRange) {
+  switch (currentDateRange) {
+    case "this_week":
+      return "last_week";
+    case "last_week":
+      return "this_week";
+    case "this_month":
+      return "last_month";
+    case "last_month":
+      return "this_month";
+    default:
+      return "last_week";
+  }
+}
+
+export function CellGroupTrend({
+  selectedDateRange,
+  currentCellReports,
+}: {
+  selectedDateRange: DateRange;
+  currentCellReports: CellReport[];
+}) {
+  const dateRange = getPreviousDateRangeType(selectedDateRange);
+
+  const dateRangeLabel = getDateRangeLabel(dateRange);
+
+  const cgsQuery = useCellGroupStatistics({ dateRange });
+
+  const previousReports = cgsQuery.data?.cellReports ?? [];
+
+  const currentCount = currentCellReports.length ?? 0;
+  const previousCount = previousReports.length ?? 0;
+
+  const percentDelta =
+    currentCount === 0
+      ? 100
+      : ((previousCount - currentCount) / currentCount) * 100;
+
+  const trend = percentDelta < 0 ? "up" : "down";
+
+  return (
+    <div className="flex flex-col gap-3 relative p-4">
+      <p className="text-sm font-semibold">Cell Group Trend</p>
+      <div className="text-sm text-muted-foreground">Total Cell Groups</div>
+      <div className="flex items-end gap-2">
+        <div className="text-4xl font-semibold tabular-nums">
+          {currentCount}
+        </div>
+        <p className="text-sm text-muted-foreground">
+          compared to {previousCount} {pluralize("report", previousCount)}{" "}
+          {dateRangeLabel}
+        </p>
+      </div>
+      <div className="absolute top-4 right-4">
+        <Badge variant={trend === "up" ? "ACTIVE" : "INACTIVE"}>
+          {trend === "up" ? <TrendingUpIcon /> : <TrendingDownIcon />}
+          {trend === "up" ? "+" : "-"}
+          {Math.abs(percentDelta).toFixed(1)}%
+        </Badge>
+      </div>
+      <div className="mt-auto">
+        <Button
+          size="sm"
+          variant="link"
+          className="text-blue-500 px-0 has-[>svg]:px-0"
+        >
+          View Reports <ArrowRightIcon />
+        </Button>
+      </div>
+    </div>
+  );
+}

@@ -25,13 +25,13 @@ export default function DashboardPage() {
       <Separator />
       <CellGroupStatistics />
 
-      <Card>
-        <CardHeader className="border-b">
+      <Card className="py-4 gap-0">
+        <CardHeader className="border-b px-4 [.border-b]:pb-4">
           <CardTitle>Member Statistics</CardTitle>
           <CardDescription>As of today</CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+        <CardContent className="px-0">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3 [&>div]:p-4">
             <MemberStatisticsByType />
             <MemberStatisticsByCellStatus />
             <MemberStatisticsByChurchStatus />

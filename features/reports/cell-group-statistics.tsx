@@ -25,6 +25,7 @@ import { useCellGroupStatistics } from "@/hooks/use-cell-group-statistics";
 import { formatDate } from "@/lib/utils";
 import type { DateRange } from "@/types/globals";
 import { CellGroupByType } from "./cell-group-by-type";
+import { CellGroupTrend } from "./cell-group-trend";
 import { CellGroupWithAssistants } from "./cell-group-with-assistants";
 
 function getDateRangeLabel(dateRange: DateRange) {
@@ -54,8 +55,8 @@ export function CellGroupStatistics() {
   const periodDate = cgStatsQuery.data?.dateRangeFilter;
 
   return (
-    <Card className="@container/card">
-      <CardHeader className="border-b">
+    <Card className="@container/card py-4 gap-0">
+      <CardHeader className="border-b px-4 [.border-b]:pb-4">
         <CardTitle>Cell Groups</CardTitle>
         <CardDescription>
           <span className="hidden @[540px]/card:block">
@@ -70,6 +71,7 @@ export function CellGroupStatistics() {
             value={dateRange}
             onValueChange={setDateRange}
             variant="outline"
+            size="sm"
             disabled={cgStatsQuery.isLoading}
             className="hidden *:data-[slot=toggle-group-item]:!px-4 @[767px]/card:flex"
           >
@@ -103,35 +105,38 @@ export function CellGroupStatistics() {
           </Select>
         </CardAction>
       </CardHeader>
-      <CardContent>
+      <CardContent className="px-0">
         {cgStatsQuery.isLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr_auto_1fr] gap-6 h-[156px]">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr_auto_1fr] gap-2 h-[188px] p-4">
             <Skeleton className="h-full" />
-            <Separator orientation="vertical" className="hidden md:block" />
-            <Separator className=" md:hidden" />
+            <Separator orientation="vertical" className="hidden lg:block" />
+            <Separator className=" lg:hidden" />
             <Skeleton className="h-full" />
-            <Separator orientation="vertical" className="hidden md:block" />
-            <Separator className=" md:hidden" />
+            <Separator orientation="vertical" className="hidden lg:block" />
+            <Separator className=" lg:hidden" />
             <Skeleton className="h-full" />
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr_auto_1fr] gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr_auto_1fr] gap-2">
             <CellGroupByType
               dateRangeLabel={dateRangeLabel}
               cellReports={cgStatsQuery.data?.cellReports ?? []}
             />
-            <Separator orientation="vertical" className="hidden md:block" />
-            <Separator className=" md:hidden" />
+            <Separator orientation="vertical" className="hidden lg:block" />
+            <Separator className=" lg:hidden" />
             <CellGroupWithAssistants
               cellReports={cgStatsQuery.data?.cellReports ?? []}
             />
-            <Separator orientation="vertical" className="hidden md:block" />
-            <Separator className=" md:hidden" />
-            <div></div>
+            <Separator orientation="vertical" className="hidden lg:block" />
+            <Separator className=" lg:hidden" />
+            <CellGroupTrend
+              currentCellReports={cgStatsQuery.data?.cellReports ?? []}
+              selectedDateRange={dateRange as DateRange}
+            />
           </div>
         )}
       </CardContent>
-      <CardFooter className="border-t">
+      <CardFooter className="border-t px-4 [.border-t]:pt-4">
         {cgStatsQuery.isLoading ? (
           <Skeleton className="h-4 w-48" />
         ) : (

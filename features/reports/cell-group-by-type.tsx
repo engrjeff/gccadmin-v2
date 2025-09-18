@@ -33,7 +33,7 @@ export function CellGroupByType({
   }
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 p-4">
       <div className="flex items-center">
         <p className="text-sm font-semibold">Cell Groups {dateRangeLabel}</p>
         {/* {trend ? (

@@ -4,6 +4,7 @@ import { auth } from "@clerk/nextjs/server";
 import type { CellType } from "@/app/generated/prisma";
 import prisma from "@/lib/prisma";
 import { getDateRange, getSkip } from "@/lib/utils.server";
+import type { DateRange } from "@/types/globals";
 
 export type CellReportsQueryArgs = {
   page?: number;
@@ -14,12 +15,7 @@ export type CellReportsQueryArgs = {
   // filters
   leader?: string;
   cellType?: CellType;
-  dateRange?:
-    | "this_week"
-    | "last_week"
-    | "this_month"
-    | "last_month"
-    | "last_last_month";
+  dateRange?: DateRange;
 };
 
 const DEFAULT_PAGE_SIZE = 10;

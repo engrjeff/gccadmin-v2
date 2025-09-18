@@ -10,4 +10,6 @@ export const API_ENDPOINTS = {
   GET_DISCIPLES: "/disciples",
   GET_LESSON_SERIES: "/lesson-series",
   GET_LESSONS: "/lessons",
+  GET_MEMBER_STATISTICS: "/reports/member-statistics",
+  GET_CELLGROUP_STATISTICS: "/reports/cell-group-statistics",
 };

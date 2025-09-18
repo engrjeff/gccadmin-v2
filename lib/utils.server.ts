@@ -8,8 +8,7 @@ import {
   subMonths,
 } from "date-fns";
 import type { CellStatus } from "@/app/generated/prisma";
-import type { CellReportsQueryArgs } from "@/features/cell-reports/queries";
-import type { UserAccountRole } from "@/types/globals";
+import type { DateRange, UserAccountRole } from "@/types/globals";
 
 export const checkRole = async (role: UserAccountRole) => {
   const { sessionClaims } = await auth();
@@ -37,7 +36,7 @@ export const getNextCellStatus = (cellStatus: CellStatus): CellStatus => {
 };
 
 export function getDateRange(
-  preset: CellReportsQueryArgs["dateRange"],
+  preset: DateRange,
 ): { start: Date; end: Date } | undefined {
   if (!preset) return undefined;
 
@@ -68,6 +67,13 @@ export function getDateRange(
     return {
       start: startOfMonth(subMonths(now, 1)),
       end: endOfMonth(subMonths(now, 1)),
+    };
+  }
+
+  if (preset === "last_last_month") {
+    return {
+      start: startOfMonth(subMonths(now, 2)),
+      end: endOfMonth(subMonths(now, 2)),
     };
   }
 }

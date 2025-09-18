@@ -21,3 +21,10 @@ export type Option = {
   label: string;
   value: string;
 };
+
+export type DateRange =
+  | "this_week"
+  | "last_week"
+  | "this_month"
+  | "last_month"
+  | "last_last_month";

@@ -12,6 +12,10 @@ export const lessonSeriesIdSchema = z.object({
   id: z.string({ error: "Series ID is required." }),
 });
 
+export const lessonSeriesUpdateSchema = lessonSeriesCreateSchema.extend(
+  lessonSeriesIdSchema.shape,
+);
+
 export const lessonCreateSchema = z.object({
   lessonSeriesId: z.string({
     error: "Series ID is required",

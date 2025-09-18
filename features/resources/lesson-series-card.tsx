@@ -21,6 +21,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { LessonFormDialog } from "./lesson-form-dialog";
+import { LessonSeriesEditFormDialog } from "./lesson-series-edit-form-dialog";
 
 export function LessonSeriesCard({
   lessonSeries,
@@ -34,6 +35,7 @@ export function LessonSeriesCard({
         <CardDescription>{lessonSeries.description}</CardDescription>
       </CardHeader>
       <CardAction className="absolute top-1 right-1">
+        <LessonSeriesEditFormDialog lessonSeries={lessonSeries} />
         <LessonFormDialog lessonSeries={lessonSeries} />
       </CardAction>
       <CardContent className="px-4">

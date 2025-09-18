@@ -1,36 +1,118 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GCC Admin v2
 
-## Getting Started
+A modern church administration system built for Grace City Church to manage disciples, leaders, cell groups, and ministry activities.
 
-First, run the development server:
+## =� Tech Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+<div align="center">
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js&logoColor=white)
+![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=for-the-badge&logo=typescript&logoColor=white)
+![Prisma](https://img.shields.io/badge/Prisma-6-2D3748?style=for-the-badge&logo=prisma&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791?style=for-the-badge&logo=postgresql&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Clerk](https://img.shields.io/badge/Clerk-Auth-7C3AED?style=for-the-badge&logo=clerk&logoColor=white)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+</div>
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Core Technologies
+- **Frontend**: Next.js 15 (App Router), React 19, TypeScript
+- **Database**: PostgreSQL with Prisma ORM
+- **Authentication**: Clerk
+- **Styling**: TailwindCSS with Radix UI components
+- **State Management**: TanStack Query
+- **Form Handling**: React Hook Form with Zod validation
+- **UI Components**: Radix UI primitives, Lucide React icons
 
-## Learn More
+### Development Tools
+- **Code Quality**: Biome (formatting & linting)
+- **Build**: Next.js
+- **Runtime**: Node.js with TypeScript
 
-To learn more about Next.js, take a look at the following resources:
+## ( Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### =e **Disciple Management**
+- Comprehensive disciple profiles with personal information
+- Track church status (NACS, ACS, Regular) and cell status
+- Monitor process levels and spiritual growth
+- Import disciples via Excel files
+- Advanced filtering and search capabilities
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### = **Leader Management**
+- Primary leader profiles and hierarchies
+- Leader-disciple relationships tracking
+- Performance and ministry oversight tools
 
-## Deploy on Vercel
+### =� **Cell Group Reporting**
+- Digital cell group attendance tracking
+- Real-time cell report creation and management
+- Attendance history and analytics
+- Member engagement metrics
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### =� **Lesson Management**
+- Lesson series organization and tracking
+- Individual lesson content management
+- Progress tracking for disciples
+- Educational resource organization
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### <� **Dashboard & Analytics**
+- Ministry overview and key metrics
+- Visual charts and progress indicators
+- Administrative insights and reports
+
+### = **Authentication & Authorization**
+- Secure login with Clerk integration
+- Role-based access control (Admin/User)
+- Protected routes and API endpoints
+
+### =� **Data Management**
+- Excel import/export functionality
+- Data pagination and efficient queries
+- Real-time updates with optimistic UI
+- Robust error handling and validation
+
+## =� Getting Started
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd gccadmin-v2
+   ```
+
+2. **Install dependencies**
+   ```bash
+   pnpm install
+   ```
+
+3. **Set up environment variables**
+   ```bash
+   cp .env.example .env.local
+   # Configure your DATABASE_URL and Clerk keys
+   ```
+
+4. **Run database migrations**
+   ```bash
+   pnpm prisma migrate deploy
+   ```
+
+5. **Start the development server**
+   ```bash
+   pnpm dev
+   ```
+
+Visit [http://localhost:3008](http://localhost:3008) to see the application.
+
+## =� Available Scripts
+
+- `pnpm dev` - Start development server on port 3008
+- `pnpm build` - Build for production
+- `pnpm start` - Start production server
+- `pnpm lint` - Run Biome linting
+- `pnpm format` - Format code with Biome
+
+---
+
+*Built for Grace City Church*
+
+Made by [Jeff Segovia](https://jeffsegovia.dev).

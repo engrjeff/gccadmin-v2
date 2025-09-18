@@ -38,6 +38,10 @@ export const lessonIdSchema = z.object({
   id: z.string({ error: "Lesson ID is required." }),
 });
 
+export const lessonUpdateSchema = lessonCreateSchema.extend(
+  lessonIdSchema.shape,
+);
+
 export type LessonCreateInputs = z.infer<typeof lessonCreateSchema>;
 
 export type LessonSeriesCreateInputs = z.infer<typeof lessonSeriesCreateSchema>;

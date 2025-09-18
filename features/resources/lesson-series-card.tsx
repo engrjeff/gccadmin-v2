@@ -1,4 +1,3 @@
-import { DownloadIcon } from "lucide-react";
 import pluralize from "pluralize";
 import type { Lesson, LessonSeries } from "@/app/generated/prisma";
 import { Badge } from "@/components/ui/badge";
@@ -20,6 +19,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { LessonCard } from "./lesson-card";
 import { LessonFormDialog } from "./lesson-form-dialog";
 import { LessonSeriesEditFormDialog } from "./lesson-series-edit-form-dialog";
 
@@ -72,42 +72,7 @@ export function LessonSeriesCard({
             <ul className="p-4 space-y-3 max-h-[calc(100%-88px)] overflow-y-auto">
               {lessonSeries.lessons.map((lesson) => (
                 <li key={lesson.id}>
-                  <div className="bg-card/60 border rounded-md p-3 flex items-center gap-2">
-                    <div className="space-y-0.5">
-                      <p className="text-sm font-semibold">{lesson.title}</p>
-                      <p className="text-xs text-muted-foreground line-clamp-1">
-                        {lesson.description}
-                      </p>
-                      {lesson.scriptureReferences.length === 0 ? null : (
-                        <div className="flex items-center gap-1.5 flex-wrap">
-                          {lesson.scriptureReferences.slice(0, 4).map((sc) => (
-                            <Badge
-                              key={`${lesson.id}-scriptureref-${sc}`}
-                              variant="MALE"
-                            >
-                              {sc}
-                            </Badge>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-
-                    {lesson.fileUrl ? (
-                      <div className="ml-auto">
-                        <Button size="iconSm" variant="ghost" asChild>
-                          <a
-                            href={lesson.fileUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            download={lesson.title}
-                          >
-                            <DownloadIcon />{" "}
-                            <span className="sr-only">Download</span>
-                          </a>
-                        </Button>
-                      </div>
-                    ) : null}
-                  </div>
+                  <LessonCard lesson={lesson} />
                 </li>
               ))}
             </ul>

@@ -7,6 +7,7 @@ import {
   lessonCreateSchema,
   lessonSeriesCreateSchema,
   lessonSeriesUpdateSchema,
+  lessonUpdateSchema,
 } from "./schema";
 
 export const createLessonSeries = authActionClient
@@ -61,6 +62,29 @@ export const createLesson = authActionClient
         scriptureReferences: parsedInput.scriptureReferences,
         fileUrl: parsedInput.fileUrl,
         lessonSeriesId: parsedInput.lessonSeriesId,
+      },
+    });
+
+    revalidatePath("/resources");
+
+    return {
+      lesson,
+    };
+  });
+
+export const updateLesson = authActionClient
+  .metadata({ actionName: "updateLesson" })
+  .inputSchema(lessonUpdateSchema)
+  .action(async ({ parsedInput }) => {
+    const lesson = await prisma.lesson.update({
+      where: {
+        id: parsedInput.id,
+      },
+      data: {
+        title: parsedInput.title,
+        description: parsedInput.description,
+        scriptureReferences: parsedInput.scriptureReferences,
+        fileUrl: parsedInput.fileUrl,
       },
     });
 

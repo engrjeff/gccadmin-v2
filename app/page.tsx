@@ -29,7 +29,7 @@ export default function Home() {
               <Link href="/dashboard">Go to Dashboard</Link>
             </Button>
             <Button asChild variant="secondary" className="border">
-              <Link href="/cell-reports/new">Create Cell Report</Link>
+              <Link href="/cell-reports">Cell Reports</Link>
             </Button>
           </SignedIn>
           <SignedOut>

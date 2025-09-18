@@ -31,10 +31,10 @@ export function MemberStatisticsByType() {
                 </span>
               </span>
             </p>
-            <div className="mt-2 flex w-full items-center [&>*]:h-1.5">
-              <div className="relative flex h-2 w-full items-center rounded-full bg-blue-100 dark:bg-blue-500/30">
+            <div className="mt-2 flex w-full items-center [&>*]:h-2">
+              <div className="relative flex w-full items-center bg-blue-100 dark:bg-blue-500/30">
                 <div
-                  className="h-full flex-col rounded-full bg-blue-600 dark:bg-blue-500"
+                  className="h-full flex-col bg-blue-600 dark:bg-blue-500"
                   style={{
                     width: `${(member._count.memberType / total) * 100}%`,
                   }}

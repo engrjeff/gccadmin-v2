@@ -41,7 +41,7 @@ export function CellGroupWithAssistants({
           <div>
             <div className="flex items-center gap-2">
               <span
-                className="size-2.5 shrink-0 rounded-sm bg-blue-500 dark:bg-blue-500"
+                className="size-2.5 shrink-0 bg-blue-500 dark:bg-blue-500"
                 aria-hidden="true"
               ></span>
               <span className="text-sm">With Assistant</span>
@@ -53,7 +53,7 @@ export function CellGroupWithAssistants({
           <div>
             <div className="flex items-center gap-2">
               <span
-                className="size-2.5 shrink-0 rounded-sm bg-gray-500 dark:bg-gray-500"
+                className="size-2.5 shrink-0 bg-gray-500 dark:bg-gray-500"
                 aria-hidden="true"
               ></span>
               <span className="text-sm text-gray-900 dark:text-gray-50">

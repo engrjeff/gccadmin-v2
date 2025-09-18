@@ -54,22 +54,22 @@ export function CellGroupByType({
           Cell {pluralize("Group", cellReports.length)} {dateRangeLabel}
         </span>
       </div>
-      <div className="flex w-full items-center rounded-full bg-muted/30 [&>*]:h-1.5">
+      <div className="flex w-full items-center rounded-full gap-1 bg-muted/30 [&>*]:h-2">
         <div
-          className="h-full rounded-full bg-blue-500"
+          className="h-full bg-blue-500"
           style={{
             width: `${calcPercent(count.discipleshipCell)}%`,
           }}
         ></div>
         <div
-          className="h-full rounded-full bg-rose-500"
+          className="h-full bg-rose-500"
           style={{
             width: `${calcPercent(count.openCell)}%`,
           }}
         ></div>
 
         <div
-          className="h-full rounded-full bg-yellow-500"
+          className="h-full bg-yellow-500"
           style={{
             width: `${calcPercent(count.soulwinning)}%`,
           }}
@@ -81,10 +81,7 @@ export function CellGroupByType({
             {calcPercent(count.discipleshipCell).toFixed(1)}%
           </span>
           <div className="flex items-center gap-2">
-            <span
-              className="size-2.5 rounded-sm bg-blue-500"
-              aria-hidden="true"
-            ></span>
+            <span className="size-2.5 bg-blue-500" aria-hidden="true"></span>
             <span className="text-gray-900 dark:text-gray-50">
               Discipleship ({count.discipleshipCell})
             </span>
@@ -95,10 +92,7 @@ export function CellGroupByType({
             {calcPercent(count.openCell).toFixed(1)}%
           </span>
           <div className="flex items-center gap-2">
-            <span
-              className="size-2.5 rounded-sm bg-rose-500"
-              aria-hidden="true"
-            ></span>
+            <span className="size-2.5 bg-rose-500" aria-hidden="true"></span>
             <span className="text-gray-900 dark:text-gray-50">
               Open ({count.openCell})
             </span>
@@ -109,10 +103,7 @@ export function CellGroupByType({
             {calcPercent(count.soulwinning).toFixed(1)}%
           </span>
           <div className="flex items-center gap-2">
-            <span
-              className="size-2.5 rounded-sm bg-yellow-500"
-              aria-hidden="true"
-            ></span>
+            <span className="size-2.5 bg-yellow-500" aria-hidden="true"></span>
             <span className="text-gray-900 dark:text-gray-50">
               Soul Winning ({count.soulwinning})
             </span>

@@ -33,6 +33,8 @@ function getDateRangeLabel(dateRange: DateRange) {
       return "this week";
     case "last_week":
       return "last week";
+    case "this_month":
+      return "this month";
     case "last_month":
       return "last month";
     default:

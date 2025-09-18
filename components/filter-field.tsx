@@ -1,6 +1,6 @@
 "use client";
 
-import { FilterIcon, Loader2Icon, XIcon } from "lucide-react";
+import { FilterIcon, Loader2Icon, type LucideIcon, XIcon } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useCallback, useMemo, useState, useTransition } from "react";
 
@@ -23,6 +23,8 @@ interface FilterFieldProps {
   options: FilterOption[];
   queryName: string;
   className?: string;
+  singleSection?: boolean;
+  Icon?: LucideIcon;
 }
 
 function FilterFieldComponent({
@@ -30,6 +32,8 @@ function FilterFieldComponent({
   options,
   queryName,
   className,
+  singleSection,
+  Icon = FilterIcon,
 }: FilterFieldProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -77,14 +81,14 @@ function FilterFieldComponent({
       let newValues: string[];
 
       if (checked) {
-        newValues = [...tempSelectedValues, value];
+        newValues = singleSection ? [value] : [...tempSelectedValues, value];
       } else {
         newValues = tempSelectedValues.filter((v) => v !== value);
       }
 
       setTempSelectedValues(newValues);
     },
-    [tempSelectedValues],
+    [tempSelectedValues, singleSection],
   );
 
   const handleApply = useCallback(() => {
@@ -116,7 +120,7 @@ function FilterFieldComponent({
             className,
           )}
         >
-          <FilterIcon className="size-4" />
+          <Icon className="size-4" />
           {label}
           {isPending ? (
             <Loader2Icon className="size-4 animate-spin text-muted-foreground" />
@@ -188,17 +192,17 @@ function FilterFieldComponent({
   );
 }
 
-export function FilterField(props: FilterFieldProps) {
+export function FilterField({ Icon = FilterIcon, ...props }: FilterFieldProps) {
   return (
     <Suspense
       fallback={
         <Button variant="outline" className="border-dashed h-7" disabled>
-          <FilterIcon className="size-4" />
+          <Icon className="size-4" />
           {props.label}
         </Button>
       }
     >
-      <FilterFieldComponent {...props} />
+      <FilterFieldComponent {...props} Icon={Icon} />
     </Suspense>
   );
 }

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Header } from "@/components/header";
+import { RequestAccessForm } from "@/features/accounts/request-access-form";
 import { app } from "@/lib/config";
 
 export default function UnauthorizedPage() {
@@ -18,6 +19,7 @@ export default function UnauthorizedPage() {
         <p className="text-lg text-muted-foreground">
           Your account has no rights to access that page.
         </p>
+        <RequestAccessForm />
       </main>
     </>
   );

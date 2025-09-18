@@ -9,6 +9,8 @@ const isPublicRoute = createRouteMatcher([
   "/unauthorized",
 ]);
 
+const isAdminRoute = createRouteMatcher(["/leaders/(.*)"]);
+
 export default clerkMiddleware(async (auth, req) => {
   const session = await auth();
 
@@ -24,7 +26,7 @@ export default clerkMiddleware(async (auth, req) => {
 
     const nonAdmin = session.sessionClaims?.metadata?.role !== "admin";
 
-    if (nonAdmin && req.nextUrl.pathname.includes("/leaders")) {
+    if (nonAdmin && isAdminRoute(req)) {
       const url = new URL("/dashboard", req.nextUrl);
       return NextResponse.redirect(url);
     }

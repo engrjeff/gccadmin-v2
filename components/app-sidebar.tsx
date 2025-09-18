@@ -1,9 +1,11 @@
 "use client";
 
 import {
+  BookOpenIcon,
   GalleryVerticalEnd,
   Grid2X2Icon,
   NotebookIcon,
+  ShieldCheckIcon,
   ShieldIcon,
   UsersIcon,
 } from "lucide-react";
@@ -23,6 +25,7 @@ import {
 } from "@/components/ui/sidebar";
 import { app } from "@/lib/config";
 import { NavAdmin } from "./nav-admin";
+import { NavProcess } from "./nav-process";
 
 // This is sample data.
 const data = {
@@ -75,6 +78,18 @@ const data = {
       // ],
     },
   ],
+  navProcess: [
+    {
+      name: "Resources",
+      url: "/resources",
+      icon: BookOpenIcon,
+    },
+    {
+      name: "Leadership",
+      url: "/leadership",
+      icon: ShieldCheckIcon,
+    },
+  ],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -107,6 +122,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <NavCellGroup menuItems={data.navCellGroup} />
         <NavAdmin menuItems={data.navAdmin} />
+        <NavProcess menuItems={data.navProcess} />
       </SidebarContent>
       <SidebarFooter>
         <p className="text-xs text-muted-foreground">

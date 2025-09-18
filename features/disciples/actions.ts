@@ -28,6 +28,8 @@ export const createDisciple = leaderActionClient
         memberType: parsedInput.memberType,
         processLevel: parsedInput.processLevel,
         processLevelStatus: parsedInput.processLevelStatus,
+        isMyPrimary: parsedInput.isMyPrimary,
+        handledById: parsedInput.handledById,
         leaderId,
       },
     });

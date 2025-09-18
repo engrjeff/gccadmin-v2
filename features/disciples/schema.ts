@@ -24,6 +24,7 @@ export const discipleCreateSchema = z.object({
   }),
   handledById: z.string().optional(),
   leaderId: z.string().optional(), // for admin
+  isMyPrimary: z.boolean().optional(),
 });
 
 export const importDisciplesSchema = z.object({

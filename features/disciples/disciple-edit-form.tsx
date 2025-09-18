@@ -9,11 +9,18 @@ import {
   useForm,
 } from "react-hook-form";
 import { toast } from "sonner";
-import { type Disciple, Gender, MemberType } from "@/app/generated/prisma";
+import {
+  type Disciple,
+  Gender,
+  MemberType,
+  ProcessLevel,
+  ProcessLevelStatus,
+} from "@/app/generated/prisma";
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -24,6 +31,8 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { SelectNative } from "@/components/ui/select-native";
 import { Separator } from "@/components/ui/separator";
 import { SubmitButton } from "@/components/ui/submit-button";
+import { Switch } from "@/components/ui/switch";
+import { useDisciples } from "@/hooks/use-disciples";
 import { useIsAdmin } from "@/hooks/use-is-admin";
 import { useLeaders } from "@/hooks/use-leaders";
 import {
@@ -58,9 +67,18 @@ export function DiscipleEditForm({
       memberType: disciple.memberType,
       processLevel: disciple.processLevel,
       processLevelStatus: disciple.processLevelStatus,
+      isMyPrimary: disciple.isPrimary ? true : disciple.isMyPrimary,
     },
     resolver: zodResolver(discipleCreateSchema),
   });
+
+  const leaderId = form.watch("leaderId");
+
+  const disciples = useDisciples({ leaderId });
+
+  const handledByOptions = disciples.data
+    ?.filter((d) => d.isMyPrimary && d.id !== disciple.id)
+    .map((d) => ({ label: d.name, value: d.id }));
 
   const updateAction = useAction(updateDisciple, {
     onError: ({ error }) => {
@@ -314,7 +332,22 @@ export function DiscipleEditForm({
                   <FormItem>
                     <FormLabel>Process Level</FormLabel>
                     <FormControl>
-                      <SelectNative {...field} className="capitalize">
+                      <SelectNative
+                        {...field}
+                        className="capitalize"
+                        onChange={(e) => {
+                          const value = e.currentTarget.value;
+
+                          if (value === ProcessLevel.NONE) {
+                            form.setValue(
+                              "processLevelStatus",
+                              ProcessLevelStatus.NOT_STARTED,
+                            );
+                          }
+
+                          field.onChange(e);
+                        }}
+                      >
                         <option value="">Process Level</option>
                         {processLevels.map((option) => (
                           <option key={option.value} value={option.value}>
@@ -334,7 +367,14 @@ export function DiscipleEditForm({
                   <FormItem>
                     <FormLabel>Process Status</FormLabel>
                     <FormControl>
-                      <SelectNative {...field} className="capitalize">
+                      <SelectNative
+                        key={form.watch("processLevel")}
+                        disabled={
+                          form.watch("processLevel") === ProcessLevel.NONE
+                        }
+                        className="capitalize"
+                        {...field}
+                      >
                         <option value="">Process Status</option>
                         {processLevelStatuses.map((option) => (
                           <option key={option.value} value={option.value}>
@@ -348,6 +388,59 @@ export function DiscipleEditForm({
                 )}
               />
             </div>
+
+            <FormField
+              control={form.control}
+              name="handledById"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Handled By</FormLabel>
+                  <FormControl>
+                    <SelectNative
+                      disabled={handledByOptions?.length === 0}
+                      {...field}
+                      className="capitalize"
+                    >
+                      <option value="">
+                        {handledByOptions?.length === 0
+                          ? "No qualified option"
+                          : "Select Handled by"}
+                      </option>
+                      {handledByOptions?.map((disciple) => (
+                        <option key={disciple.value} value={disciple.value}>
+                          {disciple.label}
+                        </option>
+                      ))}
+                    </SelectNative>
+                  </FormControl>
+                  <FormDescription>Who handles this disciple?</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {disciple.isPrimary ? null : (
+              <FormField
+                control={form.control}
+                name="isMyPrimary"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row bg-transparent dark:bg-input/30 items-center justify-between rounded-lg border p-3 shadow-sm">
+                    <div className="space-y-0.5">
+                      <FormLabel>Is Primary?</FormLabel>
+                      <FormDescription>
+                        Is this disciple your primary disciple?
+                      </FormDescription>
+                    </div>
+                    <FormControl>
+                      <Switch
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            )}
           </fieldset>
         </div>
 

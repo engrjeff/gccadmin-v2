@@ -21,6 +21,7 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -31,6 +32,8 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { SelectNative } from "@/components/ui/select-native";
 import { Separator } from "@/components/ui/separator";
 import { SubmitButton } from "@/components/ui/submit-button";
+import { Switch } from "@/components/ui/switch";
+import { useDisciples } from "@/hooks/use-disciples";
 import { useIsAdmin } from "@/hooks/use-is-admin";
 import { useLeaders } from "@/hooks/use-leaders";
 import {
@@ -52,6 +55,7 @@ const defaultValues: Partial<DiscipleCreateInputs> = {
   memberType: MemberType.KIDS,
   processLevel: ProcessLevel.NONE,
   processLevelStatus: ProcessLevelStatus.NOT_STARTED,
+  isMyPrimary: false,
 };
 
 export function DiscipleForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
@@ -63,6 +67,14 @@ export function DiscipleForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
     defaultValues,
     resolver: zodResolver(discipleCreateSchema),
   });
+
+  const leaderId = form.watch("leaderId");
+
+  const disciples = useDisciples({ leaderId });
+
+  const handledByOptions = disciples.data
+    ?.filter((d) => d.isMyPrimary)
+    .map((d) => ({ label: d.name, value: d.id }));
 
   const createAction = useAction(createDisciple, {
     onError: ({ error }) => {
@@ -205,6 +217,7 @@ export function DiscipleForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
                 )}
               />
             </div>
+
             <Separator />
             <p className="text-sm text-foreground">
               Church-related Information
@@ -265,6 +278,7 @@ export function DiscipleForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
                 )}
               />
             ) : null}
+
             <div className="grid grid-cols-2 gap-4">
               <FormField
                 control={form.control}
@@ -313,7 +327,22 @@ export function DiscipleForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
                   <FormItem>
                     <FormLabel>Process Level</FormLabel>
                     <FormControl>
-                      <SelectNative {...field} className="capitalize">
+                      <SelectNative
+                        {...field}
+                        className="capitalize"
+                        onChange={(e) => {
+                          const value = e.currentTarget.value;
+
+                          if (value === ProcessLevel.NONE) {
+                            form.setValue(
+                              "processLevelStatus",
+                              ProcessLevelStatus.NOT_STARTED,
+                            );
+                          }
+
+                          field.onChange(e);
+                        }}
+                      >
                         <option value="">Process Level</option>
                         {processLevels.map((option) => (
                           <option key={option.value} value={option.value}>
@@ -333,7 +362,14 @@ export function DiscipleForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
                   <FormItem>
                     <FormLabel>Process Status</FormLabel>
                     <FormControl>
-                      <SelectNative {...field} className="capitalize">
+                      <SelectNative
+                        key={form.watch("processLevel")}
+                        disabled={
+                          form.watch("processLevel") === ProcessLevel.NONE
+                        }
+                        className="capitalize"
+                        {...field}
+                      >
                         <option value="">Process Status</option>
                         {processLevelStatuses.map((option) => (
                           <option key={option.value} value={option.value}>
@@ -347,6 +383,57 @@ export function DiscipleForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
                 )}
               />
             </div>
+
+            <FormField
+              control={form.control}
+              name="handledById"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Handled By</FormLabel>
+                  <FormControl>
+                    <SelectNative
+                      disabled={handledByOptions?.length === 0}
+                      {...field}
+                      className="capitalize"
+                    >
+                      <option value="">
+                        {handledByOptions?.length === 0
+                          ? "No qualified option"
+                          : "Select Handled by"}
+                      </option>
+                      {handledByOptions?.map((disciple) => (
+                        <option key={disciple.value} value={disciple.value}>
+                          {disciple.label}
+                        </option>
+                      ))}
+                    </SelectNative>
+                  </FormControl>
+                  <FormDescription>Who handles this disciple?</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="isMyPrimary"
+              render={({ field }) => (
+                <FormItem className="flex flex-row bg-transparent dark:bg-input/30 items-center justify-between rounded-lg border p-3 shadow-sm">
+                  <div className="space-y-0.5">
+                    <FormLabel>Is Primary?</FormLabel>
+                    <FormDescription>
+                      Is this disciple your primary disciple?
+                    </FormDescription>
+                  </div>
+                  <FormControl>
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
           </fieldset>
         </div>
 

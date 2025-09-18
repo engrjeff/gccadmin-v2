@@ -8,7 +8,12 @@ import { removeUnderscores } from "@/lib/utils";
 export function MemberStatisticsByCellStatus() {
   const members = useMemberStatistics<"cellStatus", CellStatus>("cellStatus");
 
-  if (members.isLoading) return <Skeleton className="h-[230px]" />;
+  if (members.isLoading)
+    return (
+      <div className="p-4">
+        <Skeleton className="h-[230px]" />
+      </div>
+    );
 
   const total =
     members.data?.reduce((total, a) => total + a._count.cellStatus, 0) ?? 100;

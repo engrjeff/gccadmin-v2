@@ -31,7 +31,7 @@ export default function DashboardPage() {
           <CardDescription>As of today</CardDescription>
         </CardHeader>
         <CardContent className="px-0">
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3 [&>div]:p-4">
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3 [&>div]:p-4">
             <MemberStatisticsByType />
             <MemberStatisticsByCellStatus />
             <MemberStatisticsByChurchStatus />

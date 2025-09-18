@@ -3,6 +3,7 @@
 import { useUser } from "@clerk/nextjs";
 import { type LucideIcon, MoreHorizontal } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,6 +32,8 @@ export function NavAdmin({
 }) {
   const { isMobile } = useSidebar();
 
+  const pathname = usePathname();
+
   const { user, isLoaded } = useUser();
 
   if (!isLoaded) return null;
@@ -43,7 +46,7 @@ export function NavAdmin({
       <SidebarMenu>
         {menuItems.map((item) => (
           <SidebarMenuItem key={item.name}>
-            <SidebarMenuButton asChild>
+            <SidebarMenuButton asChild isActive={pathname.startsWith(item.url)}>
               <Link href={item.url}>
                 <item.icon />
                 <span>{item.name}</span>

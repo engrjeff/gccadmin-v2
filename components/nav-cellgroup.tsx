@@ -2,6 +2,7 @@
 
 import { type LucideIcon, MoreHorizontal } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -30,13 +31,15 @@ export function NavCellGroup({
 }) {
   const { isMobile } = useSidebar();
 
+  const pathname = usePathname();
+
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarGroupLabel>Cell Group</SidebarGroupLabel>
       <SidebarMenu>
         {menuItems.map((item) => (
           <SidebarMenuItem key={item.name}>
-            <SidebarMenuButton asChild>
+            <SidebarMenuButton asChild isActive={pathname.startsWith(item.url)}>
               <Link href={item.url}>
                 <item.icon />
                 <span>{item.name}</span>

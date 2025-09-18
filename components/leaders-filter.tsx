@@ -1,0 +1,30 @@
+"use client";
+
+import { ShieldIcon } from "lucide-react";
+import { useIsAdmin } from "@/hooks/use-is-admin";
+import { useLeaders } from "@/hooks/use-leaders";
+import { FilterField } from "./filter-field";
+
+export function LeadersFilter() {
+  const isAdmin = useIsAdmin();
+
+  const leadersQuery = useLeaders({ enabled: isAdmin });
+
+  if (!isAdmin) return null;
+
+  return (
+    <FilterField
+      label="Leader"
+      queryName="leader"
+      singleSection
+      Icon={ShieldIcon}
+      useLabelDisplay
+      options={
+        leadersQuery.data?.map((leader) => ({
+          value: leader.id,
+          label: leader.name,
+        })) ?? []
+      }
+    />
+  );
+}

@@ -22,3 +22,25 @@ export const formatDate = (dateString: string) => {
     day: "numeric",
   });
 };
+
+export const formatCellGroupDate = (date: Date) => {
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+};
+
+export const formatTime = (timeStr: string) => {
+  const parts = timeStr.split(":");
+  let hours = parseInt(parts[0], 10);
+  const minutes = parseInt(parts[1], 10);
+  const ampm = hours >= 12 ? "PM" : "AM";
+  hours = hours % 12;
+  hours = hours ? hours : 12;
+  const minutesStr = minutes.toString().padStart(2, "0");
+  const strTime = `${hours}:${minutesStr} ${ampm}`;
+  return strTime;
+};

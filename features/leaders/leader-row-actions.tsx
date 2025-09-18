@@ -32,13 +32,13 @@ export function LeaderRowActions({ leader }: { leader: Disciple }) {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href={`/disciples?leaderId=${leader.id}`}>
+          <Link href={`/disciples?leader=${leader.id}`}>
             <UsersIcon />
             <span>Disciples</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href={`/cell-reports?leaderId=${leader.id}`}>
+          <Link href={`/cell-reports?leader=${leader.id}`}>
             <BookIcon />
             <span>Cell Reports</span>
           </Link>

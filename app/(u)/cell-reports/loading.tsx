@@ -1,6 +1,6 @@
 import { Loader2Icon } from "lucide-react";
 
-function LeadersLoadingPage() {
+function CellReportsLoadingPage() {
   return (
     <div className="flex-1 h-full min-h-[70vh]">
       <div className="max-w-5xl mx-auto h-full flex flex-col items-center justify-center gap-4 p-4">
@@ -10,4 +10,4 @@ function LeadersLoadingPage() {
   );
 }
 
-export default LeadersLoadingPage;
+export default CellReportsLoadingPage;

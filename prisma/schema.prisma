@@ -163,7 +163,6 @@ model CellReport {
   type  CellType @default(OPEN)
   venue String
   date  DateTime
-  time  String
 
   lessonId        String?
   lesson          Lesson? @relation(fields: [lessonId], references: [id])
@@ -198,8 +197,10 @@ model CellReport {
 model CellReportAttendeeSnapshot {
   id String @id @default(cuid())
 
-  name   String
-  status CellStatus
+  name         String
+  status       CellStatus
+  churchStatus ChurchStatus
+  discipleId   String
 
   cellReportId String
   cellReport   CellReport @relation(fields: [cellReportId], references: [id], onDelete: Cascade)
@@ -208,6 +209,7 @@ model CellReportAttendeeSnapshot {
   updatedAt DateTime @updatedAt
 
   @@index([cellReportId])
+  @@index([discipleId])
 }
 
 model ProcessLessonSeries {

@@ -19,7 +19,7 @@ export type DisciplesQueryArgs = {
   churchStatus?: string;
   processLevel?: string;
   processLevelStatus?: string;
-  leaderId?: string;
+  leader?: string;
   q?: string;
   status?: "active" | "inactive" | "primary";
 };
@@ -96,15 +96,11 @@ export async function getDisciples(args: DisciplesQueryArgs) {
     ? (args.processLevel.split(",") as Array<ProcessLevel>)
     : undefined;
 
-  // const processLevelStatusFilter = args?.processLevelStatus
-  //   ? (args.processLevelStatus.split(",") as Array<ProcessLevelStatus>)
-  //   : undefined;
-
   const isActive = args?.status === undefined ? true : args.status === "active";
 
-  const totalFiltered = await prisma.disciple.count({
+  const totalFilteredQuery = prisma.disciple.count({
     where: {
-      leaderId: leader?.id,
+      leaderId: args.leader ? args.leader : leader?.id,
       isDeleted: false,
       isActive,
       name: args.q
@@ -125,15 +121,9 @@ export async function getDisciples(args: DisciplesQueryArgs) {
     },
   });
 
-  const pageInfo = {
-    total: totalFiltered,
-    page: args.page ? Number(args.page) : 1,
-    pageSize: DEFAULT_PAGE_SIZE,
-  };
-
-  const disciples = await prisma.disciple.findMany({
+  const disciplesQuery = prisma.disciple.findMany({
     where: {
-      leaderId: leader?.id,
+      leaderId: args.leader ? args.leader : leader?.id,
       isDeleted: false,
       isActive,
       name: args.q
@@ -173,6 +163,17 @@ export async function getDisciples(args: DisciplesQueryArgs) {
       },
     ],
   });
+
+  const [totalFiltered, disciples] = await Promise.all([
+    totalFilteredQuery,
+    disciplesQuery,
+  ]);
+
+  const pageInfo = {
+    total: totalFiltered,
+    page: args.page ? Number(args.page) : 1,
+    pageSize: DEFAULT_PAGE_SIZE,
+  };
 
   return {
     disciples,

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { DataPagination } from "@/components/data-pagination";
 import { FilterField } from "@/components/filter-field";
+import { LeadersFilter } from "@/components/leaders-filter";
 import { SearchField } from "@/components/ui/search-field";
 import { DiscipleCreateFormModal } from "@/features/disciples/disciple-create-form-modal";
 import { DisciplesTable } from "@/features/disciples/disciples-table";
@@ -10,6 +11,8 @@ import {
   getDisciples,
 } from "@/features/disciples/queries";
 import { cellStatuses, churchStatuses, processLevels } from "@/lib/constants";
+
+export const revalidate = 3600; // revalidate at most every hour
 
 export const metadata: Metadata = {
   title: "Disciples",
@@ -50,6 +53,7 @@ export default async function DisciplesPage({ searchParams }: PageProps) {
           options={processLevels}
           queryName="processLevel"
         />
+        <LeadersFilter />
       </div>
       <DisciplesTable isAdmin={isAdmin} disciples={disciples} />
       <DataPagination name="disciples" pageInfo={pageInfo} />

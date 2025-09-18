@@ -26,6 +26,7 @@ interface FilterFieldProps {
   className?: string;
   singleSection?: boolean;
   Icon?: LucideIcon;
+  useLabelDisplay?: boolean;
 }
 
 function FilterFieldComponent({
@@ -35,6 +36,7 @@ function FilterFieldComponent({
   className,
   singleSection,
   Icon = FilterIcon,
+  useLabelDisplay,
 }: FilterFieldProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -131,7 +133,9 @@ function FilterFieldComponent({
           {label}
           {hasActiveFilters && (
             <Badge variant="MALE">
-              {removeUnderscores(selectedValues.at(0) as string)}{" "}
+              {useLabelDisplay
+                ? options.find((o) => o.value === selectedValues.at(0))?.label
+                : removeUnderscores(selectedValues.at(0) as string)}{" "}
               <span className="normal-case">
                 {moreCount > 0 ? `+${moreCount} more` : ""}
               </span>
@@ -139,7 +143,10 @@ function FilterFieldComponent({
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-52 p-0 select-none" align="start">
+      <PopoverContent
+        className="min-w-52 max-w-60 p-0 select-none"
+        align="start"
+      >
         <div className="border-b px-3 py-2">
           <h4 className="text-sm font-medium">{label}</h4>
         </div>

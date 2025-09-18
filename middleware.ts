@@ -22,6 +22,13 @@ export default clerkMiddleware(async (auth, req) => {
       return NextResponse.redirect(url);
     }
 
+    const nonAdmin = session.sessionClaims?.metadata?.role !== "admin";
+
+    if (nonAdmin && req.nextUrl.pathname.includes("/leaders")) {
+      const url = new URL("/dashboard", req.nextUrl);
+      return NextResponse.redirect(url);
+    }
+
     return NextResponse.next();
   }
 

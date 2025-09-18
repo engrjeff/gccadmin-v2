@@ -11,7 +11,6 @@ import Image from "next/image";
 import Link from "next/link";
 import type * as React from "react";
 import { NavCellGroup } from "@/components/nav-cellgroup";
-import { NavUser } from "@/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -110,7 +109,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavAdmin menuItems={data.navAdmin} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <p className="text-xs text-muted-foreground">
+          Made with ♥️ by{" "}
+          <a
+            href="http://jeffsegovia.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold hover:underline hover:text-foreground"
+          >
+            Jeff Segovia
+          </a>
+        </p>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

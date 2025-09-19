@@ -107,10 +107,10 @@ export function CellGroupStatistics() {
       </CardHeader>
       <CardContent className="px-0">
         {cgStatsQuery.isLoading ? (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 h-[188px] p-4">
-            <Skeleton className="h-full" />
-            <Skeleton className="h-full" />
-            <Skeleton className="h-full" />
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 p-4">
+            <Skeleton className="h-[172px] lg:h-[188px]" />
+            <Skeleton className="h-[172px] lg:h-[188px]" />
+            <Skeleton className="h-[172px] lg:h-[188px]" />
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr_auto_1fr] gap-2">

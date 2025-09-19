@@ -18,49 +18,72 @@ const badgeVariants = cva(
         outline:
           "text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
 
-        MALE: "bg-muted/50 border-none text-blue-400 capitalize",
+        MALE: "bg-accent dark:bg-muted/50 border-none text-blue-400 capitalize",
 
-        FEMALE: "bg-muted/50 border-none text-rose-400 capitalize",
+        FEMALE:
+          "bg-accent dark:bg-muted/50 border-none text-rose-400 capitalize",
 
         FILTER:
           "bg-emerald-400/10 border-emerald-400/20 text-emerald-400 capitalize",
 
-        FIRST_TIMER: "bg-muted/50 border-none text-emerald-400 capitalize",
-        SECOND_TIMER: "bg-muted/50 border-none text-amber-400 capitalize",
-        THIRD_TIMER: "bg-muted/50 border-none text-orange-400 capitalize",
-        REGULAR: "bg-muted/50 border-none text-violet-500 capitalize",
+        FIRST_TIMER:
+          "bg-accent dark:bg-muted/50 border-none text-emerald-400 capitalize",
+        SECOND_TIMER:
+          "bg-accent dark:bg-muted/50 border-none text-amber-400 capitalize",
+        THIRD_TIMER:
+          "bg-accent dark:bg-muted/50 border-none text-orange-400 capitalize",
+        REGULAR:
+          "bg-accent dark:bg-muted/50 border-none text-violet-500 capitalize",
 
-        NACS: "bg-muted/50 border-none text-gray-400 capitalize",
-        ACS: "bg-muted/50 border-none text-amber-400 capitalize",
+        NACS: "bg-accent dark:bg-muted/50 border-none text-gray-400 capitalize",
+        ACS: "bg-accent dark:bg-muted/50 border-none text-amber-400 capitalize",
 
-        NONE: "bg-muted/50 border-none text-gray-400 capitalize",
-        PREENC: "bg-muted/50 border-none text-blue-400 capitalize",
-        ENCOUNTER: "bg-muted/50 border-none text-emerald-400 capitalize",
-        LEADERSHIP_1: "bg-muted/50 border-none text-amber-400 capitalize",
-        LEADERSHIP_2: "bg-muted/50 border-none text-orange-400 capitalize",
-        LEADERSHIP_3: "bg-muted/50 border-none text-violet-500 capitalize",
+        NONE: "bg-accent dark:bg-muted/50 border-none text-gray-400 capitalize",
+        PREENC:
+          "bg-accent dark:bg-muted/50 border-none text-blue-400 capitalize",
+        ENCOUNTER:
+          "bg-accent dark:bg-muted/50 border-none text-emerald-400 capitalize",
+        LEADERSHIP_1:
+          "bg-accent dark:bg-muted/50 border-none text-amber-400 capitalize",
+        LEADERSHIP_2:
+          "bg-accent dark:bg-muted/50 border-none text-orange-400 capitalize",
+        LEADERSHIP_3:
+          "bg-accent dark:bg-muted/50 border-none text-violet-500 capitalize",
 
-        NOT_STARTED: "bg-muted/50 border-none text-gray-400 capitalize",
-        ON_GOING: "bg-muted/50 border-none text-emerald-400 capitalize",
+        NOT_STARTED:
+          "bg-accent dark:bg-muted/50 border-none text-gray-400 capitalize",
+        ON_GOING:
+          "bg-accent dark:bg-muted/50 border-none text-emerald-400 capitalize",
         PENDING_REQUIREMENTS:
-          "bg-muted/50 border-none text-amber-400 capitalize",
-        FINISHED: "bg-muted/50 border-none text-violet-500 capitalize",
-        UNFINISHED: "bg-muted/50 border-none text-rose-400 capitalize",
-        DROPPED: "bg-muted/50 border-none text-red-400 capitalize",
+          "bg-accent dark:bg-muted/50 border-none text-amber-400 capitalize",
+        FINISHED:
+          "bg-accent dark:bg-muted/50 border-none text-violet-500 capitalize",
+        UNFINISHED:
+          "bg-accent dark:bg-muted/50 border-none text-rose-400 capitalize",
+        DROPPED:
+          "bg-accent dark:bg-muted/50 border-none text-red-400 capitalize",
 
-        UNCATEGORIZED: "bg-muted/50 border-none text-gray-400 capitalize",
-        KIDS: "bg-muted/50 border-none text-emerald-400 capitalize",
-        MEN: "bg-muted/50 border-none text-blue-400 capitalize",
-        WOMEN: "bg-muted/50 border-none text-rose-400 capitalize",
-        YOUTH: "bg-muted/50 border-none text-amber-400 capitalize",
-        YOUNGPRO: "bg-muted/50 border-none text-orange-400 capitalize",
+        UNCATEGORIZED:
+          "bg-accent dark:bg-muted/50 border-none text-gray-400 capitalize",
+        KIDS: "bg-accent dark:bg-muted/50 border-none text-emerald-400 capitalize",
+        MEN: "bg-accent dark:bg-muted/50 border-none text-blue-400 capitalize",
+        WOMEN:
+          "bg-accent dark:bg-muted/50 border-none text-rose-400 capitalize",
+        YOUTH:
+          "bg-accent dark:bg-muted/50 border-none text-amber-400 capitalize",
+        YOUNGPRO:
+          "bg-accent dark:bg-muted/50 border-none text-orange-400 capitalize",
 
-        OPEN: "bg-muted/50 border-none text-emerald-400 capitalize",
-        SOULWINNING: "bg-muted/50 border-none text-amber-400 capitalize",
-        DISCIPLESHIP: "bg-muted/50 border-none text-blue-400 capitalize",
+        OPEN: "bg-accent dark:bg-muted/50 border-none text-emerald-400 capitalize",
+        SOULWINNING:
+          "bg-accent dark:bg-muted/50 border-none text-amber-400 capitalize",
+        DISCIPLESHIP:
+          "bg-accent dark:bg-muted/50 border-none text-blue-400 capitalize",
 
-        ACTIVE: "bg-muted/50 border-none text-emerald-400 capitalize",
-        INACTIVE: "bg-muted/50 border-none text-red-400 capitalize",
+        ACTIVE:
+          "bg-accent dark:bg-muted/50 border-none text-emerald-400 capitalize",
+        INACTIVE:
+          "bg-accent dark:bg-muted/50 border-none text-red-400 capitalize",
       },
     },
     defaultVariants: {

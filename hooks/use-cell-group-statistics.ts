@@ -1,12 +1,12 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import type { CellReport } from "@/app/generated/prisma";
+import type { CellReportRecord } from "@/features/cell-reports/queries";
 import { API_ENDPOINTS, apiClient } from "@/lib/api-client";
 import type { DateRange } from "@/types/globals";
 
 interface ReturnData {
-  cellReports: CellReport[];
+  cellReports: CellReportRecord[];
   dateRangeFilter: { start: string; end: string };
 }
 

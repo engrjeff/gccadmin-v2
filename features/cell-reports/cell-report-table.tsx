@@ -116,12 +116,9 @@ export function CellReportTable({
                     </div>
                   ) : (
                     <div>
-                      <Link
-                        href={`/lessons/${cellReport.lessonId}`}
-                        className="font-semibold hover:underline"
-                      >
+                      <p className="font-semibold hover:underline">
                         {cellReport.lesson?.title}
-                      </Link>
+                      </p>
                       <p className="text-xs text-muted-foreground">
                         {cellReport.lesson?.lessonSeries.title}
                       </p>

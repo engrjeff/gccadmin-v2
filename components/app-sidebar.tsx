@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/sidebar";
 import { app } from "@/lib/config";
 import { NavAdmin } from "./nav-admin";
+import { NavGCCLinks } from "./nav-gcc-links";
 import { NavProcess } from "./nav-process";
 
 // This is sample data.
@@ -123,6 +124,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavCellGroup menuItems={data.navCellGroup} />
         <NavAdmin menuItems={data.navAdmin} />
         <NavProcess menuItems={data.navProcess} />
+        <NavGCCLinks />
       </SidebarContent>
       <SidebarFooter>
         <p className="text-xs text-muted-foreground">

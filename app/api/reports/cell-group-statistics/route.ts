@@ -31,6 +31,11 @@ export async function GET(request: NextRequest) {
             name: true,
           },
         },
+        lesson: {
+          include: {
+            lessonSeries: true,
+          },
+        },
         cellReportAttendeeSnapshots: true,
       },
       orderBy: [

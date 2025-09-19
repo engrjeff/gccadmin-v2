@@ -85,16 +85,17 @@ export function DataPagination({ pageInfo, name }: DataPaginationProps) {
   };
 
   return (
-    <div className="flex items-center justify-between w-full">
+    <div className="flex flex-col md:flex-row gap-3 items-center md:justify-between w-full">
       <p className="text-sm text-muted-foreground shrink-0">
         Showing {(page - 1) * pageSize + 1} to{" "}
         {Math.min(page * pageSize, total)} of {total} {name}
       </p>
 
-      <Pagination className="justify-end">
+      <Pagination className="md:justify-end justify-center">
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious
+              size="sm"
               onClick={page > 1 ? () => navigateToPage(page - 1) : undefined}
               className={
                 page <= 1 ? "pointer-events-none opacity-50" : "cursor-pointer"
@@ -108,6 +109,7 @@ export function DataPagination({ pageInfo, name }: DataPaginationProps) {
                 <PaginationEllipsis />
               ) : (
                 <PaginationLink
+                  size="sm"
                   onClick={() => navigateToPage(pageNum)}
                   isActive={pageNum === page}
                   className="cursor-pointer"
@@ -120,6 +122,7 @@ export function DataPagination({ pageInfo, name }: DataPaginationProps) {
 
           <PaginationItem>
             <PaginationNext
+              size="sm"
               onClick={
                 page < totalPages ? () => navigateToPage(page + 1) : undefined
               }

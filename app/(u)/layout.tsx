@@ -13,10 +13,12 @@ function UserPagesLayout({ children }: { children: ReactNode }) {
         } as React.CSSProperties
       }
     >
-      <AppSidebar variant="inset" />
-      <SidebarInset>
+      <AppSidebar variant="sidebar" />
+      <SidebarInset className="overflow-hidden max-h-screen">
         <AppHeader />
-        <div className="container max-w-6xl mx-auto">{children}</div>
+        <div className="flex-1 max-h-[100%-48px] overflow-y-auto">
+          <div className="container max-w-6xl mx-auto h-full">{children}</div>
+        </div>
       </SidebarInset>
     </SidebarProvider>
   );

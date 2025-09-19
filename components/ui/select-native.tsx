@@ -8,7 +8,7 @@ const SelectNative = ({
   ...props
 }: ComponentProps<"select">) => {
   return (
-    <div className="relative flex flex-1">
+    <div className={cn("relative flex flex-1", className)}>
       <select
         data-slot="select-native"
         className={cn(

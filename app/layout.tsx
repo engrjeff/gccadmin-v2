@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { ClerkProvider } from "@/components/providers/clerk-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import "./globals.css";
+import NextTopLoader from "nextjs-toploader";
 import { QueryProvider } from "@/components/providers/query-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { app } from "@/lib/config";
@@ -36,6 +37,7 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} flex min-h-full flex-col antialiased`}
         >
+          <NextTopLoader color="#6d28d9" />
           <QueryProvider>
             <ThemeProvider
               attribute="class"

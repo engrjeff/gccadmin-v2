@@ -37,7 +37,7 @@ export function CellReportDetails({
       <div className="px-4 py-2 text-sm">
         <p className="font-semibold">Date</p>
         <p className="text-muted-foreground">
-          {formatCellGroupDate(cellReport.date)}
+          {formatCellGroupDate(new Date(cellReport.date.toString()))}
         </p>
       </div>
       <div className="px-4 py-2 text-sm">

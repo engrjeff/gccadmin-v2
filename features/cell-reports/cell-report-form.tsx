@@ -200,7 +200,7 @@ export function CellReportForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
               />
             ) : null}
 
-            <div className="grid grid-cols-[1fr_auto_auto] gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormField
                 control={form.control}
                 name="type"
@@ -209,7 +209,7 @@ export function CellReportForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
                     <FormLabel>Cell Type</FormLabel>
                     <FormControl>
                       <SelectNative
-                        className="normal-case"
+                        className="normal-case w-min md:w-full"
                         id="type"
                         {...field}
                       >

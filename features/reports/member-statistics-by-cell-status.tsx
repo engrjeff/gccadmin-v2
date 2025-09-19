@@ -10,7 +10,7 @@ export function MemberStatisticsByCellStatus() {
 
   if (members.isLoading)
     return (
-      <div className="p-4">
+      <div>
         <Skeleton className="h-[230px]" />
       </div>
     );

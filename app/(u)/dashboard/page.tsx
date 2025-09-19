@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 
 export default function DashboardPage() {
   return (
-    <div className="p-4 space-y-4">
+    <div className="p-4 space-y-4 h-full overflow-y-auto flex-1">
       <div>
         <h2 className="mb-1 text-lg font-bold tracking-tight">Dashboard</h2>
       </div>
@@ -31,7 +31,7 @@ export default function DashboardPage() {
           <CardDescription>As of today</CardDescription>
         </CardHeader>
         <CardContent className="px-0">
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3 [&>div]:p-4">
+          <div className="grid grid-cols-1 gap-2 md:grid-cols-2 xl:grid-cols-3 [&>div]:p-4">
             <MemberStatisticsByType />
             <MemberStatisticsByCellStatus />
             <MemberStatisticsByChurchStatus />

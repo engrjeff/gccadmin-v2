@@ -36,7 +36,7 @@ export default async function DisciplesPage({ searchParams }: PageProps) {
           <DiscipleCreateFormModal />
         </div>
       </div>
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 flex-wrap">
         <SearchField paramName="q" />
         <FilterField
           label="Cell Status"

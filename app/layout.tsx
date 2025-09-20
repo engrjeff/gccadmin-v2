@@ -24,6 +24,17 @@ export const metadata: Metadata = {
     default: app.title,
   },
   description: app.description,
+  openGraph: {
+    title: app.title,
+    images: [
+      {
+        url: app.ogImageUrl,
+        alt: app.title,
+        width: 1200,
+        height: 630,
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
@@ -37,7 +48,7 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} flex min-h-full flex-col antialiased`}
         >
-          <NextTopLoader color="#6d28d9" />
+          <NextTopLoader color={app.themeColor} />
           <QueryProvider>
             <ThemeProvider
               attribute="class"

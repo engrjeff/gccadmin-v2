@@ -1,10 +1,4 @@
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  SignUpButton,
-  UserButton,
-} from "@clerk/nextjs";
+import { SignedIn, SignedOut, SignUpButton, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -25,9 +19,6 @@ export function Header() {
       </Link>
       <div className="flex items-center gap-x-4">
         <SignedOut>
-          <SignInButton>
-            <Button variant="ghost">Sign in</Button>
-          </SignInButton>
           <SignUpButton>
             <Button>Sign up</Button>
           </SignUpButton>

@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRightIcon, CalendarIcon } from "lucide-react";
+import { ArrowRightIcon, CalendarIcon, PackageIcon } from "lucide-react";
 import Link from "next/link";
 import pluralize from "pluralize";
 import { Badge } from "@/components/ui/badge";
@@ -62,23 +62,25 @@ export function RecentCellGroups() {
             {formatDate(periodDate?.end as string)}
           </span>
         </CardDescription>
-        <CardAction>
-          <Button
-            size="sm"
-            variant="link"
-            asChild
-            className="text-blue-500 px-0 has-[>svg]:px-0"
-          >
-            <Link
-              href={{
-                pathname: "/cell-reports",
-                query: { dateRange: "this_week" },
-              }}
+        {cellGroups?.length === 0 ? null : (
+          <CardAction>
+            <Button
+              size="sm"
+              variant="link"
+              asChild
+              className="text-blue-500 px-0 has-[>svg]:px-0"
             >
-              View All <ArrowRightIcon />
-            </Link>
-          </Button>
-        </CardAction>
+              <Link
+                href={{
+                  pathname: "/cell-reports",
+                  query: { dateRange: "this_week" },
+                }}
+              >
+                View All <ArrowRightIcon />
+              </Link>
+            </Button>
+          </CardAction>
+        )}
       </CardHeader>
 
       <CardContent className="px-4">
@@ -93,76 +95,92 @@ export function RecentCellGroups() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {cellGroups?.slice(0, 6)?.map((cellgroup) => (
-              <TableRow key={cellgroup.id} className="hover:bg-card">
-                <TableCell>
-                  {cellgroup.assistant ? (
-                    <div>
-                      <Link
-                        href={`/disciples/${cellgroup.assistantId}`}
-                        className="font-semibold hover:underline"
-                      >
-                        {cellgroup.assistant.name}
-                      </Link>
-                      <p className="text-xs text-muted-foreground capitalize">
-                        Assistant Leader
-                      </p>
-                    </div>
-                  ) : (
-                    <div>
-                      <Link
-                        href={`/disciples/${cellgroup.leaderId}`}
-                        className="font-semibold hover:underline"
-                      >
-                        {cellgroup.leader.name}
-                      </Link>
-                      <p className="text-xs text-muted-foreground capitalize">
-                        Primary Leader
-                      </p>
-                    </div>
-                  )}
-                </TableCell>
-                <TableCell>
-                  <Badge variant={cellgroup.type}>
-                    {removeUnderscores(cellgroup.type)}
-                  </Badge>
-                </TableCell>
-                <TableCell className="whitespace-nowrap">
-                  <p className="text-sm line-clamp-1">{cellgroup.venue}</p>
-                  <p className="text-xs text-muted-foreground">
-                    {formatCellGroupDate(new Date(cellgroup.date))}
-                  </p>
-                </TableCell>
-                <TableCell className="whitespace-nowrap">
-                  {cellgroup.lessonTitle ? (
-                    <div>
-                      <p className="font-semibold">{cellgroup.lessonTitle}</p>
-                      <p className="text-xs text-muted-foreground">
-                        Custom Lesson
-                      </p>
-                    </div>
-                  ) : (
-                    <div>
-                      <p className="font-semibold hover:underline">
-                        {cellgroup.lesson?.title}
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        {cellgroup.lesson?.lessonSeries.title}
-                      </p>
-                    </div>
-                  )}
-                </TableCell>
-                <TableCell>
-                  <Badge variant="DISCIPLESHIP">
-                    {cellgroup.cellReportAttendeeSnapshots.length}{" "}
-                    {pluralize(
-                      "attendee",
-                      cellgroup.cellReportAttendeeSnapshots.length,
-                    )}
-                  </Badge>
+            {cellGroups?.length === 0 ? (
+              <TableRow className="hover:bg-transparent">
+                <TableCell colSpan={5}>
+                  <div className="min-h-[300px] flex flex-col items-center justify-center gap-3">
+                    <PackageIcon className="size-6 text-muted-foreground" />
+                    <p className="text-sm text-muted-foreground text-center">
+                      No recent cell reports yet.
+                    </p>
+                    <Button asChild>
+                      <Link href="/cell-reports">Go to Cell Reports</Link>
+                    </Button>
+                  </div>
                 </TableCell>
               </TableRow>
-            ))}
+            ) : (
+              cellGroups?.slice(0, 6)?.map((cellgroup) => (
+                <TableRow key={cellgroup.id} className="hover:bg-card">
+                  <TableCell>
+                    {cellgroup.assistant ? (
+                      <div>
+                        <Link
+                          href={`/disciples/${cellgroup.assistantId}`}
+                          className="font-semibold hover:underline"
+                        >
+                          {cellgroup.assistant.name}
+                        </Link>
+                        <p className="text-xs text-muted-foreground capitalize">
+                          Assistant Leader
+                        </p>
+                      </div>
+                    ) : (
+                      <div>
+                        <Link
+                          href={`/disciples/${cellgroup.leaderId}`}
+                          className="font-semibold hover:underline"
+                        >
+                          {cellgroup.leader.name}
+                        </Link>
+                        <p className="text-xs text-muted-foreground capitalize">
+                          Primary Leader
+                        </p>
+                      </div>
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    <Badge variant={cellgroup.type}>
+                      {removeUnderscores(cellgroup.type)}
+                    </Badge>
+                  </TableCell>
+                  <TableCell className="whitespace-nowrap">
+                    <p className="text-sm line-clamp-1">{cellgroup.venue}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {formatCellGroupDate(new Date(cellgroup.date))}
+                    </p>
+                  </TableCell>
+                  <TableCell className="whitespace-nowrap">
+                    {cellgroup.lessonTitle ? (
+                      <div>
+                        <p className="font-semibold">{cellgroup.lessonTitle}</p>
+                        <p className="text-xs text-muted-foreground">
+                          Custom Lesson
+                        </p>
+                      </div>
+                    ) : (
+                      <div>
+                        <p className="font-semibold hover:underline">
+                          {cellgroup.lesson?.title}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {cellgroup.lesson?.lessonSeries.title}
+                        </p>
+                      </div>
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    <Badge variant="DISCIPLESHIP">
+                      {cellgroup.cellReportAttendeeSnapshots.length}{" "}
+                      {pluralize(
+                        "attendee",
+                        cellgroup.cellReportAttendeeSnapshots.length,
+                      )}
+                    </Badge>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </Table>
       </CardContent>

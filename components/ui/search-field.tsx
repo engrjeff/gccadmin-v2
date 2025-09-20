@@ -90,7 +90,7 @@ export function SearchField({
         placeholder={placeholder}
         value={searchValue}
         onChange={handleInputChange}
-        className="pr-16 pl-7 h-8"
+        className="pr-16 pl-7 md:h-8"
       />
       {isPending && (
         <Loader2 className="text-muted-foreground absolute top-1/2 right-1 size-4 -translate-y-1/2 animate-spin" />

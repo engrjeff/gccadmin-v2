@@ -1,16 +1,13 @@
 import type { Metadata } from "next";
 import { DataPagination } from "@/components/data-pagination";
-import { FilterField } from "@/components/filter-field";
-import { LeadersFilter } from "@/components/leaders-filter";
-import { SearchField } from "@/components/ui/search-field";
 import { DiscipleCreateFormModal } from "@/features/disciples/disciple-create-form-modal";
+import { DisciplesFilters } from "@/features/disciples/disciples-filters";
 import { DisciplesTable } from "@/features/disciples/disciples-table";
 import { ImportDisciplesDialog } from "@/features/disciples/import-disciples-dialog";
 import {
   type DisciplesQueryArgs,
   getDisciples,
 } from "@/features/disciples/queries";
-import { cellStatuses, churchStatuses, processLevels } from "@/lib/constants";
 
 export const revalidate = 3600; // revalidate at most every hour
 
@@ -36,25 +33,7 @@ export default async function DisciplesPage({ searchParams }: PageProps) {
           <DiscipleCreateFormModal />
         </div>
       </div>
-      <div className="flex items-center gap-3 flex-wrap">
-        <SearchField paramName="q" />
-        <FilterField
-          label="Cell Status"
-          options={cellStatuses}
-          queryName="cellStatus"
-        />
-        <FilterField
-          label="Church Status"
-          options={churchStatuses}
-          queryName="churchStatus"
-        />
-        <FilterField
-          label="Process Level"
-          options={processLevels}
-          queryName="processLevel"
-        />
-        <LeadersFilter />
-      </div>
+      <DisciplesFilters />
       <DisciplesTable isAdmin={isAdmin} disciples={disciples} />
       <DataPagination name="disciples" pageInfo={pageInfo} />
     </div>

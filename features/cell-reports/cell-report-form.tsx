@@ -10,6 +10,7 @@ import {
   useForm,
 } from "react-hook-form";
 import { toast } from "sonner";
+import { CellType } from "@/app/generated/prisma";
 import { AppCombobox } from "@/components/app-combobox";
 import { TagsInput } from "@/components/tags-input";
 import { Button } from "@/components/ui/button";
@@ -42,7 +43,7 @@ const defaultValues: CellReportCreateInputs = {
   leaderId: "",
   venue: "",
   attendees: [],
-  type: "OPEN",
+  type: CellType.OPEN,
   scriptureReferences: [],
   assistantId: "",
   date: format(new Date(), "yyyy-MM-dd'T'HH:mm"),
@@ -153,6 +154,13 @@ export function CellReportForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
       }
     }
   };
+
+  function handleCancelClick() {
+    form.reset(defaultValues);
+    setSelectedSeries(undefined);
+    setWithAssistant(false);
+    onAfterSave();
+  }
 
   return (
     <Form {...form}>
@@ -512,7 +520,7 @@ export function CellReportForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
           </fieldset>
         </div>
 
-        <div className="mt-auto flex flex-col gap-3 border-t p-4 text-right md:flex-row md:items-center">
+        <div className="mt-auto p-4 flex gap-3 items-center justify-end">
           <div className="mb-2 hidden select-none items-center space-x-2 md:mb-0">
             <Checkbox
               id="create-more-flag"
@@ -531,7 +539,7 @@ export function CellReportForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
             variant="outline"
             type="reset"
             disabled={false}
-            className="bg-muted/30 md:ml-auto"
+            className="bg-muted/30 md:ml-auto hidden"
             onClick={() => {
               form.reset(defaultValues);
               setSelectedSeries(undefined);
@@ -539,6 +547,9 @@ export function CellReportForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
             }}
           >
             Reset
+          </Button>
+          <Button type="button" variant="ghost" onClick={handleCancelClick}>
+            Cancel
           </Button>
           <SubmitButton loading={isBusy}>Save Report</SubmitButton>
         </div>

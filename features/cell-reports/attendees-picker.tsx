@@ -6,12 +6,14 @@ import { useFormContext } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useDisciples } from "@/hooks/use-disciples";
+import { useIsAdmin } from "@/hooks/use-is-admin";
 import { cn } from "@/lib/utils";
 import type { CellReportCreateInputs } from "./schema";
 
 export function AttendeesPicker() {
   const cellReportForm = useFormContext<CellReportCreateInputs>();
 
+  const isAdmin = useIsAdmin();
   const leaderId = cellReportForm.watch("leaderId");
   const assistantId = cellReportForm.watch("assistantId");
   const attendees = cellReportForm.watch("attendees");
@@ -50,12 +52,28 @@ export function AttendeesPicker() {
     cellReportForm.setValue("attendees", []);
   };
 
+  if (isAdmin && !leaderId)
+    return (
+      <div className="relative min-h-[300px] rounded-md border">
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <p className="text-center text-sm text-muted-foreground">
+            Select a leader first
+          </p>
+        </div>
+      </div>
+    );
+
   if (disciplesOfLeader?.isLoading)
     return (
-      <div className="relative min-h-[300px]">
+      <div className="relative min-h-[300px] rounded-md border">
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <Loader2Icon size={32} className="animate-spin" />
-          <p>Getting data...</p>
+          <Loader2Icon
+            size={32}
+            className="animate-spin text-muted-foreground"
+          />
+          <p className="text-center text-sm text-muted-foreground">
+            Getting disciples data...
+          </p>
         </div>
       </div>
     );
@@ -66,8 +84,13 @@ export function AttendeesPicker() {
         <div className="relative">
           <Input
             aria-label="Search attendees"
-            placeholder="Search here"
+            placeholder={
+              disciplesOfLeader.data?.length === 0
+                ? "No discple data"
+                : "Search here"
+            }
             value={attendeesSearchQuery}
+            disabled={disciplesOfLeader.data?.length === 0}
             onChange={(e) => setAttendeesSearchQuery(e.currentTarget.value)}
             className="peer h-10 pe-9 ps-9 lg:h-9"
           />
@@ -85,6 +108,13 @@ export function AttendeesPicker() {
             </button>
           ) : null}
         </div>
+        {disciplesOfLeader.data?.length === 0 && disciplesOfLeader.isSuccess ? (
+          <div className="py-2">
+            <p className="mt-1 text-sm text-center text-muted-foreground">
+              No disciple found for the selected leader.
+            </p>
+          </div>
+        ) : null}
       </div>
 
       {attendees.length ? (

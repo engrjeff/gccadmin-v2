@@ -40,7 +40,7 @@ export function getDateRange(
 ): { start: Date; end: Date } | undefined {
   if (!preset) return undefined;
 
-  const now = new Date();
+  const now = new Date().toLocaleDateString("en-PH");
 
   if (preset === "this_week") {
     return {

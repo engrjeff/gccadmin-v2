@@ -56,7 +56,7 @@ export function CellReportTable({
           ) : (
             cellReports.map((cellReport, index) => (
               <TableRow key={cellReport.id} className="hover:bg-transparent">
-                <TableCell className="bg-card w-4 border-r text-center">
+                <TableCell className="w-4 border-r text-center">
                   {index + 1}
                 </TableCell>
 

@@ -25,7 +25,7 @@ export function DisciplesTable({
   disciples: Array<Disciple & { leader: { id: string; name: string } | null }>;
 }) {
   return (
-    <div className="[&>div]:rounded-md rounded-md border flex-1 min-h-min overflow-hidden md:[&>div]:max-h-[490px]">
+    <div className="[&>div]:rounded-md rounded-md border flex-1 min-h-min overflow-hidden lg:[&>div]:max-h-[490px]">
       <Table>
         <TableHeader className="bg-card sticky top-0 z-10 backdrop-blur-sm">
           <TableRow className="hover:bg-transparent">

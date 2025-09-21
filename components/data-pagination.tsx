@@ -85,7 +85,7 @@ export function DataPagination({ pageInfo, name }: DataPaginationProps) {
   };
 
   return (
-    <div className="flex flex-col md:flex-row gap-3 items-center md:justify-between w-full">
+    <div className="flex flex-col md:flex-row gap-3 items-center md:justify-between w-full pb-6">
       <p className="text-sm text-muted-foreground shrink-0">
         Showing {(page - 1) * pageSize + 1} to{" "}
         {Math.min(page * pageSize, total)} of {total} {name}

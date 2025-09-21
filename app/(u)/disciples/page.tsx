@@ -25,7 +25,7 @@ export default async function DisciplesPage({ searchParams }: PageProps) {
   const { disciples, pageInfo, isAdmin } = await getDisciples(pageSearchParams);
 
   return (
-    <div className="flex flex-1 flex-col gap-4 p-4">
+    <div className="flex flex-1 flex-col gap-4 p-4 h-full">
       <div className="flex items-center gap-4">
         <h2 className="font-bold">Disciples</h2>
         <div className="flex items-center gap-3 ml-auto">

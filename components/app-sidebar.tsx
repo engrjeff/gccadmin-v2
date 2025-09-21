@@ -100,7 +100,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <Link href="/dashboard" className="flex items-center">
+              <Link href="/dashboard" className="flex items-center -ml-2">
                 <Image
                   unoptimized
                   src="/gcc-logo.svg"

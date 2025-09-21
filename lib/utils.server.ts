@@ -7,6 +7,7 @@ import {
   subDays,
   subMonths,
 } from "date-fns";
+import { toZonedTime } from "date-fns-tz";
 import type { CellStatus } from "@/app/generated/prisma";
 import type { DateRange, UserAccountRole } from "@/types/globals";
 
@@ -40,7 +41,10 @@ export function getDateRange(
 ): { start: Date; end: Date } | undefined {
   if (!preset) return undefined;
 
-  const now = new Date().toLocaleDateString("en-PH");
+  // const now = new Date().toLocaleDateString("en-PH");
+  const timeZone = "Asia/Manila";
+  const dateToday = new Date();
+  const now = toZonedTime(dateToday, timeZone);
 
   if (preset === "this_week") {
     return {

@@ -3,7 +3,7 @@ import { app } from "@/lib/config";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    theme_color: app.themeColor,
+    theme_color: app.bgColor,
     background_color: app.bgColor,
     icons: [
       {

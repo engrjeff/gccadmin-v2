@@ -28,7 +28,7 @@ export function Header() {
       </Link>
       <div className="flex items-center gap-x-4">
         <Button size="sm" variant="secondary" asChild>
-          <Link href="/gcc-resources">
+          <Link href="/gcc-resources/lessons">
             <LibraryIcon /> GCC Resources
           </Link>
         </Button>

@@ -1,7 +1,14 @@
 "use client";
 
-import { SignedIn, UserButton, useUser } from "@clerk/nextjs";
+import {
+  ClerkLoaded,
+  ClerkLoading,
+  SignedIn,
+  UserButton,
+  useUser,
+} from "@clerk/nextjs";
 import { SidebarTrigger } from "./ui/sidebar";
+import { Skeleton } from "./ui/skeleton";
 
 export function AppHeader() {
   const user = useUser();
@@ -16,9 +23,14 @@ export function AppHeader() {
           </h1>
         ) : null}
         <div className="ml-auto flex items-center gap-2">
-          <SignedIn>
-            <UserButton />
-          </SignedIn>
+          <ClerkLoading>
+            <Skeleton aria-label="Loading" className="size-7 rounded-full" />
+          </ClerkLoading>
+          <ClerkLoaded>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+          </ClerkLoaded>
         </div>
       </div>
     </header>

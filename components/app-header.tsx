@@ -7,6 +7,9 @@ import {
   UserButton,
   useUser,
 } from "@clerk/nextjs";
+import { LibraryIcon } from "lucide-react";
+import Link from "next/link";
+import { Button } from "./ui/button";
 import { SidebarTrigger } from "./ui/sidebar";
 import { Skeleton } from "./ui/skeleton";
 
@@ -23,6 +26,11 @@ export function AppHeader() {
           </h1>
         ) : null}
         <div className="ml-auto flex items-center gap-2">
+          <Button size="sm" variant="secondary" asChild>
+            <Link href="/gcc-resources/lessons">
+              <LibraryIcon /> GCC Resources
+            </Link>
+          </Button>
           <ClerkLoading>
             <Skeleton aria-label="Loading" className="size-7 rounded-full" />
           </ClerkLoading>

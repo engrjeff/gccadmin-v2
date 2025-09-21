@@ -44,3 +44,6 @@ next-env.d.ts
 
 # prisma
 /app/generated/prisma
+
+# google service account
+gcc-resources-sa-keys.json

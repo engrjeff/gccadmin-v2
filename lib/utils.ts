@@ -1,4 +1,5 @@
 import { type ClassValue, clsx } from "clsx";
+import { intlFormatDistance } from "date-fns";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -44,3 +45,10 @@ export const formatTime = (timeStr: string) => {
   const strTime = `${hours}:${minutesStr} ${ampm}`;
   return strTime;
 };
+
+export function formatDateDistance(dateInput: number | string | Date) {
+  // return format(new Date(dateInput), "MMM dd, yyyy")
+  return intlFormatDistance(new Date(dateInput), new Date(), {
+    style: "narrow",
+  });
+}

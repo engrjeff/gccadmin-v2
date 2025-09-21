@@ -6,6 +6,7 @@ import {
   SignUpButton,
   UserButton,
 } from "@clerk/nextjs";
+import { LibraryIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -26,6 +27,11 @@ export function Header() {
         <span className="font-semibold">{app.title}</span>
       </Link>
       <div className="flex items-center gap-x-4">
+        <Button size="sm" variant="secondary" asChild>
+          <Link href="/gcc-resources">
+            <LibraryIcon /> GCC Resources
+          </Link>
+        </Button>
         <SignedOut>
           <SignUpButton>
             <Button>Sign up</Button>

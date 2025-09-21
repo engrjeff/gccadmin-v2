@@ -7,6 +7,8 @@ const isPublicRoute = createRouteMatcher([
   "/sign-in(.*)",
   "/sign-up(.*)",
   "/unauthorized",
+  "/gcc-resources(.*)",
+  "/api/gcc-resources/(.*)",
 ]);
 
 const isAdminRoute = createRouteMatcher(["/leaders/(.*)"]);

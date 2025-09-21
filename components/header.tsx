@@ -1,8 +1,16 @@
-import { SignedIn, SignedOut, SignUpButton, UserButton } from "@clerk/nextjs";
+import {
+  ClerkLoaded,
+  ClerkLoading,
+  SignedIn,
+  SignedOut,
+  SignUpButton,
+  UserButton,
+} from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { app } from "@/lib/config";
+import { Skeleton } from "./ui/skeleton";
 
 export function Header() {
   return (
@@ -23,9 +31,14 @@ export function Header() {
             <Button>Sign up</Button>
           </SignUpButton>
         </SignedOut>
-        <SignedIn>
-          <UserButton />
-        </SignedIn>
+        <ClerkLoading>
+          <Skeleton aria-label="Loading" className="size-7 rounded-full" />
+        </ClerkLoading>
+        <ClerkLoaded>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+        </ClerkLoaded>
       </div>
     </header>
   );

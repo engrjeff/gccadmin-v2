@@ -34,9 +34,9 @@ const OTHER_RESOURCES = [
 function OtherResourcesPage() {
   return (
     <div className="min-h-[60vh]">
-      <ul>
+      <ul className="space-y-3">
         {OTHER_RESOURCES.map((resource) => (
-          <li key={`gcc-${resource.label}`} className="mb-2">
+          <li key={`gcc-${resource.label}`}>
             <a href={resource.link} target="_blank" rel="noopener noreferrer">
               <div className="bg-card/60 border rounded-md py-3 space-y-3 hover:bg-card/80 group">
                 <div className="flex items-center gap-2 px-3">

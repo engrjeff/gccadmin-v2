@@ -8,7 +8,7 @@ export function Footer() {
       <div className="text-sm text-muted-foreground">
         <p>Got questions?</p>
         <p>
-          Contact the developer @{" "}
+          Contact the developer:{" "}
           <a
             href="mailto:gccsystemph@gmail.com"
             className="text-foreground font-semibold"

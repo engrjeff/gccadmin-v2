@@ -16,7 +16,7 @@ import { Skeleton } from "./ui/skeleton";
 export function Header() {
   return (
     <header className="flex h-16 items-center justify-between gap-4 border-b px-4">
-      <Link href="/" className="flex items-center gap-x-4">
+      <Link href="/" className="flex items-center gap-x-2">
         <Image
           unoptimized
           src="/gcc-logo.svg"

@@ -47,6 +47,8 @@ export async function getCellReports(args: CellReportsQueryArgs) {
 
   const isAdmin = user.sessionClaims.metadata.role === "admin";
 
+  const isPastor = user.sessionClaims.metadata.pastor === true;
+
   const leader = await prisma.disciple.findUnique({
     where: { userAccountId: user.userId },
   });
@@ -55,7 +57,8 @@ export async function getCellReports(args: CellReportsQueryArgs) {
     return {
       cellReports: [],
       user,
-      isAdmin: user.sessionClaims.metadata.role === "admin",
+      isAdmin,
+      isPastor,
       dateFilter: undefined,
       pageInfo: {
         total: 0,
@@ -75,7 +78,7 @@ export async function getCellReports(args: CellReportsQueryArgs) {
 
   const totalFilteredQuery = prisma.cellReport.count({
     where: {
-      leaderId: args.leader ? args.leader : leader?.id,
+      leaderId: args.leader ? args.leader : isPastor ? undefined : leader?.id,
       type: cellType,
       date: {
         gte: dateFilter?.start,
@@ -86,7 +89,7 @@ export async function getCellReports(args: CellReportsQueryArgs) {
 
   const cellReportsQuery = prisma.cellReport.findMany({
     where: {
-      leaderId: args.leader ? args.leader : leader?.id,
+      leaderId: args.leader ? args.leader : isPastor ? undefined : leader?.id,
       type: cellType,
       date: {
         gte: dateFilter?.start,
@@ -98,6 +101,7 @@ export async function getCellReports(args: CellReportsQueryArgs) {
         select: {
           id: true,
           name: true,
+          userAccountId: true,
         },
       },
       assistant: {
@@ -146,7 +150,8 @@ export async function getCellReports(args: CellReportsQueryArgs) {
   return {
     cellReports,
     user,
-    isAdmin: user.sessionClaims.metadata.role === "admin",
+    isAdmin,
+    isPastor,
     pageInfo: {
       ...pageInfo,
       itemCount: cellReports.length,

@@ -6,7 +6,7 @@ import { FilterField } from "@/components/filter-field";
 import { LeadersFilter } from "@/components/leaders-filter";
 import { ResetFiltersButton } from "@/components/reset-filters-button";
 
-export function CellReportsFilters() {
+export function CellReportsFilters({ isForPastor }: { isForPastor?: boolean }) {
   return (
     <div className="flex items-center flex-wrap gap-3">
       <FilterField
@@ -34,7 +34,7 @@ export function CellReportsFilters() {
         ]}
       />
 
-      <LeadersFilter />
+      <LeadersFilter isForPastor={isForPastor} />
 
       <ResetFiltersButton validFilters={["cellType", "dateRange", "leader"]} />
     </div>

@@ -5,12 +5,12 @@ import { useIsAdmin } from "@/hooks/use-is-admin";
 import { useLeaders } from "@/hooks/use-leaders";
 import { FilterField } from "./filter-field";
 
-export function LeadersFilter() {
+export function LeadersFilter({ isForPastor }: { isForPastor?: boolean }) {
   const isAdmin = useIsAdmin();
 
-  const leadersQuery = useLeaders({ enabled: isAdmin });
+  const leadersQuery = useLeaders({ enabled: isAdmin || isForPastor });
 
-  if (!isAdmin) return null;
+  if (!isAdmin && !isForPastor) return null;
 
   return (
     <FilterField

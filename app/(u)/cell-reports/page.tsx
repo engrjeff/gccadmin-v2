@@ -22,7 +22,7 @@ interface PageProps {
 async function CellReportsPage({ searchParams }: PageProps) {
   const pageSearchParams = await searchParams;
 
-  const { cellReports, pageInfo, isAdmin, dateFilter } =
+  const { cellReports, pageInfo, isAdmin, isPastor, dateFilter, user } =
     await getCellReports(pageSearchParams);
 
   return (
@@ -47,10 +47,14 @@ async function CellReportsPage({ searchParams }: PageProps) {
       </div>
 
       {/* filters */}
-      <CellReportsFilters />
+      <CellReportsFilters isForPastor={isPastor} />
 
       {/* table */}
-      <CellReportTable isAdmin={isAdmin} cellReports={cellReports} />
+      <CellReportTable
+        withLeader={isAdmin || isPastor}
+        userId={user.userId}
+        cellReports={cellReports}
+      />
       <DataPagination name="cell reports" pageInfo={pageInfo} />
     </div>
   );

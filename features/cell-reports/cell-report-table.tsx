@@ -16,10 +16,12 @@ import { CellReportRowActions } from "./cell-report-row-actions";
 import type { CellReportRecord } from "./queries";
 
 export function CellReportTable({
-  isAdmin,
+  withLeader,
   cellReports,
+  userId,
 }: {
-  isAdmin: boolean;
+  withLeader: boolean;
+  userId?: string | null;
   cellReports: CellReportRecord[];
 }) {
   return (
@@ -28,7 +30,7 @@ export function CellReportTable({
         <TableHeader className="bg-card sticky top-0 z-10 backdrop-blur-sm">
           <TableRow className="hover:bg-transparent">
             <TableHead className="size-4 text-center">#</TableHead>
-            {isAdmin ? <TableHead>Network Leader</TableHead> : null}
+            {withLeader ? <TableHead>Network Leader</TableHead> : null}
             <TableHead>CG Leader</TableHead>
             <TableHead>
               <SortLink sortValue="type" title="Cell Type" />
@@ -44,7 +46,7 @@ export function CellReportTable({
         <TableBody>
           {cellReports.length === 0 ? (
             <TableRow className="hover:bg-transparent">
-              <TableCell colSpan={isAdmin ? 8 : 7}>
+              <TableCell colSpan={withLeader ? 8 : 7}>
                 <div className="min-h-[300px] flex flex-col items-center justify-center gap-3">
                   <PackageIcon className="size-6 text-muted-foreground" />
                   <p className="text-sm text-muted-foreground text-center">
@@ -60,13 +62,18 @@ export function CellReportTable({
                   {index + 1}
                 </TableCell>
 
-                {isAdmin ? (
+                {withLeader ? (
                   <TableCell>
                     <Link
                       href={`/leaders/${cellReport.leader?.id}`}
                       className="hover:underline"
                     >
                       {cellReport.leader?.name}
+                      <p className="text-xs text-muted-foreground capitalize">
+                        {userId === cellReport.leader.userAccountId
+                          ? "GCC Pastor"
+                          : "Primary Leader"}
+                      </p>
                     </Link>
                   </TableCell>
                 ) : null}
@@ -93,7 +100,9 @@ export function CellReportTable({
                         {cellReport.leader.name}
                       </Link>
                       <p className="text-xs text-muted-foreground capitalize">
-                        Primary Leader
+                        {userId === cellReport.leader.userAccountId
+                          ? "GCC Pastor"
+                          : "Primary Leader"}
                       </p>
                     </div>
                   )}

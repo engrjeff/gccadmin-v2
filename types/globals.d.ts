@@ -5,6 +5,7 @@ declare global {
   interface CustomJwtSessionClaims {
     metadata: {
       role?: UserAccountRole;
+      pastor?: boolean;
     };
   }
 }

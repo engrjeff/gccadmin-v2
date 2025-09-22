@@ -35,6 +35,7 @@ export function ViewPDFButton({
           size="sm"
           variant="secondary"
           className="hidden lg  :inline-flex"
+          disabled={cellReports.length === 0}
         >
           View PDF
         </Button>

@@ -43,21 +43,11 @@ export function AppHeader() {
           <Button
             size="iconSm"
             variant="ghost"
-            className="md:hidden rounded-full"
+            className="rounded-full"
             asChild
           >
             <Link href="/gcc-resources/lessons">
               <LibraryIcon /> <span className="sr-only">GCC Resources</span>
-            </Link>
-          </Button>
-          <Button
-            size="sm"
-            variant="secondary"
-            className="hidden md:inline-flex"
-            asChild
-          >
-            <Link href="/gcc-resources/lessons">
-              <LibraryIcon /> GCC Resources
             </Link>
           </Button>
           <ClerkLoading>

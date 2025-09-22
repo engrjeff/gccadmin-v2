@@ -4,6 +4,7 @@ import { CalendarIcon, CircleDotDashedIcon } from "lucide-react";
 import { CellType } from "@/app/generated/prisma";
 import { FilterField } from "@/components/filter-field";
 import { LeadersFilter } from "@/components/leaders-filter";
+import { ResetFiltersButton } from "@/components/reset-filters-button";
 
 export function CellReportsFilters() {
   return (
@@ -34,6 +35,8 @@ export function CellReportsFilters() {
       />
 
       <LeadersFilter />
+
+      <ResetFiltersButton validFilters={["cellType", "dateRange", "leader"]} />
     </div>
   );
 }

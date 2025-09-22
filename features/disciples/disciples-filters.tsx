@@ -3,6 +3,7 @@
 import { CircleDotIcon, TrendingUpIcon } from "lucide-react";
 import { FilterField } from "@/components/filter-field";
 import { LeadersFilter } from "@/components/leaders-filter";
+import { ResetFiltersButton } from "@/components/reset-filters-button";
 import { SearchField } from "@/components/ui/search-field";
 import { cellStatuses, churchStatuses, processLevels } from "@/lib/constants";
 
@@ -29,6 +30,10 @@ export function DisciplesFilters() {
         queryName="processLevel"
       />
       <LeadersFilter />
+
+      <ResetFiltersButton
+        validFilters={["cellStatus", "churchStatus", "processLevel", "leader"]}
+      />
     </div>
   );
 }

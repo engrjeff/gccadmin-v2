@@ -27,7 +27,7 @@ export default function manifest(): MetadataRoute.Manifest {
         type: "image/png",
       },
     ],
-    orientation: "any",
+    orientation: "portrait",
     display: "standalone",
     dir: "auto",
     lang: "en-US",
@@ -35,5 +35,6 @@ export default function manifest(): MetadataRoute.Manifest {
     short_name: app.title,
     description: app.description,
     start_url: "/",
+    categories: ["productivity"],
   };
 }

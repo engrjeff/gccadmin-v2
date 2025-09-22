@@ -8,6 +8,7 @@ import {
   type CellReportsQueryArgs,
   getCellReports,
 } from "@/features/cell-reports/queries";
+import { ViewPDFButton } from "@/features/cell-reports/view-pdf-button";
 import { formatDate } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -40,6 +41,7 @@ async function CellReportsPage({ searchParams }: PageProps) {
           ) : null}
         </div>
         <div className="flex items-center gap-3 ml-auto">
+          <ViewPDFButton period={dateFilter} cellReports={cellReports} />
           <CellReportCreateFormModal />
         </div>
       </div>

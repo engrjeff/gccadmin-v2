@@ -1,6 +1,6 @@
 "use client";
 
-import { MoreHorizontalIcon, PencilIcon, StickyNoteIcon } from "lucide-react";
+import { MoreHorizontalIcon, PencilIcon } from "lucide-react";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -20,6 +20,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { CellReportDetails } from "./cell-report-details";
+import { GeneratePDFButton } from "./cell-report-pdf";
 import type { CellReportRecord } from "./queries";
 
 type RowAction = "view" | "edit" | "generate-pdf";
@@ -49,10 +50,7 @@ export function CellReportRowActions({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => setAction("generate-pdf")}>
-              <StickyNoteIcon />
-              Generate PDF
-            </DropdownMenuItem>
+            <GeneratePDFButton cellReport={cellReport} />
             <DropdownMenuItem disabled onClick={() => setAction("edit")}>
               <PencilIcon />
               Edit

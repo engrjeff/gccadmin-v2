@@ -86,7 +86,7 @@ export function AttendeesPicker() {
             aria-label="Search attendees"
             placeholder={
               disciplesOfLeader.data?.length === 0
-                ? "No discple data"
+                ? "No disciple data"
                 : "Search here"
             }
             value={attendeesSearchQuery}

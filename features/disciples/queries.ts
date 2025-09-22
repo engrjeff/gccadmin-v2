@@ -190,7 +190,7 @@ export async function getDisciples(args: DisciplesQueryArgs) {
 export async function getDiscipleById(discipleId: string) {
   const disciple = await prisma.disciple.findUnique({
     where: { id: discipleId },
-    include: { leader: true, handledBy: true },
+    include: { leader: true, handledBy: true, handledDisciples: true },
   });
 
   return { disciple };

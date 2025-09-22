@@ -6,6 +6,7 @@ import { TabsContent } from "@/components/ui/tabs";
 import { AttendedCellGroups } from "@/features/disciples/attended-cellgroups";
 import { DiscipleDetailTabs } from "@/features/disciples/disciple-detail-tabs";
 import { DiscipleDetails } from "@/features/disciples/disciple-details";
+import { HandledDisciples } from "@/features/disciples/handled-disciples";
 import { LessonsTaken } from "@/features/disciples/lessons-taken";
 import { cachedGetDiscipleById } from "@/features/disciples/queries";
 
@@ -45,7 +46,11 @@ async function DiscipleDetailPage({ params }: PageProps) {
           <h2 className="font-bold">{disciple.name}</h2>
           {disciple.isPrimary ? (
             <p className="text-sm text-muted-foreground">Primary Leader</p>
-          ) : null}
+          ) : (
+            <p className="text-sm text-muted-foreground">
+              Cell Leader: {disciple.leader?.name}
+            </p>
+          )}
         </div>
         <div className="flex items-center gap-3 ml-auto"></div>
       </div>
@@ -58,6 +63,12 @@ async function DiscipleDetailPage({ params }: PageProps) {
         </TabsContent>
         <TabsContent value="attended-cellgroups">
           <AttendedCellGroups />
+        </TabsContent>
+        <TabsContent value="handled-disciples">
+          <HandledDisciples
+            handledBy={disciple.name}
+            disciples={disciple.handledDisciples}
+          />
         </TabsContent>
       </DiscipleDetailTabs>
     </div>

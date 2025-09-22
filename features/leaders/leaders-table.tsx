@@ -1,3 +1,4 @@
+import { CheckIcon, XIcon } from "lucide-react";
 import Link from "next/link";
 import pluralize from "pluralize";
 import type { Disciple, User } from "@/app/generated/prisma";
@@ -40,7 +41,12 @@ export function LeadersTable({
               <TableCell>{index + 1}</TableCell>
               <TableCell className="font-medium">
                 <div>
-                  <Link href={`/leaders/${leader.id}`}>{leader.name}</Link>
+                  <Link
+                    href={`/leaders/${leader.id}`}
+                    className="hover:underline"
+                  >
+                    {leader.name}
+                  </Link>
                   <p className="text-xs text-muted-foreground capitalize">
                     {removeUnderscores(leader.memberType)},{" "}
                     {leader.gender.toLowerCase()}
@@ -58,9 +64,14 @@ export function LeadersTable({
               </TableCell>
               <TableCell>
                 {leader.userAccount ? (
-                  <Badge variant="ACTIVE">Account linked</Badge>
+                  <Badge variant="ACTIVE">
+                    <CheckIcon /> Account linked
+                  </Badge>
                 ) : (
-                  <Badge variant="outline">No account</Badge>
+                  <Badge variant="INACTIVE">
+                    <XIcon />
+                    Unregistered
+                  </Badge>
                 )}
               </TableCell>
               <TableCell className="text-center">

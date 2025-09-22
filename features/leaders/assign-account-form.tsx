@@ -147,14 +147,16 @@ export function AssignAccountForm({
                   )}
                 />
               )}
-              <div className="pt-6 flex justify-end">
-                <SubmitButton
-                  disabled={Boolean(leader.userAccountId)}
-                  loading={action.isPending}
-                >
-                  Save Changes
-                </SubmitButton>
-              </div>
+              {leader.userAccountId ? null : (
+                <div className="pt-6 flex justify-end">
+                  <SubmitButton
+                    disabled={Boolean(leader.userAccountId)}
+                    loading={action.isPending}
+                  >
+                    Link Account
+                  </SubmitButton>
+                </div>
+              )}
             </fieldset>
           </form>
         </Form>

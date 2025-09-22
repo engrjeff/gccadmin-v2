@@ -34,6 +34,8 @@ export async function getLeaders(args: LeadersQueryArgs) {
     orderBy: [{ createdAt: "asc" }, { name: "asc" }],
   });
 
+  leaders.sort((a) => (a.userAccount ? -1 : 1));
+
   return leaders;
 }
 

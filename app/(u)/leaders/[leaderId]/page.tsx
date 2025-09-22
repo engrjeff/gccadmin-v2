@@ -1,4 +1,4 @@
-import { ArrowLeftIcon, CheckIcon } from "lucide-react";
+import { ArrowLeftIcon, CheckIcon, XIcon } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -46,9 +46,16 @@ async function LeaderDetailPage({ params }: PageProps) {
           <div>
             <h2 className="font-bold flex items-center gap-2">
               {leader.name}{" "}
-              <Badge variant="ACTIVE">
-                <CheckIcon /> With Account{" "}
-              </Badge>
+              {leader.userAccountId ? (
+                <Badge variant="ACTIVE">
+                  <CheckIcon /> With Account{" "}
+                </Badge>
+              ) : (
+                <Badge variant="INACTIVE">
+                  <XIcon />
+                  Unregistered
+                </Badge>
+              )}
             </h2>
             <p className="text-sm text-muted-foreground">Primary Leader</p>
           </div>

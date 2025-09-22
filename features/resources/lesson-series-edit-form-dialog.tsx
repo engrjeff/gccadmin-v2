@@ -68,9 +68,11 @@ export function LessonSeriesEditFormDialog({
           </Button>
         </DrawerTrigger>
         <DrawerContent>
-          <DrawerHeader className="text-left">
-            <DrawerTitle>Add Lesson Series</DrawerTitle>
-            <DrawerDescription>Fill out the form below.</DrawerDescription>
+          <DrawerHeader className="!text-left">
+            <DrawerTitle>Edit Series</DrawerTitle>
+            <DrawerDescription>
+              Make sure to save your changes.
+            </DrawerDescription>
           </DrawerHeader>
           <div className="p-6">
             <LessonSeriesEditForm

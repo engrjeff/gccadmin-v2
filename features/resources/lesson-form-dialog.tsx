@@ -66,7 +66,7 @@ export function LessonFormDialog({
           </Button>
         </DrawerTrigger>
         <DrawerContent>
-          <DrawerHeader className="text-left">
+          <DrawerHeader className="!text-left">
             <DrawerTitle>New Lesson</DrawerTitle>
             <DrawerDescription>
               Add lesson for{" "}

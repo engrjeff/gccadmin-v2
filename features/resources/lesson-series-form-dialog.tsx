@@ -59,8 +59,8 @@ export function LessonSeriesFormDialog() {
           </Button>
         </DrawerTrigger>
         <DrawerContent>
-          <DrawerHeader className="text-left">
-            <DrawerTitle>Add Lesson Series</DrawerTitle>
+          <DrawerHeader className="!text-left">
+            <DrawerTitle>New Lesson Series</DrawerTitle>
             <DrawerDescription>Fill out the form below.</DrawerDescription>
           </DrawerHeader>
           <div className="p-6">

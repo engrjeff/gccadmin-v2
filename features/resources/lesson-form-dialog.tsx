@@ -23,6 +23,14 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import {
   Form,
   FormControl,
   FormField,
@@ -33,6 +41,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { SubmitButton } from "@/components/ui/submit-button";
 import { Textarea } from "@/components/ui/textarea";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { createLesson } from "./actions";
 import { type LessonCreateInputs, lessonCreateSchema } from "./schema";
 
@@ -42,6 +51,38 @@ export function LessonFormDialog({
   lessonSeries: LessonSeries;
 }) {
   const [open, setOpen] = useState(false);
+  const isMobile = useIsMobile();
+
+  if (isMobile)
+    return (
+      <Drawer open={open} onOpenChange={setOpen}>
+        <DrawerTrigger asChild>
+          <Button
+            size="iconSm"
+            variant="ghost"
+            title={`Add lesson for ${lessonSeries.title}`}
+          >
+            <PlusIcon />
+          </Button>
+        </DrawerTrigger>
+        <DrawerContent>
+          <DrawerHeader className="text-left">
+            <DrawerTitle>New Lesson</DrawerTitle>
+            <DrawerDescription>
+              Add lesson for{" "}
+              <span className="text-foreground">{lessonSeries.title}</span>.
+              Fill out the form below.
+            </DrawerDescription>
+          </DrawerHeader>
+          <div className="p-6">
+            <LessonForm
+              lessonSeries={lessonSeries}
+              onAfterSave={() => setOpen(false)}
+            />
+          </div>
+        </DrawerContent>
+      </Drawer>
+    );
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

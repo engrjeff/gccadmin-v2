@@ -22,6 +22,14 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import {
   Form,
   FormControl,
   FormField,
@@ -32,6 +40,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { SubmitButton } from "@/components/ui/submit-button";
 import { Textarea } from "@/components/ui/textarea";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { updateLessonSeries } from "./actions";
 import {
   type LessonSeriesCreateInputs,
@@ -44,6 +53,34 @@ export function LessonSeriesEditFormDialog({
   lessonSeries: LessonSeries;
 }) {
   const [open, setOpen] = useState(false);
+  const isMobile = useIsMobile();
+
+  if (isMobile)
+    return (
+      <Drawer open={open} onOpenChange={setOpen}>
+        <DrawerTrigger asChild>
+          <Button
+            size="iconSm"
+            variant="ghost"
+            title={`Edit ${lessonSeries.title}`}
+          >
+            <PencilIcon />
+          </Button>
+        </DrawerTrigger>
+        <DrawerContent>
+          <DrawerHeader className="text-left">
+            <DrawerTitle>Add Lesson Series</DrawerTitle>
+            <DrawerDescription>Fill out the form below.</DrawerDescription>
+          </DrawerHeader>
+          <div className="p-6">
+            <LessonSeriesEditForm
+              lessonSeries={lessonSeries}
+              onAfterSave={() => setOpen(false)}
+            />
+          </div>
+        </DrawerContent>
+      </Drawer>
+    );
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

@@ -64,13 +64,17 @@ export function CellGroupStatistics() {
           </span>
           <span className="@[540px]/card:hidden">{dateRangeLabel}</span>
         </CardDescription>
-        <div className="lg:hidden col-span-full text-xs text-muted-foreground flex items-center gap-1.5">
-          <CalendarIcon className="size-3 shrink-0" />
-          <span className="block">
-            {formatDate(periodDate?.start as string)} -
-            {formatDate(periodDate?.end as string)}
-          </span>
-        </div>
+        {cgStatsQuery.isLoading ? (
+          <Skeleton className="h-4 w-48" />
+        ) : (
+          <div className="lg:hidden col-span-full text-xs text-muted-foreground flex items-center gap-1.5">
+            <CalendarIcon className="size-3 shrink-0" />
+            <span className="block">
+              {formatDate(periodDate?.start as string)} -
+              {formatDate(periodDate?.end as string)}
+            </span>
+          </div>
+        )}
         <CardAction>
           <ToggleGroup
             type="single"

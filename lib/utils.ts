@@ -1,6 +1,16 @@
 import { type ClassValue, clsx } from "clsx";
-import { intlFormatDistance } from "date-fns";
+import {
+  endOfMonth,
+  endOfWeek,
+  intlFormatDistance,
+  startOfMonth,
+  startOfWeek,
+  subDays,
+  subMonths,
+} from "date-fns";
+import { toZonedTime } from "date-fns-tz";
 import { twMerge } from "tailwind-merge";
+import type { DateRange } from "@/types/globals";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -51,4 +61,50 @@ export function formatDateDistance(dateInput: number | string | Date) {
   return intlFormatDistance(new Date(dateInput), new Date(), {
     style: "narrow",
   });
+}
+
+export function getClientDateRange(
+  preset: DateRange,
+): { start: Date; end: Date } | undefined {
+  if (!preset) return undefined;
+
+  // const now = new Date().toLocaleDateString("en-PH");
+  const timeZone = "Asia/Manila";
+  const dateToday = new Date();
+  const now = toZonedTime(dateToday, timeZone);
+
+  if (preset === "this_week") {
+    return {
+      start: startOfWeek(now, { weekStartsOn: 1 }),
+      end: endOfWeek(now, { weekStartsOn: 1 }),
+    };
+  }
+
+  if (preset === "last_week") {
+    return {
+      start: subDays(startOfWeek(now, { weekStartsOn: 1 }), 7),
+      end: subDays(endOfWeek(now, { weekStartsOn: 1 }), 7),
+    };
+  }
+
+  if (preset === "this_month") {
+    return {
+      start: startOfMonth(now),
+      end: endOfMonth(now),
+    };
+  }
+
+  if (preset === "last_month") {
+    return {
+      start: startOfMonth(subMonths(now, 1)),
+      end: endOfMonth(subMonths(now, 1)),
+    };
+  }
+
+  if (preset === "last_last_month") {
+    return {
+      start: startOfMonth(subMonths(now, 2)),
+      end: endOfMonth(subMonths(now, 2)),
+    };
+  }
 }

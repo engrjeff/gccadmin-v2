@@ -1,10 +1,10 @@
 "use client";
 
 import {
+  BookIcon,
   BookOpenIcon,
   GalleryVerticalEnd,
   Grid2X2Icon,
-  NotebookIcon,
   ShieldCheckIcon,
   ShieldIcon,
   UsersIcon,
@@ -69,7 +69,7 @@ const data = {
     {
       name: "Cell Reports",
       url: "/cell-reports",
-      icon: NotebookIcon,
+      icon: BookIcon,
       // quickActions: [
       //   {
       //     label: "Create Report",
@@ -81,7 +81,7 @@ const data = {
   ],
   navProcess: [
     {
-      name: "Resources",
+      name: "CG Lessons",
       url: "/resources",
       icon: BookOpenIcon,
     },

@@ -56,6 +56,7 @@ export async function getCellReports(args: CellReportsQueryArgs) {
       cellReports: [],
       user,
       isAdmin: user.sessionClaims.metadata.role === "admin",
+      dateFilter: undefined,
       pageInfo: {
         total: 0,
         page: 1,
@@ -68,7 +69,9 @@ export async function getCellReports(args: CellReportsQueryArgs) {
 
   const cellType = args?.cellType;
 
-  const dateFilter = args?.dateRange ? getDateRange(args.dateRange) : undefined;
+  const dateFilter = args?.dateRange
+    ? getDateRange(args.dateRange)
+    : getDateRange("this_week"); // default to the current week
 
   const totalFilteredQuery = prisma.cellReport.count({
     where: {
@@ -149,6 +152,7 @@ export async function getCellReports(args: CellReportsQueryArgs) {
       itemCount: cellReports.length,
       totalPages: Math.ceil(totalFiltered / DEFAULT_PAGE_SIZE),
     },
+    dateFilter,
   };
 }
 

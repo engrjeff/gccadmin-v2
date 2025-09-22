@@ -3,6 +3,7 @@
 import {
   BookIcon,
   BookOpenIcon,
+  CircleUserIcon,
   GalleryVerticalEnd,
   Grid2X2Icon,
   ShieldCheckIcon,
@@ -45,6 +46,11 @@ const data = {
       name: "Leaders",
       url: "/leaders",
       icon: ShieldIcon,
+    },
+    {
+      name: "Users",
+      url: "/users",
+      icon: CircleUserIcon,
     },
   ],
   navCellGroup: [

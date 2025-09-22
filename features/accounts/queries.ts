@@ -17,3 +17,15 @@ export async function getClerkUserAccounts() {
       email: u.emailAddresses[0].emailAddress,
     }));
 }
+
+export async function getAllClerkUserAccounts({ q }: { q?: string }) {
+  const client = await clerkClient();
+
+  const users = await client.users.getUserList({
+    limit: 100,
+    query: q?.toLowerCase(),
+    orderBy: "-created_at",
+  });
+
+  return users.data;
+}

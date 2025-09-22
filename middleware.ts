@@ -11,7 +11,7 @@ const isPublicRoute = createRouteMatcher([
   "/api/gcc-resources/(.*)",
 ]);
 
-const isAdminRoute = createRouteMatcher(["/leaders/(.*)"]);
+const isAdminRoute = createRouteMatcher(["/leaders/(.*)", "/users/(.*)"]);
 
 export default clerkMiddleware(async (auth, req) => {
   const session = await auth();

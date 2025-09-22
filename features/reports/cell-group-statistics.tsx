@@ -64,10 +64,10 @@ export function CellGroupStatistics() {
           </span>
           <span className="@[540px]/card:hidden">{dateRangeLabel}</span>
         </CardDescription>
-        <div className="lg:hidden col-span-full text-xs text-muted-foreground flex items-center gap-2">
+        <div className="lg:hidden col-span-full text-xs text-muted-foreground flex items-center gap-1.5">
           <CalendarIcon className="size-3 shrink-0" />
           <span className="block">
-            Period: {formatDate(periodDate?.start as string)} -
+            {formatDate(periodDate?.start as string)} -
             {formatDate(periodDate?.end as string)}
           </span>
         </div>
@@ -142,7 +142,7 @@ export function CellGroupStatistics() {
         {cgStatsQuery.isLoading ? (
           <Skeleton className="h-4 w-48" />
         ) : (
-          <div className="text-xs text-muted-foreground flex items-center gap-2">
+          <div className="text-xs text-muted-foreground flex items-center gap-1.5">
             <CalendarIcon className="size-3" />
             <span>
               Period: {formatDate(periodDate?.start as string)} -

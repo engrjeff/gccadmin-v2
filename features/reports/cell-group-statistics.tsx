@@ -65,7 +65,7 @@ export function CellGroupStatistics() {
           <span className="@[540px]/card:hidden">{dateRangeLabel}</span>
         </CardDescription>
         {cgStatsQuery.isLoading ? (
-          <Skeleton className="h-4 w-48" />
+          <Skeleton className="h-4 w-48 lg:hidden" />
         ) : (
           <div className="lg:hidden col-span-full text-xs text-muted-foreground flex items-center gap-1.5">
             <CalendarIcon className="size-3 shrink-0" />

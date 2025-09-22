@@ -67,7 +67,11 @@ async function DiscipleDetailPage({ params }: PageProps) {
         <TabsContent value="handled-disciples">
           <HandledDisciples
             handledBy={disciple.name}
-            disciples={disciple.handledDisciples}
+            disciples={
+              disciple.isPrimary
+                ? disciple.disciples
+                : disciple.handledDisciples
+            }
           />
         </TabsContent>
       </DiscipleDetailTabs>

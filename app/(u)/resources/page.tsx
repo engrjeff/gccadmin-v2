@@ -26,9 +26,7 @@ async function ResourcesPage({ searchParams }: PageProps) {
       <div className="flex items-center gap-4">
         <div>
           <h2 className="font-bold">Resources</h2>
-          <p className="text-sm text-muted-foreground">
-            Collection of GCC Resources like lessons and preachings.
-          </p>
+          <p className="text-sm text-muted-foreground">Cell Group lessons</p>
         </div>
         {lessonSeriesList.length === 0 ? null : (
           <div className="flex items-center gap-3 ml-auto">
@@ -51,7 +49,7 @@ async function ResourcesPage({ searchParams }: PageProps) {
           <div className="flex items-center gap-3">
             <SearchField paramName="q" />
           </div>
-          <ul className="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <ul className="flex-1 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
             {lessonSeriesList.map((lessonSeries) => (
               <li key={`lesson-series-${lessonSeries.id}`}>
                 <LessonSeriesCard lessonSeries={lessonSeries} />

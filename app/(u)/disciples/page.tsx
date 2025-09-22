@@ -27,7 +27,12 @@ export default async function DisciplesPage({ searchParams }: PageProps) {
   return (
     <div className="flex flex-1 flex-col gap-4 p-4 h-full">
       <div className="flex items-center gap-4">
-        <h2 className="font-bold">Disciples</h2>
+        <div>
+          <h2 className="font-bold">Disciples</h2>
+          <p className="text-sm text-muted-foreground hidden md:block">
+            View and manage your disciples.
+          </p>
+        </div>
         <div className="flex items-center gap-3 ml-auto">
           <ImportDisciplesDialog />
           <DiscipleCreateFormModal />

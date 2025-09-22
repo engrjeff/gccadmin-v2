@@ -21,7 +21,7 @@ export function MemberStatisticsByChurchStatus() {
     members.data?.reduce((total, a) => total + a._count.churchStatus, 0) ?? 100;
 
   return (
-    <div className="flex flex-col gap-4 border-b pb-4 sm:border-b-0">
+    <div className="flex flex-col gap-4 pb-4 border-b-0">
       <p className="text-sm font-semibold">Members by Church Status</p>
       <ul className="space-y-4">
         {members.data?.map((member) => (

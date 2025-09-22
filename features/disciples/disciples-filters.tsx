@@ -11,29 +11,36 @@ export function DisciplesFilters() {
   return (
     <div className="flex items-center gap-3 flex-wrap">
       <SearchField paramName="q" />
-      <FilterField
-        label="Cell Status"
-        options={cellStatuses}
-        Icon={CircleDotIcon}
-        queryName="cellStatus"
-      />
-      <FilterField
-        label="Church Status"
-        options={churchStatuses}
-        Icon={CircleDotIcon}
-        queryName="churchStatus"
-      />
-      <FilterField
-        label="Process Level"
-        options={processLevels}
-        Icon={TrendingUpIcon}
-        queryName="processLevel"
-      />
-      <LeadersFilter />
+      <div className="flex items-center gap-3 flex-wrap">
+        <FilterField
+          label="Cell Status"
+          options={cellStatuses}
+          Icon={CircleDotIcon}
+          queryName="cellStatus"
+        />
+        <FilterField
+          label="Church Status"
+          options={churchStatuses}
+          Icon={CircleDotIcon}
+          queryName="churchStatus"
+        />
+        <FilterField
+          label="Process Level"
+          options={processLevels}
+          Icon={TrendingUpIcon}
+          queryName="processLevel"
+        />
+        <LeadersFilter />
 
-      <ResetFiltersButton
-        validFilters={["cellStatus", "churchStatus", "processLevel", "leader"]}
-      />
+        <ResetFiltersButton
+          validFilters={[
+            "cellStatus",
+            "churchStatus",
+            "processLevel",
+            "leader",
+          ]}
+        />
+      </div>
     </div>
   );
 }

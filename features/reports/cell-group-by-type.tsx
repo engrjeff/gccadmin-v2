@@ -35,7 +35,7 @@ export function CellGroupByType({
   return (
     <div className="flex flex-col gap-3 p-4">
       <div className="flex items-center">
-        <p className="text-sm font-semibold">Cell Groups {dateRangeLabel}</p>
+        <p className="text-sm font-semibold">Reported Cell Groups</p>
         {/* {trend ? (
           <Badge
             variant={trend.status === "increased" ? "ACTIVE" : "INACTIVE"}

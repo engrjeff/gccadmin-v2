@@ -11,7 +11,10 @@ export default function DashboardPage() {
   return (
     <div className="space-y-4 p-4">
       <div>
-        <h2 className="mb-1 text-lg font-bold tracking-tight">Dashboard</h2>
+        <h2 className="font-bold">Dashboard</h2>
+        <p className="text-sm text-muted-foreground">
+          Quick insights on cell groups and members.
+        </p>
       </div>
       <CellGroupStatistics />
       <RecentCellGroups />

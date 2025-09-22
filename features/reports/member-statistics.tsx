@@ -11,7 +11,7 @@ import { MemberStatisticsByType } from "./member-statistics-by-type";
 
 export function MemberStatistics() {
   return (
-    <Card className="py-4 gap-0">
+    <Card className="pt-4 pb-0 gap-0">
       <CardHeader className="border-b px-4 [.border-b]:pb-4">
         <CardTitle>Member Statistics</CardTitle>
         <CardDescription>As of today</CardDescription>

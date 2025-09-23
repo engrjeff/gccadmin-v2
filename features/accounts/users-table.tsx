@@ -66,13 +66,18 @@ export function UsersTable({ users }: { users: User[] }) {
                   </div>
                 </TableCell>
                 <TableCell>
-                  <Badge variant="ACTIVE">
-                    {
-                      (
-                        user.publicMetadata as CustomJwtSessionClaims["metadata"]
-                      ).role
-                    }
-                  </Badge>
+                  {(user.publicMetadata as CustomJwtSessionClaims["metadata"])
+                    .role ? (
+                    <Badge variant="ACTIVE">
+                      {
+                        (
+                          user.publicMetadata as CustomJwtSessionClaims["metadata"]
+                        ).role
+                      }
+                    </Badge>
+                  ) : (
+                    <Badge variant="INACTIVE">Unassigned</Badge>
+                  )}
                 </TableCell>
                 <TableCell>
                   {(user.publicMetadata as CustomJwtSessionClaims["metadata"])

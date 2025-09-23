@@ -46,7 +46,11 @@ export function NavAdmin({
       <SidebarMenu>
         {menuItems.map((item) => (
           <SidebarMenuItem key={item.name}>
-            <SidebarMenuButton asChild isActive={pathname.startsWith(item.url)}>
+            <SidebarMenuButton
+              asChild
+              size="md"
+              isActive={pathname.startsWith(item.url)}
+            >
               <Link href={item.url}>
                 <item.icon />
                 <span>{item.name}</span>

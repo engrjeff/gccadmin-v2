@@ -6,6 +6,7 @@ import {
   CircleUserIcon,
   GalleryVerticalEnd,
   Grid2X2Icon,
+  LibraryIcon,
   ShieldCheckIcon,
   ShieldIcon,
   UsersIcon,
@@ -26,7 +27,6 @@ import {
 } from "@/components/ui/sidebar";
 import { app } from "@/lib/config";
 import { NavAdmin } from "./nav-admin";
-import { NavGCCLinks } from "./nav-gcc-links";
 import { NavProcess } from "./nav-process";
 
 // This is sample data.
@@ -92,9 +92,14 @@ const data = {
       icon: BookOpenIcon,
     },
     {
-      name: "Leadership",
-      url: "/leadership",
+      name: "Growth Process System",
+      url: "/gps",
       icon: ShieldCheckIcon,
+    },
+    {
+      name: "GCC Resources",
+      url: "/gcc-resources",
+      icon: LibraryIcon,
     },
   ],
 };
@@ -130,7 +135,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavCellGroup menuItems={data.navCellGroup} />
         <NavAdmin menuItems={data.navAdmin} />
         <NavProcess menuItems={data.navProcess} />
-        <NavGCCLinks />
       </SidebarContent>
       <SidebarFooter>
         <p className="text-xs text-muted-foreground">

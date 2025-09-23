@@ -77,7 +77,7 @@ export function DiscipleEditForm({
   const disciples = useDisciples({ leaderId });
 
   const handledByOptions = disciples.data
-    ?.filter((d) => d.isMyPrimary && d.id !== disciple.id)
+    ?.filter((d) => d.isMyPrimary && !d.isPrimary && d.id !== disciple.id)
     .map((d) => ({ label: d.name, value: d.id }));
 
   const updateAction = useAction(updateDisciple, {
@@ -389,36 +389,39 @@ export function DiscipleEditForm({
               />
             </div>
 
-            <FormField
-              control={form.control}
-              name="handledById"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Handled By</FormLabel>
-                  <FormControl>
-                    <SelectNative
-                      disabled={handledByOptions?.length === 0}
-                      {...field}
-                      className="capitalize"
-                    >
-                      <option value="">
-                        {handledByOptions?.length === 0
-                          ? "No qualified option"
-                          : "Select Handled by"}
-                      </option>
-                      {handledByOptions?.map((disciple) => (
-                        <option key={disciple.value} value={disciple.value}>
-                          {disciple.label}
+            {disciple.isPrimary ? null : (
+              <FormField
+                control={form.control}
+                name="handledById"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Handled By</FormLabel>
+                    <FormControl>
+                      <SelectNative
+                        disabled={handledByOptions?.length === 0}
+                        {...field}
+                        className="capitalize"
+                      >
+                        <option value="">
+                          {handledByOptions?.length === 0
+                            ? "No qualified option"
+                            : "Select Handled by"}
                         </option>
-                      ))}
-                    </SelectNative>
-                  </FormControl>
-                  <FormDescription>Who handles this disciple?</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
+                        {handledByOptions?.map((disciple) => (
+                          <option key={disciple.value} value={disciple.value}>
+                            {disciple.label}
+                          </option>
+                        ))}
+                      </SelectNative>
+                    </FormControl>
+                    <FormDescription>
+                      Who handles this disciple?
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
             {disciple.isPrimary ? null : (
               <FormField
                 control={form.control}

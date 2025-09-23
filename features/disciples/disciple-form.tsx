@@ -73,7 +73,7 @@ export function DiscipleForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
   const disciples = useDisciples({ leaderId });
 
   const handledByOptions = disciples.data
-    ?.filter((d) => d.isMyPrimary)
+    ?.filter((d) => d.isMyPrimary && !d.isPrimary)
     .map((d) => ({ label: d.name, value: d.id }));
 
   const createAction = useAction(createDisciple, {

@@ -34,7 +34,7 @@ async function CellReportsPage({ searchParams }: PageProps) {
             <div className="text-xs text-muted-foreground flex items-center gap-2">
               <CalendarIcon className="size-3" />
               <span>
-                {formatDate(dateFilter?.start?.toISOString())} -
+                {formatDate(dateFilter?.start?.toISOString())} -{" "}
                 {formatDate(dateFilter?.end.toISOString())}
               </span>
             </div>

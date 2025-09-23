@@ -7,7 +7,6 @@ import {
   CardAction,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -55,25 +54,19 @@ export function CellGroupStatistics() {
   const periodDate = cgStatsQuery.data?.dateRangeFilter;
 
   return (
-    <Card className="@container/card pt-4 pb-0 lg:pb-4 gap-0">
+    <Card className="@container/card pt-4 pb-0 gap-0">
       <CardHeader className="border-b px-4 [.border-b]:pb-4">
         <CardTitle>Cell Groups</CardTitle>
-        <CardDescription>
-          <span className="hidden @[540px]/card:block">
-            Total for {dateRangeLabel}
-          </span>
-          <span className="@[540px]/card:hidden">{dateRangeLabel}</span>
-        </CardDescription>
         {cgStatsQuery.isLoading ? (
-          <Skeleton className="h-4 w-48 lg:hidden" />
+          <Skeleton className="h-4 w-48" />
         ) : (
-          <div className="lg:hidden col-span-full text-xs text-muted-foreground flex items-center gap-1.5">
+          <CardDescription className="text-xs flex items-center gap-1.5">
             <CalendarIcon className="size-3 shrink-0" />
             <span className="block">
-              {formatDate(periodDate?.start as string)} -
+              {formatDate(periodDate?.start as string)} -{" "}
               {formatDate(periodDate?.end as string)}
             </span>
-          </div>
+          </CardDescription>
         )}
         <CardAction>
           <ToggleGroup
@@ -142,19 +135,6 @@ export function CellGroupStatistics() {
           </div>
         )}
       </CardContent>
-      <CardFooter className="border-t px-4 [.border-t]:pt-4 hidden lg:flex">
-        {cgStatsQuery.isLoading ? (
-          <Skeleton className="h-4 w-48" />
-        ) : (
-          <div className="text-xs text-muted-foreground flex items-center gap-1.5">
-            <CalendarIcon className="size-3" />
-            <span>
-              Period: {formatDate(periodDate?.start as string)} -
-              {formatDate(periodDate?.end as string)}
-            </span>
-          </div>
-        )}
-      </CardFooter>
     </Card>
   );
 }

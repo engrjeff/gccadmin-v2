@@ -1,4 +1,4 @@
-import { PackageIcon } from "lucide-react";
+import { BadgeCheckIcon, PackageIcon, ShieldCheckIcon } from "lucide-react";
 import Link from "next/link";
 import type { Disciple } from "@/app/generated/prisma";
 import { SortLink } from "@/components/sort-link";
@@ -75,9 +75,15 @@ export function DisciplesTable({
                   <div>
                     <Link
                       href={`/disciples/${d.id}`}
-                      className="font-semibold hover:underline"
+                      className="font-semibold hover:underline inline-flex items-center gap-1.5"
                     >
-                      {d.name}
+                      {d.name}{" "}
+                      {d.isMyPrimary && !d.isPrimary ? (
+                        <BadgeCheckIcon className="size-3 text-blue-500" />
+                      ) : null}
+                      {d.isPrimary ? (
+                        <ShieldCheckIcon className="size-3 text-yellow-500" />
+                      ) : null}
                     </Link>
                     <p className="text-xs text-muted-foreground capitalize">
                       {removeUnderscores(d.memberType)},{" "}

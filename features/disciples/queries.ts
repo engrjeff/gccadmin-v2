@@ -69,6 +69,13 @@ export async function getDisciples(args: DisciplesQueryArgs) {
     where: { userAccountId: user.userId },
   });
 
+  const pageSizeParam = args.pageSize
+    ? // biome-ignore lint/suspicious/noGlobalIsNan: <nah>
+      isNaN(args.pageSize)
+      ? DEFAULT_PAGE_SIZE
+      : Number(args.pageSize)
+    : DEFAULT_PAGE_SIZE;
+
   if (!leader && !isAdmin) {
     return {
       disciples: [],
@@ -78,7 +85,7 @@ export async function getDisciples(args: DisciplesQueryArgs) {
         total: 0,
         page: 1,
         itemCount: 0,
-        pageSize: DEFAULT_PAGE_SIZE,
+        pageSize: pageSizeParam,
         totalPages: 0,
       },
     };
@@ -154,8 +161,8 @@ export async function getDisciples(args: DisciplesQueryArgs) {
       },
     },
 
-    take: args?.pageSize ?? DEFAULT_PAGE_SIZE,
-    skip: getSkip({ limit: DEFAULT_PAGE_SIZE, page: args?.page }),
+    take: pageSizeParam,
+    skip: getSkip({ limit: pageSizeParam, page: args?.page }),
     orderBy: [
       ...getDiscipleSort(args.sort, args.order),
       {
@@ -172,7 +179,7 @@ export async function getDisciples(args: DisciplesQueryArgs) {
   const pageInfo = {
     total: totalFiltered,
     page: args.page ? Number(args.page) : 1,
-    pageSize: DEFAULT_PAGE_SIZE,
+    pageSize: pageSizeParam,
   };
 
   return {
@@ -182,7 +189,7 @@ export async function getDisciples(args: DisciplesQueryArgs) {
     pageInfo: {
       ...pageInfo,
       itemCount: disciples.length,
-      totalPages: Math.ceil(totalFiltered / DEFAULT_PAGE_SIZE),
+      totalPages: Math.ceil(totalFiltered / pageSizeParam),
     },
   };
 }

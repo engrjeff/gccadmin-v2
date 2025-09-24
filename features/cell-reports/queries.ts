@@ -53,6 +53,13 @@ export async function getCellReports(args: CellReportsQueryArgs) {
     where: { userAccountId: user.userId },
   });
 
+  const pageSizeParam = args.pageSize
+    ? // biome-ignore lint/suspicious/noGlobalIsNan: <nah>
+      isNaN(args.pageSize)
+      ? DEFAULT_PAGE_SIZE
+      : Number(args.pageSize)
+    : DEFAULT_PAGE_SIZE;
+
   if (!leader && !isAdmin) {
     return {
       cellReports: [],
@@ -64,7 +71,7 @@ export async function getCellReports(args: CellReportsQueryArgs) {
         total: 0,
         page: 1,
         itemCount: 0,
-        pageSize: DEFAULT_PAGE_SIZE,
+        pageSize: pageSizeParam,
         totalPages: 0,
       },
     };
@@ -126,8 +133,8 @@ export async function getCellReports(args: CellReportsQueryArgs) {
       },
     },
 
-    take: args?.pageSize ?? DEFAULT_PAGE_SIZE,
-    skip: getSkip({ limit: DEFAULT_PAGE_SIZE, page: args?.page }),
+    take: pageSizeParam,
+    skip: getSkip({ limit: pageSizeParam, page: args?.page }),
     orderBy: [
       ...getCellReportSort(args.sort, args.order),
       {
@@ -144,7 +151,7 @@ export async function getCellReports(args: CellReportsQueryArgs) {
   const pageInfo = {
     total: totalFiltered,
     page: args.page ? Number(args.page) : 1,
-    pageSize: DEFAULT_PAGE_SIZE,
+    pageSize: pageSizeParam,
   };
 
   return {
@@ -155,7 +162,7 @@ export async function getCellReports(args: CellReportsQueryArgs) {
     pageInfo: {
       ...pageInfo,
       itemCount: cellReports.length,
-      totalPages: Math.ceil(totalFiltered / DEFAULT_PAGE_SIZE),
+      totalPages: Math.ceil(totalFiltered / pageSizeParam),
     },
     dateFilter,
   };

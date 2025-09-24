@@ -10,6 +10,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { PageSizeSelect } from "./page-size-select";
 
 interface PageInfo {
   total: number;
@@ -30,7 +31,16 @@ export function DataPagination({ pageInfo, name }: DataPaginationProps) {
   const { total, page, pageSize, totalPages } = pageInfo;
 
   if (totalPages <= 1) {
-    return null;
+    return (
+      <Pagination className="pb-6 flex flex-col lg:flex-row items-center gap-4">
+        <PageSizeSelect />
+
+        <p className="text-sm text-muted-foreground lg:ml-auto">
+          Showing {(page - 1) * pageSize + 1} to{" "}
+          {Math.min(page * pageSize, total)} of {total} {name}
+        </p>
+      </Pagination>
+    );
   }
 
   const createPageUrl = (newPage: number) => {
@@ -85,56 +95,56 @@ export function DataPagination({ pageInfo, name }: DataPaginationProps) {
   };
 
   return (
-    <div className="flex flex-col md:flex-row gap-3 items-center md:justify-between w-full pb-6">
-      <p className="text-sm text-muted-foreground shrink-0">
+    <Pagination className="pb-6 flex flex-col lg:flex-row items-center gap-4">
+      <PageSizeSelect />
+
+      <p className="text-sm text-muted-foreground lg:ml-auto">
         Showing {(page - 1) * pageSize + 1} to{" "}
         {Math.min(page * pageSize, total)} of {total} {name}
       </p>
 
-      <Pagination className="md:justify-end justify-center">
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious
-              size="sm"
-              onClick={page > 1 ? () => navigateToPage(page - 1) : undefined}
-              className={
-                page <= 1 ? "pointer-events-none opacity-50" : "cursor-pointer"
-              }
-            />
-          </PaginationItem>
+      <PaginationContent>
+        <PaginationItem>
+          <PaginationPrevious
+            size="iconSm"
+            onClick={page > 1 ? () => navigateToPage(page - 1) : undefined}
+            className={
+              page <= 1 ? "pointer-events-none opacity-50" : "cursor-pointer"
+            }
+          />
+        </PaginationItem>
 
-          {renderPageNumbers().map((pageNum, index) => (
-            <PaginationItem key={index.toString()}>
-              {pageNum === "ellipsis" ? (
-                <PaginationEllipsis />
-              ) : (
-                <PaginationLink
-                  size="sm"
-                  onClick={() => navigateToPage(pageNum)}
-                  isActive={pageNum === page}
-                  className="cursor-pointer"
-                >
-                  {pageNum}
-                </PaginationLink>
-              )}
-            </PaginationItem>
-          ))}
-
-          <PaginationItem>
-            <PaginationNext
-              size="sm"
-              onClick={
-                page < totalPages ? () => navigateToPage(page + 1) : undefined
-              }
-              className={
-                page >= totalPages
-                  ? "pointer-events-none opacity-50"
-                  : "cursor-pointer"
-              }
-            />
+        {renderPageNumbers().map((pageNum, index) => (
+          <PaginationItem key={index.toString()}>
+            {pageNum === "ellipsis" ? (
+              <PaginationEllipsis />
+            ) : (
+              <PaginationLink
+                size="iconSm"
+                onClick={() => navigateToPage(pageNum)}
+                isActive={pageNum === page}
+                className="cursor-pointer"
+              >
+                {pageNum}
+              </PaginationLink>
+            )}
           </PaginationItem>
-        </PaginationContent>
-      </Pagination>
-    </div>
+        ))}
+
+        <PaginationItem>
+          <PaginationNext
+            size="iconSm"
+            onClick={
+              page < totalPages ? () => navigateToPage(page + 1) : undefined
+            }
+            className={
+              page >= totalPages
+                ? "pointer-events-none opacity-50"
+                : "cursor-pointer"
+            }
+          />
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
   );
 }

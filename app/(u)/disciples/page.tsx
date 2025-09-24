@@ -3,6 +3,7 @@ import { DataPagination } from "@/components/data-pagination";
 import { DiscipleCreateFormModal } from "@/features/disciples/disciple-create-form-modal";
 import { DisciplesFilters } from "@/features/disciples/disciples-filters";
 import { DisciplesTable } from "@/features/disciples/disciples-table";
+import { ExportDisciplesButton } from "@/features/disciples/export-disciples-button";
 import { ImportDisciplesDialog } from "@/features/disciples/import-disciples-dialog";
 import {
   type DisciplesQueryArgs,
@@ -34,7 +35,10 @@ export default async function DisciplesPage({ searchParams }: PageProps) {
           </p>
         </div>
         <div className="flex items-center gap-3 ml-auto">
-          <ImportDisciplesDialog />
+          <ExportDisciplesButton data={disciples} />
+          <div className="hidden lg:block">
+            <ImportDisciplesDialog />
+          </div>
           <DiscipleCreateFormModal />
         </div>
       </div>

@@ -1,3 +1,5 @@
+import type { Disciple } from "@/app/generated/prisma";
+
 // Create a type for the roles
 export type UserAccountRole = "admin" | "leader" | "stranger";
 
@@ -29,3 +31,8 @@ export type DateRange =
   | "this_month"
   | "last_month"
   | "last_last_month";
+
+export interface DiscipleRecord extends Disciple {
+  leader: Pick<Disciple, "id" | "name"> | null;
+  handledBy: Pick<Disciple, "name"> | null;
+}

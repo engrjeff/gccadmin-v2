@@ -1,16 +1,7 @@
-import { CheckIcon } from "lucide-react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import { DiscipleAccountCard } from "@/features/disciples/disciple-account-card";
 import { DiscipleProfileForm } from "@/features/disciples/disciple-profile-form";
 import { getDiscipleProfile } from "@/features/disciples/queries";
 
@@ -38,30 +29,11 @@ async function MyProfilePage() {
         </div>
         <Separator />
         <div className="flex-1 space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Account</CardTitle>
-              <CardDescription>Linked User Account</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2">
-                <Label htmlFor="leader">Leader</Label>
-                <div className="relative">
-                  <Input
-                    readOnly
-                    disabled
-                    type="email"
-                    defaultValue={discipleProfile.userAccount?.email}
-                  />
-                  <CheckIcon className="size-4 absolute top-1/2 right-2 -translate-y-1/2 text-green-500" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
           <DiscipleProfileForm
             key={discipleProfile.updatedAt.toString()}
             disciple={discipleProfile}
           />
+          <DiscipleAccountCard email={discipleProfile.userAccount?.email} />
         </div>
       </div>
     </div>

@@ -62,6 +62,16 @@ export const discipleUpdateSchema = discipleCreateSchema.extend(
   discipleIdSchema.shape,
 );
 
+export const discipleProfileSchema = discipleCreateSchema
+  .pick({
+    name: true,
+    birthdate: true,
+    address: true,
+  })
+  .extend(discipleIdSchema.shape);
+
 export type DiscipleCreateInputs = z.infer<typeof discipleCreateSchema>;
 
 export type DiscipleImportInputs = z.infer<typeof importDisciplesSchema>;
+
+export type DiscipleProfileInputs = z.infer<typeof discipleProfileSchema>;

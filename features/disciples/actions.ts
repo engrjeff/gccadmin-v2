@@ -6,6 +6,7 @@ import { authActionClient, leaderActionClient } from "@/lib/safe-action";
 import {
   discipleCreateSchema,
   discipleIdSchema,
+  discipleProfileSchema,
   discipleStatusChangeSchema,
   discipleUpdateSchema,
   importDisciplesSchema,
@@ -112,6 +113,30 @@ export const updateDisciple = authActionClient
     });
 
     revalidatePath("/disciples");
+
+    return {
+      disciple,
+    };
+  });
+
+export const updateDiscipleProfile = authActionClient
+  .metadata({ actionName: "updateDiscipleProfile" })
+  .inputSchema(discipleProfileSchema)
+  .action(async ({ parsedInput }) => {
+    const { id, name, address, birthdate } = parsedInput;
+
+    const disciple = await prisma.disciple.update({
+      where: {
+        id,
+      },
+      data: {
+        name,
+        address,
+        birthdate: birthdate ? new Date(birthdate) : undefined,
+      },
+    });
+
+    revalidatePath("/profile");
 
     return {
       disciple,

@@ -21,7 +21,7 @@ async function LeadersPage({ searchParams }: PageProps) {
       <div className="max-w-5xl mx-auto flex flex-col gap-4 p-4">
         <div>
           <h2 className="font-bold">Primary Leaders</h2>
-          <p className="text-sm text-muted-foreground hidden md:block">
+          <p className="text-sm text-muted-foreground">
             List of GCC Primary Leaders
           </p>
         </div>

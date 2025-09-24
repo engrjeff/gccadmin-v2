@@ -9,6 +9,7 @@ import {
   LibraryIcon,
   ShieldCheckIcon,
   ShieldIcon,
+  UserCogIcon,
   UsersIcon,
 } from "lucide-react";
 import Image from "next/image";
@@ -59,7 +60,6 @@ const data = {
       url: "/dashboard",
       icon: Grid2X2Icon,
     },
-
     {
       name: "Disciples",
       url: "/disciples",
@@ -83,6 +83,11 @@ const data = {
       //     icon: PlusIcon,
       //   },
       // ],
+    },
+    {
+      name: "My Profile",
+      url: "/profile",
+      icon: UserCogIcon,
     },
   ],
   navProcess: [

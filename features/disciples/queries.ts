@@ -202,3 +202,16 @@ export async function getDiscipleById(discipleId: string) {
 }
 
 export const cachedGetDiscipleById = cache(getDiscipleById);
+
+export async function getDiscipleProfile() {
+  const user = await auth();
+
+  if (!user?.userId) return { discipleProfile: null };
+
+  const discipleProfile = await prisma.disciple.findUnique({
+    where: { userAccountId: user.userId },
+    include: { userAccount: true },
+  });
+
+  return { discipleProfile };
+}

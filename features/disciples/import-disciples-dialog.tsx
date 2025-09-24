@@ -3,8 +3,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   AlertCircleIcon,
+  ArrowDownIcon,
   ChevronDownIcon,
-  Grid2x2CheckIcon,
   ImportIcon,
   Loader2Icon,
 } from "lucide-react";
@@ -76,9 +76,21 @@ export function ImportDisciplesDialog() {
         >
           <DialogHeader className="border-b p-4 text-left">
             <DialogTitle>Import Disciples</DialogTitle>
-            <DialogDescription>
-              Upload a <Badge variant="outline">.xlsx</Badge> file.
-            </DialogDescription>
+            <div className="flex items-center justify-between gap-4 pr-4">
+              <DialogDescription>
+                Upload a <Badge variant="outline">.xlsx</Badge> file.
+              </DialogDescription>
+              <a
+                href="/templates/disciple-template.xlsx"
+                download
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1.5 text-blue-500 hover:underline text-sm"
+              >
+                <ArrowDownIcon size={16} strokeWidth={2} aria-hidden="true" />
+                Download Template
+              </a>
+            </div>
           </DialogHeader>
           <DisciplesImportContent onAfterSave={() => setOpen(false)} />
         </DialogContent>
@@ -102,7 +114,7 @@ export function ImportDisciplesDialog() {
               target="_blank"
               rel="noreferrer"
             >
-              <Grid2x2CheckIcon
+              <ArrowDownIcon
                 size={16}
                 strokeWidth={2}
                 className="opacity-60"

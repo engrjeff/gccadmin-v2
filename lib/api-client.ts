@@ -12,6 +12,7 @@ export const API_ENDPOINTS = {
   GET_LESSONS: "/lessons",
   GET_MEMBER_STATISTICS: "/reports/member-statistics",
   GET_CELLGROUP_STATISTICS: "/reports/cell-group-statistics",
+  GET_CELLREPORT_TREND: "/reports/cell-report-trend",
 
   // GCC Resources
   GET_PREACHING_FOLDERS: "/gcc-resources/preaching-folders",

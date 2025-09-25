@@ -42,7 +42,7 @@ export function RecentCellGroups() {
         <CardHeader className="border-b px-4 [.border-b]:pb-4">
           <CardTitle>Recent Cell Groups</CardTitle>
           <CardDescription className="flex items-center gap-2">
-            <Skeleton className="h-4 w-48" />
+            <Skeleton className="h-4 w-32" />
           </CardDescription>
         </CardHeader>
         <CardContent className="p-4">
@@ -83,7 +83,7 @@ export function RecentCellGroups() {
         )}
       </CardHeader>
 
-      <CardContent className="px-4">
+      <CardContent className="px-4 flex-1 [&>div]:h-full">
         <Table>
           <TableHeader>
             <TableRow className="hover:bg-card bg-card">

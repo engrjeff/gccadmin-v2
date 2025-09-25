@@ -53,9 +53,9 @@ export async function GET(request: NextRequest) {
 
       return {
         month,
-        DISCIPLESHIP: discipleshipCount,
-        SOULWINNING: soulwinningCount,
-        OPEN: openCount,
+        discipleship: discipleshipCount,
+        soulwinning: soulwinningCount,
+        open: openCount,
       };
     }).filter(Boolean);
 

@@ -20,28 +20,17 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { useCellReportTrend } from "@/hooks/use-cell-report-trend";
 
-export const description = "A multiple bar chart";
-
-// const chartData = [
-//   { month: "January", desktop: 186, mobile: 80, test: 80 },
-//   { month: "February", desktop: 305, mobile: 200, test: 80 },
-//   { month: "March", desktop: 237, mobile: 120, test: 80 },
-//   { month: "April", desktop: 73, mobile: 190, test: 80 },
-//   { month: "May", desktop: 209, mobile: 130, test: 80 },
-//   { month: "June", desktop: 214, mobile: 140, test: 80 },
-// ];
-
 const chartConfig = {
-  DISCIPLESHIP: {
-    label: "DISCIPLESHIP",
+  discipleship: {
+    label: "Discipleship",
     color: "var(--chart-1)",
   },
-  OPEN: {
-    label: "OPEN",
+  open: {
+    label: "Open Cell",
     color: "var(--chart-2)",
   },
-  SOULWINNING: {
-    label: "SOULWINNING",
+  soulwinning: {
+    label: "Soul Winning",
     color: "var(--chart-3)",
   },
 } satisfies ChartConfig;
@@ -94,14 +83,14 @@ export function CellReportTrend() {
             />
             <ChartLegend content={<ChartLegendContent />} />
             <Bar
-              dataKey="DISCIPLESHIP"
-              fill="var(--color-DISCIPLESHIP)"
+              dataKey="discipleship"
+              fill="var(--color-discipleship)"
               radius={4}
             />
-            <Bar dataKey="OPEN" fill="var(--color-OPEN)" radius={4} />
+            <Bar dataKey="open" fill="var(--color-open)" radius={4} />
             <Bar
-              dataKey="SOULWINNING"
-              fill="var(--color-SOULWINNING)"
+              dataKey="soulwinning"
+              fill="var(--color-soulwinning)"
               radius={4}
             />
           </BarChart>

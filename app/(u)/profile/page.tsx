@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { DiscipleAccountCard } from "@/features/disciples/disciple-account-card";
 import { DiscipleProfileForm } from "@/features/disciples/disciple-profile-form";
@@ -12,7 +12,14 @@ export const metadata: Metadata = {
 async function MyProfilePage() {
   const { discipleProfile } = await getDiscipleProfile();
 
-  if (!discipleProfile) return notFound();
+  if (!discipleProfile)
+    return (
+      <Card>
+        <CardContent>
+          <p>No disciple profile found.</p>
+        </CardContent>
+      </Card>
+    );
 
   return (
     <div className="flex-1">

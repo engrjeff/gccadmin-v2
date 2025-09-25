@@ -14,11 +14,15 @@ async function MyProfilePage() {
 
   if (!discipleProfile)
     return (
-      <Card>
-        <CardContent>
-          <p>No disciple profile found.</p>
-        </CardContent>
-      </Card>
+      <div className="flex-1">
+        <div className="max-w-5xl mx-auto flex flex-col gap-4 p-4">
+          <Card>
+            <CardContent>
+              <p>No disciple profile found.</p>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
     );
 
   return (

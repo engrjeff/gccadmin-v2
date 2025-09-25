@@ -120,7 +120,6 @@ function FilterFieldComponent({
           variant="outline"
           size="sm"
           className={cn(
-            "border-dashed",
             hasActiveFilters && "border-solid bg-accent has-[>svg]:px-1.5",
             className,
           )}

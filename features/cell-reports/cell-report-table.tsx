@@ -35,10 +35,10 @@ export function CellReportTable({
             <TableHead>
               <SortLink sortValue="type" title="Cell Type" />
             </TableHead>
+            <TableHead>Lesson</TableHead>
             <TableHead>
               <SortLink sortValue="date" title="Date & Time" />
             </TableHead>
-            <TableHead>Lesson</TableHead>
             <TableHead># Attendees</TableHead>
             <TableHead className="text-center">Actions</TableHead>
           </TableRow>
@@ -64,17 +64,19 @@ export function CellReportTable({
 
                 {withLeader ? (
                   <TableCell>
-                    <Link
-                      href={`/leaders/${cellReport.leader?.id}`}
-                      className="hover:underline"
-                    >
-                      {cellReport.leader?.name}
+                    <div>
+                      <Link
+                        href={`/leaders/${cellReport.leader?.id}`}
+                        className="font-semibold hover:underline"
+                      >
+                        {cellReport.leader?.name}
+                      </Link>
                       <p className="text-xs text-muted-foreground capitalize">
                         {userId === cellReport.leader.userAccountId
                           ? "GCC Pastor"
                           : "Primary Leader"}
                       </p>
-                    </Link>
+                    </div>
                   </TableCell>
                 ) : null}
 
@@ -110,11 +112,7 @@ export function CellReportTable({
                 <TableCell>
                   <Badge variant={cellReport.type}>{cellReport.type}</Badge>
                 </TableCell>
-                <TableCell>
-                  <span className="text-muted-foreground text-xs">
-                    {formatCellGroupDate(cellReport.date)}
-                  </span>
-                </TableCell>
+
                 <TableCell>
                   {cellReport.lessonTitle ? (
                     <div>
@@ -133,6 +131,11 @@ export function CellReportTable({
                       </p>
                     </div>
                   )}
+                </TableCell>
+                <TableCell>
+                  <span className="text-muted-foreground text-xs">
+                    {formatCellGroupDate(cellReport.date)}
+                  </span>
                 </TableCell>
                 <TableCell>
                   <Badge variant="DISCIPLESHIP">

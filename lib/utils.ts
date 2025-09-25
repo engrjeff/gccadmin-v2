@@ -5,6 +5,7 @@ import {
   intlFormatDistance,
   startOfMonth,
   startOfWeek,
+  startOfYear,
   subDays,
   subMonths,
 } from "date-fns";
@@ -105,6 +106,13 @@ export function getClientDateRange(
     return {
       start: startOfMonth(subMonths(now, 2)),
       end: endOfMonth(subMonths(now, 2)),
+    };
+  }
+
+  if (preset === "year_to_date") {
+    return {
+      start: startOfYear(now),
+      end: now,
     };
   }
 }

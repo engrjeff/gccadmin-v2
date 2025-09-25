@@ -1,6 +1,6 @@
 "use client";
 
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 import {
   Card,
@@ -67,10 +67,10 @@ export function CellReportTrend() {
           {begin} - December {year}
         </CardDescription>
       </CardHeader>
-      <CardContent className="px-4 pt-4">
+      <CardContent className="px-4 pt-4 flex-1">
         <ChartContainer
           config={chartConfig}
-          className="aspect-auto h-[230px] w-full"
+          className="aspect-auto h-[240px] w-full"
         >
           <BarChart accessibilityLayer data={chartData}>
             <CartesianGrid vertical={false} />
@@ -79,7 +79,12 @@ export function CellReportTrend() {
               tickLine={false}
               tickMargin={10}
               axisLine={false}
+              minTickGap={5}
+              tickFormatter={(value: string) => {
+                return value.slice(0, 3);
+              }}
             />
+            <YAxis domain={[0, "dataMax + 0.5"]} hide />
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent indicator="dot" />}

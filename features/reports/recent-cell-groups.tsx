@@ -45,8 +45,8 @@ export function RecentCellGroups() {
             <Skeleton className="h-4 w-32" />
           </CardDescription>
         </CardHeader>
-        <CardContent className="p-4">
-          <Skeleton className="h-[252px]" />
+        <CardContent className="p-4 pb-0">
+          <Skeleton className="h-[240px]" />
         </CardContent>
       </Card>
     );

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { QuickActions } from "@/components/quick-actions";
 import { CellGroupStatistics } from "@/features/reports/cell-group-statistics";
 import { CellReportTrend } from "@/features/reports/cell-report-trend";
+import { DisciplesWithCellGroups } from "@/features/reports/disciples-with-cellgroups";
 import { MemberStatistics } from "@/features/reports/member-statistics";
 import { RecentCellGroups } from "@/features/reports/recent-cell-groups";
 
@@ -27,7 +28,14 @@ export default function DashboardPage() {
 
       <CellGroupStatistics />
       <CellReportTrend />
-      <RecentCellGroups />
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div className="lg:col-span-2">
+          <RecentCellGroups />
+        </div>
+        <div>
+          <DisciplesWithCellGroups />
+        </div>
+      </div>
       <MemberStatistics />
     </div>
   );

@@ -59,6 +59,7 @@ export function ExportDisciplesButton({ data }: { data: DiscipleRecord[] }) {
       type="button"
       size="sm"
       variant="secondaryOutline"
+      disabled={data.length === 0}
       onClick={handleExportToXLSX}
     >
       Export <DownloadIcon />

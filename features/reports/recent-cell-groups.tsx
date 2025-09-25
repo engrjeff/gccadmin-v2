@@ -58,7 +58,7 @@ export function RecentCellGroups() {
         <CardDescription className="flex items-center gap-2">
           <CalendarIcon className="size-3" />
           <span>
-            {formatDate(periodDate?.start as string)} -
+            {formatDate(periodDate?.start as string)} -{" "}
             {formatDate(periodDate?.end as string)}
           </span>
         </CardDescription>

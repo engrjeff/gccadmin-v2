@@ -37,6 +37,8 @@ function getDateRangeLabel(dateRange: DateRange) {
       return "this month";
     case "last_month":
       return "last month";
+    case "year_to_date":
+      return "this year";
     default:
       return "";
   }
@@ -82,10 +84,11 @@ export function CellGroupStatistics() {
             <ToggleGroupItem value="last_week">Last week</ToggleGroupItem>
             <ToggleGroupItem value="this_month">This month</ToggleGroupItem>
             <ToggleGroupItem value="last_month">Last month</ToggleGroupItem>
+            <ToggleGroupItem value="year_to_date">Year-to-date</ToggleGroupItem>
           </ToggleGroup>
           <Select value={dateRange} onValueChange={setDateRange}>
             <SelectTrigger
-              className="flex w-32 **:data-[slot=select-value]:block **:data-[slot=select-value]:truncate @[767px]/card:hidden"
+              className="flex **:data-[slot=select-value]:block **:data-[slot=select-value]:truncate @[767px]/card:hidden"
               size="sm"
               aria-label="Select a value"
             >
@@ -103,6 +106,9 @@ export function CellGroupStatistics() {
               </SelectItem>
               <SelectItem value="last_month" className="rounded-lg">
                 Last month
+              </SelectItem>
+              <SelectItem value="year_to_date" className="rounded-lg">
+                Year-to-date
               </SelectItem>
             </SelectContent>
           </Select>

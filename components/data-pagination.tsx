@@ -35,10 +35,12 @@ export function DataPagination({ pageInfo, name }: DataPaginationProps) {
       <Pagination className="pb-6 flex flex-col lg:flex-row items-center gap-4">
         <PageSizeSelect />
 
-        <p className="text-sm text-muted-foreground lg:ml-auto">
-          Showing {(page - 1) * pageSize + 1} to{" "}
-          {Math.min(page * pageSize, total)} of {total} {name}
-        </p>
+        {total === 0 ? null : (
+          <p className="text-sm text-muted-foreground lg:ml-auto">
+            Showing {(page - 1) * pageSize + 1} to{" "}
+            {Math.min(page * pageSize, total)} of {total} {name}
+          </p>
+        )}
       </Pagination>
     );
   }

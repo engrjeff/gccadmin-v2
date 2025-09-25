@@ -58,6 +58,29 @@ function getDiscipleSort(sortBy?: string, order?: "asc" | "desc") {
   ];
 }
 
+function getStatusFilter(status: DisciplesQueryArgs["status"]) {
+  if (!status)
+    return {
+      isActive: true,
+    };
+
+  if (status === "active")
+    return {
+      isActive: true,
+    };
+
+  if (status === "inactive")
+    return {
+      isActive: false,
+    };
+
+  if (status === "primary")
+    return {
+      isActive: true,
+      OR: [{ isPrimary: true }, { isMyPrimary: true }],
+    };
+}
+
 export async function getDisciples(args: DisciplesQueryArgs) {
   const user = await auth();
 
@@ -103,13 +126,11 @@ export async function getDisciples(args: DisciplesQueryArgs) {
     ? (args.processLevel.split(",") as Array<ProcessLevel>)
     : undefined;
 
-  const isActive = args?.status === undefined ? true : args.status === "active";
-
   const totalFilteredQuery = prisma.disciple.count({
     where: {
       leaderId: args.leader ? args.leader : leader?.id,
       isDeleted: false,
-      isActive,
+      ...getStatusFilter(args.status),
       name: args.q
         ? {
             contains: args.q,
@@ -132,7 +153,7 @@ export async function getDisciples(args: DisciplesQueryArgs) {
     where: {
       leaderId: args.leader ? args.leader : leader?.id,
       isDeleted: false,
-      isActive,
+      ...getStatusFilter(args.status),
       name: args.q
         ? {
             contains: args.q,

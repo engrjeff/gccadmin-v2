@@ -48,3 +48,18 @@ export const processLevelStatuses: Option[] = [
   value: m,
   label: removeUnderscores(m),
 }));
+
+export const discipleStatusOptions: Option[] = [
+  {
+    label: "Active",
+    value: "active",
+  },
+  {
+    label: "Inactive",
+    value: "inactive",
+  },
+  {
+    label: "Primary",
+    value: "primary",
+  },
+];

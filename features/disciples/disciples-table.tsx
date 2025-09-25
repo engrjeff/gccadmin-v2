@@ -95,7 +95,7 @@ export function DisciplesTable({
                   <TableCell>
                     <Link
                       href={`/leaders/${d.leader?.id}`}
-                      className="hover:underline"
+                      className="font-semibold hover:underline"
                     >
                       {d.leader?.name}
                     </Link>

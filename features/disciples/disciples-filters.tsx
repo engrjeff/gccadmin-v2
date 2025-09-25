@@ -1,11 +1,16 @@
 "use client";
 
-import { CircleDotIcon, TrendingUpIcon } from "lucide-react";
+import { CircleDotIcon, FlameIcon, TrendingUpIcon } from "lucide-react";
 import { FilterField } from "@/components/filter-field";
 import { LeadersFilter } from "@/components/leaders-filter";
 import { ResetFiltersButton } from "@/components/reset-filters-button";
 import { SearchField } from "@/components/ui/search-field";
-import { cellStatuses, churchStatuses, processLevels } from "@/lib/constants";
+import {
+  cellStatuses,
+  churchStatuses,
+  discipleStatusOptions,
+  processLevels,
+} from "@/lib/constants";
 
 export function DisciplesFilters() {
   return (
@@ -30,6 +35,13 @@ export function DisciplesFilters() {
           Icon={TrendingUpIcon}
           queryName="processLevel"
         />
+        <FilterField
+          label="Status"
+          options={discipleStatusOptions}
+          Icon={FlameIcon}
+          queryName="status"
+          singleSection
+        />
         <LeadersFilter />
 
         <ResetFiltersButton
@@ -38,6 +50,7 @@ export function DisciplesFilters() {
             "churchStatus",
             "processLevel",
             "leader",
+            "status",
           ]}
         />
       </div>

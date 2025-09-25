@@ -30,7 +30,8 @@ export type DateRange =
   | "last_week"
   | "this_month"
   | "last_month"
-  | "last_last_month";
+  | "last_last_month"
+  | "year_to_date";
 
 export interface DiscipleRecord extends Disciple {
   leader: Pick<Disciple, "id" | "name"> | null;

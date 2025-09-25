@@ -4,6 +4,7 @@ import {
   endOfWeek,
   startOfMonth,
   startOfWeek,
+  startOfYear,
   subDays,
   subMonths,
 } from "date-fns";
@@ -78,6 +79,13 @@ export function getDateRange(
     return {
       start: startOfMonth(subMonths(now, 2)),
       end: endOfMonth(subMonths(now, 2)),
+    };
+  }
+
+  if (preset === "year_to_date") {
+    return {
+      start: startOfYear(now),
+      end: now,
     };
   }
 }

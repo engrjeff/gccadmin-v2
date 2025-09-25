@@ -11,6 +11,8 @@ import {
   View,
 } from "@react-pdf/renderer/lib/react-pdf.browser";
 import { StickyNoteIcon } from "lucide-react";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import {
   formatCellGroupDate,
@@ -345,10 +347,55 @@ export const GeneratePDFButton = ({
       <a
         href={instance.url as string}
         download={`cg-${new Date(cellReport.date).toISOString()}.pdf`}
+        onClick={() => toast.info("PDF generated!")}
       >
         <StickyNoteIcon />
         Generate PDF
       </a>
     </DropdownMenuItem>
+  );
+};
+
+export const GeneratePDFButtonWide = ({
+  cellReport,
+}: {
+  cellReport: CellReportRecord;
+}) => {
+  const [instance] = usePDF({
+    document: (
+      <Document
+        pageLayout="singlePage"
+        pageMode="fullScreen"
+        title={DOCUMENT_TITLE}
+        author={cellReport.leader.name}
+        creationDate={new Date()}
+        subject="GCC Cell Report"
+      >
+        <CellReportPDFTemplate cellReport={cellReport} />
+      </Document>
+    ),
+  });
+
+  if (instance.loading)
+    return (
+      <Button type="button" size="sm" disabled>
+        <StickyNoteIcon />
+        Generate PDF
+      </Button>
+    );
+
+  if (instance.error) return <div>Something went wrong: {instance.error}</div>;
+
+  return (
+    <Button type="button" size="sm" asChild>
+      <a
+        href={instance.url as string}
+        download={`cg-${new Date(cellReport.date).toISOString()}.pdf`}
+        onClick={() => toast.info("PDF generated!")}
+      >
+        <StickyNoteIcon />
+        Generate PDF
+      </a>
+    </Button>
   );
 };

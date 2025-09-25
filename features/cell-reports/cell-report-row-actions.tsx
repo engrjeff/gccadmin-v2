@@ -15,12 +15,11 @@ import {
   SheetClose,
   SheetContent,
   SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
 import { CellReportDetails } from "./cell-report-details";
-import { GeneratePDFButton } from "./cell-report-pdf";
+import { GeneratePDFButton, GeneratePDFButtonWide } from "./cell-report-pdf";
 import type { CellReportRecord } from "./queries";
 
 type RowAction = "view" | "edit" | "generate-pdf";
@@ -81,17 +80,18 @@ export function CellReportRowActions({
             </div>
           </SheetHeader>
 
-          <div className="max-h-[calc(100%-69px)] flex-1 overflow-y-auto py-4">
+          <div className="max-h-[calc(100%-69px)] flex-1 overflow-y-auto pt-1 pb-4">
             <CellReportDetails cellReport={cellReport} />
           </div>
 
-          <SheetFooter className="mt-auto flex gap-3 border-t p-4 text-right">
+          <div className="mt-auto flex gap-3 justify-end border-t p-4 text-right">
             <SheetClose asChild>
               <Button type="button" variant="outline" className="bg-muted/30">
                 Close
               </Button>
             </SheetClose>
-          </SheetFooter>
+            <GeneratePDFButtonWide cellReport={cellReport} />
+          </div>
         </SheetContent>
       </Sheet>
     </>

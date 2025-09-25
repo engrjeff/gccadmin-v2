@@ -58,7 +58,7 @@ export function CellGroupStatistics() {
       <CardHeader className="border-b px-4 [.border-b]:pb-4">
         <CardTitle>Cell Groups</CardTitle>
         {cgStatsQuery.isLoading ? (
-          <Skeleton className="h-4 w-48" />
+          <Skeleton className="h-4 w-32" />
         ) : (
           <CardDescription className="text-xs flex items-center gap-1.5">
             <CalendarIcon className="size-3 shrink-0" />

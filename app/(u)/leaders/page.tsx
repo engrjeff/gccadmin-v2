@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { SearchField } from "@/components/ui/search-field";
 import { LeadersTable } from "@/features/leaders/leaders-table";
 import { getLeaders, type LeadersQueryArgs } from "@/features/leaders/queries";
+import { SendCellReportReminderButton } from "@/features/leaders/send-cell-report-reminder-button";
 
 export const metadata: Metadata = {
   title: "Leaders",
@@ -19,11 +20,21 @@ async function LeadersPage({ searchParams }: PageProps) {
   return (
     <div className="flex-1">
       <div className="max-w-5xl mx-auto flex flex-col gap-4 p-4">
-        <div>
-          <h2 className="font-bold">Primary Leaders</h2>
-          <p className="text-sm text-muted-foreground">
-            List of GCC Primary Leaders
-          </p>
+        <div className="flex items-center gap-4 justify-between">
+          <div>
+            <h2 className="font-bold">Primary Leaders</h2>
+            <p className="text-sm text-muted-foreground">
+              List of GCC Primary Leaders
+            </p>
+          </div>
+          <SendCellReportReminderButton
+            data={leaders
+              .filter((l) => l.userAccount?.email)
+              .map((i) => ({
+                name: i.name,
+                email: i.userAccount?.email as string,
+              }))}
+          />
         </div>
         <div className="flex items-center gap-3">
           <SearchField paramName="q" />

@@ -17,4 +17,7 @@ export const API_ENDPOINTS = {
   // GCC Resources
   GET_PREACHING_FOLDERS: "/gcc-resources/preaching-folders",
   GET_RESOURCES_FOLDERS: "/gcc-resources/resources-folders",
+
+  // SEND EMAIL"
+  POST_SEND_CELL_REPORT_REMINDER: "/send-cell-report-reminder",
 };

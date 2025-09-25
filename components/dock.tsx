@@ -6,14 +6,13 @@ import type * as React from "react";
 import { cn } from "@/lib/utils";
 
 const dockVariants = cva(
-  "fixed bottom-0 left-0 right-0 border-t z-50 flex items-center justify-center gap-1 px-1 py-2.5 shadow-lg sm:hidden",
+  "fixed bottom-2 left-2 right-2 border-none rounded-full z-50 flex items-center justify-center gap-1 px-1 py-2.5 shadow-lg sm:hidden",
   {
     variants: {
       variant: {
-        default:
+        translucent:
           "bg-background/95 backdrop-blur-xs supports-[backdrop-filter]:bg-background/60",
-        solid: "bg-background",
-        translucent: "bg-background/80 backdrop-blur-xs",
+        default: "bg-background",
       },
     },
     defaultVariants: {

@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQueryClient } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { useAction } from "next-safe-action/hooks";
 import { useState } from "react";
@@ -63,6 +64,8 @@ export function CellReportForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
   const leadersQuery = useLeaders({ enabled: isAdmin });
 
   const lessonSeriesQuery = useLessonSeries();
+
+  const queryClient = useQueryClient();
 
   const form = useForm<CellReportCreateInputs>({
     defaultValues,
@@ -145,6 +148,8 @@ export function CellReportForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
 
       if (result.data?.cellReport) {
         toast.success(`Cell Report created!`);
+
+        await queryClient.invalidateQueries();
 
         onAfterSave();
       }

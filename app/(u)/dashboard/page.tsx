@@ -26,10 +26,8 @@ export default function DashboardPage() {
       </div>
 
       <CellGroupStatistics />
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <CellReportTrend />
-        <RecentCellGroups />
-      </div>
+      <CellReportTrend />
+      <RecentCellGroups />
       <MemberStatistics />
     </div>
   );

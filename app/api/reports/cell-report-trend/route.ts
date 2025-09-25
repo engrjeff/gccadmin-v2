@@ -35,9 +35,9 @@ export async function GET(request: NextRequest) {
         return reportMonth === index;
       });
 
-      if (monthReports.length === 0) {
-        return null;
-      }
+      // if (monthReports.length === 0) {
+      //   return null;
+      // }
 
       const discipleshipCount = monthReports.filter(
         (report) => report.type === CellType.DISCIPLESHIP,
@@ -57,7 +57,7 @@ export async function GET(request: NextRequest) {
         soulwinning: soulwinningCount,
         open: openCount,
       };
-    }).filter(Boolean);
+    });
 
     return NextResponse.json({
       data: monthlyData,

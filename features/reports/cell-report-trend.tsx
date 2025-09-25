@@ -48,7 +48,7 @@ export function CellReportTrend() {
           </CardDescription>
         </CardHeader>
         <CardContent className="p-4 flex-1">
-          <Skeleton className="h-[252px]" />
+          <Skeleton className="h-[250px]" />
         </CardContent>
       </Card>
     );
@@ -67,8 +67,11 @@ export function CellReportTrend() {
           {begin} - December {year}
         </CardDescription>
       </CardHeader>
-      <CardContent className="px-4">
-        <ChartContainer config={chartConfig}>
+      <CardContent className="px-4 pt-4">
+        <ChartContainer
+          config={chartConfig}
+          className="aspect-auto h-[230px] w-full"
+        >
           <BarChart accessibilityLayer data={chartData}>
             <CartesianGrid vertical={false} />
             <XAxis
@@ -85,13 +88,13 @@ export function CellReportTrend() {
             <Bar
               dataKey="discipleship"
               fill="var(--color-discipleship)"
-              radius={4}
+              radius={2}
             />
-            <Bar dataKey="open" fill="var(--color-open)" radius={4} />
+            <Bar dataKey="open" fill="var(--color-open)" radius={2} />
             <Bar
               dataKey="soulwinning"
               fill="var(--color-soulwinning)"
-              radius={4}
+              radius={2}
             />
           </BarChart>
         </ChartContainer>

@@ -55,7 +55,7 @@ export function RecentCellGroups() {
     <Card className="py-4 gap-0">
       <CardHeader className="border-b px-4 [.border-b]:pb-4">
         <CardTitle>Recent Cell Groups</CardTitle>
-        <CardDescription className="flex items-center gap-2">
+        <CardDescription className="flex items-center gap-2 text-xs">
           <CalendarIcon className="size-3" />
           <span>
             {formatDate(periodDate?.start as string)} -{" "}

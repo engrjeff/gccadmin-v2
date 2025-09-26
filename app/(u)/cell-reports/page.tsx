@@ -55,7 +55,11 @@ async function CellReportsPage({ searchParams }: PageProps) {
         userId={user.userId}
         cellReports={cellReports}
       />
-      <DataPagination name="cell reports" pageInfo={pageInfo} />
+      <DataPagination
+        name="cell reports"
+        pageInfo={pageInfo}
+        pageSizeOptions={[10, 20, 40, 50, 100]}
+      />
     </div>
   );
 }

@@ -23,9 +23,14 @@ interface PageInfo {
 interface DataPaginationProps {
   pageInfo: PageInfo;
   name: string;
+  pageSizeOptions?: number[];
 }
 
-export function DataPagination({ pageInfo, name }: DataPaginationProps) {
+export function DataPagination({
+  pageInfo,
+  name,
+  pageSizeOptions,
+}: DataPaginationProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const { total, page, pageSize, totalPages } = pageInfo;
@@ -33,7 +38,7 @@ export function DataPagination({ pageInfo, name }: DataPaginationProps) {
   if (totalPages <= 1) {
     return (
       <Pagination className="pb-6 flex flex-col lg:flex-row items-center gap-4">
-        <PageSizeSelect />
+        <PageSizeSelect options={pageSizeOptions} />
 
         {total === 0 ? null : (
           <p className="text-sm text-muted-foreground lg:ml-auto">
@@ -98,7 +103,7 @@ export function DataPagination({ pageInfo, name }: DataPaginationProps) {
 
   return (
     <Pagination className="pb-6 flex flex-col lg:flex-row items-center gap-4">
-      <PageSizeSelect />
+      <PageSizeSelect options={pageSizeOptions} />
 
       <p className="text-sm text-muted-foreground lg:ml-auto">
         Showing {(page - 1) * pageSize + 1} to{" "}

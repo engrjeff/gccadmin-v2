@@ -79,12 +79,12 @@ export function CellReportTrend() {
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              minTickGap={5}
+              minTickGap={30}
               tickFormatter={(value: string) => {
                 return value.slice(0, 3);
               }}
             />
-            <YAxis domain={[0, "dataMax + 0.5"]} hide />
+            <YAxis domain={[0, "dataMax + 0.1"]} hide />
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent indicator="dot" />}
@@ -93,13 +93,13 @@ export function CellReportTrend() {
             <Bar
               dataKey="discipleship"
               fill="var(--color-discipleship)"
-              radius={2}
+              radius={0}
             />
-            <Bar dataKey="open" fill="var(--color-open)" radius={2} />
+            <Bar dataKey="open" fill="var(--color-open)" radius={0} />
             <Bar
               dataKey="soulwinning"
               fill="var(--color-soulwinning)"
-              radius={2}
+              radius={0}
             />
           </BarChart>
         </ChartContainer>

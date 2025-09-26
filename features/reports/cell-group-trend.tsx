@@ -1,6 +1,11 @@
 "use client";
 
-import { ArrowRightIcon, TrendingDownIcon, TrendingUpIcon } from "lucide-react";
+import {
+  ArrowRightIcon,
+  ChartColumnIcon,
+  TrendingDownIcon,
+  TrendingUpIcon,
+} from "lucide-react";
 import Link from "next/link";
 import pluralize from "pluralize";
 import type { CellReport } from "@/app/generated/prisma";
@@ -21,6 +26,8 @@ function getDateRangeLabel(dateRange: DateRange) {
       return "last month";
     case "last_last_month":
       return "last month";
+    case "year_to_date":
+      return "this year";
     default:
       return "";
   }
@@ -36,6 +43,8 @@ function getPreviousDateRangeType(currentDateRange: DateRange) {
       return "last_month";
     case "last_month":
       return "this_month";
+    case "year_to_date":
+      return "year_to_date";
     default:
       return "last_week";
   }
@@ -74,17 +83,28 @@ export function CellGroupTrend({
         <div className="text-4xl font-semibold tabular-nums">
           {currentCount}
         </div>
-        <p className="text-sm text-muted-foreground">
-          compared to {previousCount} {pluralize("report", previousCount)}{" "}
-          {dateRangeLabel}
-        </p>
+        {selectedDateRange === "year_to_date" ? (
+          <p className="text-sm text-muted-foreground">cell groups this year</p>
+        ) : (
+          <p className="text-sm text-muted-foreground">
+            compared to {previousCount} {pluralize("report", previousCount)}{" "}
+            {dateRangeLabel}
+          </p>
+        )}
       </div>
       <div className="absolute top-4 right-4">
-        <Badge variant={trend === "up" ? "ACTIVE" : "INACTIVE"}>
-          {trend === "up" ? <TrendingUpIcon /> : <TrendingDownIcon />}
-          {trend === "up" ? "+" : "-"}
-          {Math.abs(percentDelta).toFixed(1)}%
-        </Badge>
+        {selectedDateRange === "year_to_date" ? (
+          <Badge variant="ACTIVE">
+            <ChartColumnIcon />
+            YTD
+          </Badge>
+        ) : (
+          <Badge variant={trend === "up" ? "ACTIVE" : "INACTIVE"}>
+            {trend === "up" ? <TrendingUpIcon /> : <TrendingDownIcon />}
+            {trend === "up" ? "+" : "-"}
+            {Math.abs(percentDelta).toFixed(1)}%
+          </Badge>
+        )}
       </div>
       <div className="mt-auto">
         <Button

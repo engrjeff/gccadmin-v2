@@ -21,7 +21,7 @@ export function DiscipleAccountCard({ email }: { email?: string }) {
           <Label htmlFor="leader">Leader</Label>
           <div className="relative">
             <Input readOnly disabled type="email" defaultValue={email} />
-            <CheckIcon className="size-4 absolute top-1/2 right-2 -translate-y-1/2 text-green-500" />
+            <CheckIcon className="-translate-y-1/2 absolute top-1/2 right-2 size-4 text-green-500" />
           </div>
         </div>
       </CardContent>

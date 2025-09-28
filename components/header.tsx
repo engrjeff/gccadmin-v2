@@ -30,7 +30,7 @@ export function Header() {
         <Button
           size="iconSm"
           variant="ghost"
-          className="md:hidden rounded-full"
+          className="rounded-full md:hidden"
           asChild
         >
           <Link href="/gcc-resources/lessons">

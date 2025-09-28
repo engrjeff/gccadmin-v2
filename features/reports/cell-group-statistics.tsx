@@ -56,13 +56,13 @@ export function CellGroupStatistics() {
   const periodDate = cgStatsQuery.data?.dateRangeFilter;
 
   return (
-    <Card className="@container/card pt-4 pb-0 gap-0">
+    <Card className="@container/card gap-0 pt-4 pb-0">
       <CardHeader className="border-b px-4 [.border-b]:pb-4">
         <CardTitle>Cell Groups</CardTitle>
         {cgStatsQuery.isLoading ? (
           <Skeleton className="h-4 w-32" />
         ) : (
-          <CardDescription className="text-xs flex items-center gap-1.5">
+          <CardDescription className="flex items-center gap-1.5 text-xs">
             <CalendarIcon className="size-3 shrink-0" />
             <span className="block">
               {formatDate(periodDate?.start as string)} -{" "}
@@ -78,7 +78,7 @@ export function CellGroupStatistics() {
             variant="outline"
             size="sm"
             disabled={cgStatsQuery.isLoading}
-            className="hidden *:data-[slot=toggle-group-item]:!px-4 @[767px]/card:flex"
+            className="*:data-[slot=toggle-group-item]:!px-4 @[767px]/card:flex hidden"
           >
             <ToggleGroupItem value="this_week">This week</ToggleGroupItem>
             <ToggleGroupItem value="last_week">Last week</ToggleGroupItem>
@@ -88,7 +88,7 @@ export function CellGroupStatistics() {
           </ToggleGroup>
           <Select value={dateRange} onValueChange={setDateRange}>
             <SelectTrigger
-              className="flex **:data-[slot=select-value]:block **:data-[slot=select-value]:truncate @[767px]/card:hidden"
+              className="flex @[767px]/card:hidden **:data-[slot=select-value]:block **:data-[slot=select-value]:truncate"
               size="sm"
               aria-label="Select a value"
             >
@@ -116,24 +116,24 @@ export function CellGroupStatistics() {
       </CardHeader>
       <CardContent className="px-0">
         {cgStatsQuery.isLoading ? (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 p-4">
+          <div className="grid grid-cols-1 gap-2 p-4 lg:grid-cols-3">
             <Skeleton className="h-[172px] lg:h-[188px]" />
             <Skeleton className="h-[172px] lg:h-[188px]" />
             <Skeleton className="h-[172px] lg:h-[188px]" />
           </div>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr_auto_1fr] gap-2">
+          <div className="grid grid-cols-1 gap-2 lg:grid-cols-[1fr_auto_1fr_auto_1fr]">
             <CellGroupByType
               dateRangeLabel={dateRangeLabel}
               cellReports={cgStatsQuery.data?.cellReports ?? []}
             />
             <Separator orientation="vertical" className="hidden lg:block" />
-            <Separator className=" lg:hidden" />
+            <Separator className="lg:hidden" />
             <CellGroupWithAssistants
               cellReports={cgStatsQuery.data?.cellReports ?? []}
             />
             <Separator orientation="vertical" className="hidden lg:block" />
-            <Separator className=" lg:hidden" />
+            <Separator className="lg:hidden" />
             <CellGroupTrend
               currentCellReports={cgStatsQuery.data?.cellReports ?? []}
               selectedDateRange={dateRange as DateRange}

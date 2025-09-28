@@ -25,9 +25,9 @@ export function CellReportTable({
   cellReports: CellReportRecord[];
 }) {
   return (
-    <div className="[&>div]:rounded-md rounded-md border flex-1 min-h-min overflow-hidden lg:[&>div]:max-h-[500px]">
+    <div className="min-h-min flex-1 overflow-hidden rounded-md border [&>div]:rounded-md lg:[&>div]:max-h-[500px]">
       <Table>
-        <TableHeader className="bg-card sticky top-0 z-10 backdrop-blur-sm">
+        <TableHeader className="sticky top-0 z-10 bg-card backdrop-blur-sm">
           <TableRow className="hover:bg-transparent">
             <TableHead className="size-4 text-center">#</TableHead>
             {withLeader ? <TableHead>Network Leader</TableHead> : null}
@@ -47,9 +47,9 @@ export function CellReportTable({
           {cellReports.length === 0 ? (
             <TableRow className="hover:bg-transparent">
               <TableCell colSpan={withLeader ? 8 : 7}>
-                <div className="min-h-[300px] flex flex-col items-center justify-center gap-3">
+                <div className="flex min-h-[300px] flex-col items-center justify-center gap-3">
                   <PackageIcon className="size-6 text-muted-foreground" />
-                  <p className="text-sm text-muted-foreground text-center">
+                  <p className="text-center text-muted-foreground text-sm">
                     No cell report records found.
                   </p>
                 </div>
@@ -71,7 +71,7 @@ export function CellReportTable({
                       >
                         {cellReport.leader?.name}
                       </Link>
-                      <p className="text-xs text-muted-foreground capitalize">
+                      <p className="text-muted-foreground text-xs capitalize">
                         {userId === cellReport.leader.userAccountId
                           ? "GCC Pastor"
                           : "Primary Leader"}
@@ -89,7 +89,7 @@ export function CellReportTable({
                       >
                         {cellReport.assistant.name}
                       </Link>
-                      <p className="text-xs text-muted-foreground capitalize">
+                      <p className="text-muted-foreground text-xs capitalize">
                         Assistant Leader
                       </p>
                     </div>
@@ -101,7 +101,7 @@ export function CellReportTable({
                       >
                         {cellReport.leader.name}
                       </Link>
-                      <p className="text-xs text-muted-foreground capitalize">
+                      <p className="text-muted-foreground text-xs capitalize">
                         {userId === cellReport.leader.userAccountId
                           ? "GCC Pastor"
                           : "Primary Leader"}
@@ -117,7 +117,7 @@ export function CellReportTable({
                   {cellReport.lessonTitle ? (
                     <div>
                       <p className="font-semibold">{cellReport.lessonTitle}</p>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-muted-foreground text-xs">
                         Custom Lesson
                       </p>
                     </div>
@@ -126,7 +126,7 @@ export function CellReportTable({
                       <p className="font-semibold hover:underline">
                         {cellReport.lesson?.title}
                       </p>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-muted-foreground text-xs">
                         {cellReport.lesson?.lessonSeries.title}
                       </p>
                     </div>

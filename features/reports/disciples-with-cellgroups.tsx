@@ -20,7 +20,7 @@ export function DisciplesWithCellGroups() {
 
   if (cgQuery.isLoading)
     return (
-      <Card className="py-4 gap-0">
+      <Card className="gap-0 py-4">
         <CardHeader className="border-b px-4 [.border-b]:pb-4">
           <CardTitle>Disciples with Cell Groups</CardTitle>
           <CardDescription className="flex items-center gap-2">
@@ -69,7 +69,7 @@ export function DisciplesWithCellGroups() {
   const data = Array.from(assistantCgCountMap.values());
 
   return (
-    <Card className="py-4 gap-0 h-full">
+    <Card className="h-full gap-0 py-4">
       <CardHeader className="border-b px-4 [.border-b]:pb-4">
         <CardTitle>Disciples with Cell Groups</CardTitle>
         <CardDescription className="flex items-center gap-2 text-xs">
@@ -80,11 +80,11 @@ export function DisciplesWithCellGroups() {
           </span>
         </CardDescription>
       </CardHeader>
-      <CardContent className="px-4 flex-1 [&>div]:h-full pt-4 max-h-[260px] overflow-auto">
+      <CardContent className="max-h-[260px] flex-1 overflow-auto px-4 pt-4 [&>div]:h-full">
         {data.length === 0 ? (
-          <div className="min-h-[240px] flex flex-col items-center justify-center gap-3">
+          <div className="flex min-h-[240px] flex-col items-center justify-center gap-3">
             <PackageIcon className="size-6 text-muted-foreground" />
-            <p className="text-sm text-muted-foreground text-center">
+            <p className="text-center text-muted-foreground text-sm">
               No records to show.
             </p>
           </div>
@@ -96,11 +96,11 @@ export function DisciplesWithCellGroups() {
                   <div>
                     <Link
                       href={`/disciples/${item.id}`}
-                      className="font-semibold hover:underline text-sm"
+                      className="font-semibold text-sm hover:underline"
                     >
                       {item.name}
                     </Link>
-                    <p className="text-xs text-muted-foreground capitalize">
+                    <p className="text-muted-foreground text-xs capitalize">
                       Assistant Leader
                     </p>
                   </div>

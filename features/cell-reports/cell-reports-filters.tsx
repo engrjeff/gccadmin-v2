@@ -8,7 +8,7 @@ import { ResetFiltersButton } from "@/components/reset-filters-button";
 
 export function CellReportsFilters({ isForPastor }: { isForPastor?: boolean }) {
   return (
-    <div className="flex items-center flex-wrap gap-3">
+    <div className="flex flex-wrap items-center gap-3">
       <FilterField
         label="Cell Type"
         queryName="cellType"

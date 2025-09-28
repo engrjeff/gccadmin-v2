@@ -37,7 +37,7 @@ async function DiscipleDetailPage({ params }: PageProps) {
     <div className="flex flex-1 flex-col gap-4 p-4">
       <Link
         href="/disciples"
-        className="text-sm inline-flex w-max items-center gap-2 hover:underline"
+        className="inline-flex w-max items-center gap-2 text-sm hover:underline"
       >
         <ArrowLeftIcon className="size-4" /> Back to List
       </Link>
@@ -45,14 +45,14 @@ async function DiscipleDetailPage({ params }: PageProps) {
         <div>
           <h2 className="font-bold">{disciple.name}</h2>
           {disciple.isPrimary ? (
-            <p className="text-sm text-muted-foreground">Primary Leader</p>
+            <p className="text-muted-foreground text-sm">Primary Leader</p>
           ) : (
-            <p className="text-sm text-muted-foreground">
+            <p className="text-muted-foreground text-sm">
               Cell Leader: {disciple.leader?.name}
             </p>
           )}
         </div>
-        <div className="flex items-center gap-3 ml-auto"></div>
+        <div className="ml-auto flex items-center gap-3"></div>
       </div>
       <DiscipleDetailTabs>
         <TabsContent value="details">

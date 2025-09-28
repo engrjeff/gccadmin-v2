@@ -14,7 +14,7 @@ export function LessonsTaken() {
       <div className="space-y-4">
         <div>
           <h3 className="font-semibold">Lessons Taken</h3>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             Cell group lessons from GCC Resources
           </p>
         </div>
@@ -30,17 +30,17 @@ export function LessonsTaken() {
   const lessonsTaken = query.data?.lessonsTaken;
 
   return (
-    <div className="space-y-4 flex-1">
+    <div className="flex-1 space-y-4">
       <div>
         <h3 className="font-semibold">Lessons Taken</h3>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-muted-foreground text-sm">
           Cell group lessons from GCC Resources
         </p>
       </div>
       {lessonsTaken?.length === 0 ? (
-        <div className="min-h-[350px] border rounded-md border-dashed flex flex-col items-center justify-center gap-3">
+        <div className="flex min-h-[350px] flex-col items-center justify-center gap-3 rounded-md border border-dashed">
           <PackageIcon className="size-6 text-muted-foreground" />
-          <p className="text-sm text-muted-foreground text-center">
+          <p className="text-center text-muted-foreground text-sm">
             No lessons taken yet.
           </p>
         </div>
@@ -48,15 +48,15 @@ export function LessonsTaken() {
         <ul className="space-y-4">
           {lessonsTaken?.map((lesson) => (
             <li key={lesson.id}>
-              <div className="bg-card/60 border rounded-md py-3 space-y-3">
+              <div className="space-y-3 rounded-md border bg-card/60 py-3">
                 <div className="flex items-center gap-2 px-3">
                   <div className="space-y-0.5">
-                    <p className="text-sm font-semibold">{lesson.title}</p>
-                    <p className="text-xs text-muted-foreground line-clamp-1 mb-2">
+                    <p className="font-semibold text-sm">{lesson.title}</p>
+                    <p className="mb-2 line-clamp-1 text-muted-foreground text-xs">
                       {lesson.lessonSeries.title}
                     </p>
                     {lesson.scriptureReferences.length === 0 ? null : (
-                      <div className="flex items-center gap-1.5 flex-wrap">
+                      <div className="flex flex-wrap items-center gap-1.5">
                         {lesson.scriptureReferences.slice(0, 4).map((sc) => (
                           <Badge
                             key={`${lesson.id}-scriptureref-${sc}`}
@@ -81,7 +81,7 @@ export function LessonsTaken() {
                         target="_blank"
                         rel="noopener noreferrer"
                         download={lesson.title}
-                        className="aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:opacity-80 aria-disabled:text-muted-foreground"
+                        className="aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:text-muted-foreground aria-disabled:opacity-80"
                         aria-disabled={!lesson.fileUrl}
                       >
                         <DownloadIcon />{" "}

@@ -54,7 +54,7 @@ export function TagsInput({
           <Badge
             key={`${tag}-${index.toString()}`}
             variant="secondary"
-            className="text-sm font-normal"
+            className="font-normal text-sm"
           >
             {tag}{" "}
             <button
@@ -89,7 +89,7 @@ export function TagsInput({
             onClick={() => onChange([])}
             className={cn(
               badgeVariants({ variant: "secondary" }),
-              "absolute right-2 top-2 rounded-full border-none p-0.5 text-sm focus:ring-offset-0 lg:rounded lg:px-2",
+              "absolute top-2 right-2 rounded-full border-none p-0.5 text-sm focus:ring-offset-0 lg:rounded lg:px-2",
             )}
           >
             <span className="sr-only lg:not-sr-only">Clear</span>
@@ -98,7 +98,7 @@ export function TagsInput({
         ) : null}
       </div>
       {hintText ? (
-        <span className="text-xs text-muted-foreground">{hintText}</span>
+        <span className="text-muted-foreground text-xs">{hintText}</span>
       ) : null}
     </div>
   );

@@ -62,7 +62,7 @@ export function QuickActions() {
               <DrawerTitle className="text-sm">Create Actions</DrawerTitle>
               <DrawerDescription>Pick an action to do.</DrawerDescription>
             </DrawerHeader>
-            <div className="px-0.5 py-2 flex flex-col gap-1">
+            <div className="flex flex-col gap-1 px-0.5 py-2">
               <Button
                 size="lg"
                 variant="ghost"
@@ -80,7 +80,7 @@ export function QuickActions() {
                 <PlusIcon /> Create Cell Report
               </Button>
             </div>
-            <DrawerFooter className="border-t text-xs text-muted-foreground gap-2 flex-row">
+            <DrawerFooter className="flex-row gap-2 border-t text-muted-foreground text-xs">
               <InfoIcon className="size-3" />
               <p>
                 You can also add Disciple and create Cell Report in their

@@ -180,7 +180,7 @@ function LessonSeriesForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
               <FormItem>
                 <FormLabel>
                   Tags{" "}
-                  <span className="text-xs italic text-muted-foreground">
+                  <span className="text-muted-foreground text-xs italic">
                     (Optional)
                   </span>
                 </FormLabel>

@@ -229,7 +229,7 @@ function LessonForm({
               <FormItem>
                 <FormLabel>
                   File URL{" "}
-                  <span className="text-xs italic text-muted-foreground">
+                  <span className="text-muted-foreground text-xs italic">
                     (Optional)
                   </span>
                 </FormLabel>
@@ -243,7 +243,7 @@ function LessonForm({
                       {...field}
                     />
                   </FormControl>
-                  <div className="absolute left-2 top-1/2 -translate-y-1/2">
+                  <div className="-translate-y-1/2 absolute top-1/2 left-2">
                     <FaviconImage
                       url={form.watch("fileUrl") as string}
                       size={12}

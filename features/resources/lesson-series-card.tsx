@@ -29,7 +29,7 @@ export function LessonSeriesCard({
   lessonSeries: LessonSeries & { lessons: Lesson[] };
 }) {
   return (
-    <Card className="h-full py-4 relative gap-3">
+    <Card className="relative h-full gap-3 py-4">
       <CardHeader className="px-4">
         <CardTitle>{lessonSeries.title}</CardTitle>
         <CardDescription>{lessonSeries.description}</CardDescription>
@@ -40,7 +40,7 @@ export function LessonSeriesCard({
       </CardAction>
       <CardContent className="px-4">
         {lessonSeries.tags.length === 0 ? null : (
-          <div className="flex items-center gap-1.5 flex-wrap">
+          <div className="flex flex-wrap items-center gap-1.5">
             {lessonSeries.tags.map((tag) => (
               <Badge key={`${lessonSeries.id}-tag-${tag}`} variant="NONE">
                 {tag}
@@ -49,7 +49,7 @@ export function LessonSeriesCard({
           </div>
         )}
       </CardContent>
-      <CardFooter className="px-4 justify-end">
+      <CardFooter className="justify-end px-4">
         <Sheet>
           <SheetTrigger asChild>
             <Button size="sm" disabled={lessonSeries.lessons.length === 0}>
@@ -69,7 +69,7 @@ export function LessonSeriesCard({
                 Lessons in {lessonSeries.title}
               </SheetDescription>
             </SheetHeader>
-            <ul className="p-4 space-y-3 max-h-[calc(100%-88px)] overflow-y-auto">
+            <ul className="max-h-[calc(100%-88px)] space-y-3 overflow-y-auto p-4">
               {lessonSeries.lessons.map((lesson) => (
                 <li key={lesson.id}>
                   <LessonCard lesson={lesson} />

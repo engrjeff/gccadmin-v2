@@ -118,12 +118,12 @@ export function DiscipleForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
         onSubmit={form.handleSubmit(onSubmit, onFormError)}
         className="relative flex max-h-[calc(100%-88px)] flex-1 flex-col"
       >
-        <div className="max-h-[calc(100%-69px)] flex-1 overflow-y-auto mb-4">
+        <div className="mb-4 max-h-[calc(100%-69px)] flex-1 overflow-y-auto">
           <fieldset
             disabled={isBusy}
-            className="gap-3.5 disabled:opacity-90 flex flex-col h-full p-4"
+            className="flex h-full flex-col gap-3.5 p-4 disabled:opacity-90"
           >
-            <p className="text-sm text-foreground">Personal Information</p>
+            <p className="text-foreground text-sm">Personal Information</p>
             <FormField
               control={form.control}
               name="name"
@@ -179,7 +179,7 @@ export function DiscipleForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
                     <FormControl>
                       <RadioGroup
                         defaultValue={field.value}
-                        className="flex dark:bg-input/30 border-input h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs"
+                        className="flex h-9 w-full min-w-0 rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-xs dark:bg-input/30"
                         onValueChange={(value) => {
                           field.onChange(value);
 
@@ -219,7 +219,7 @@ export function DiscipleForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
             </div>
 
             <Separator />
-            <p className="text-sm text-foreground">
+            <p className="text-foreground text-sm">
               Church-related Information
             </p>
             <FormField
@@ -418,7 +418,7 @@ export function DiscipleForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
               control={form.control}
               name="isMyPrimary"
               render={({ field }) => (
-                <FormItem className="flex flex-row bg-transparent dark:bg-input/30 items-center justify-between rounded-lg border p-3 shadow-sm">
+                <FormItem className="flex flex-row items-center justify-between rounded-lg border bg-transparent p-3 shadow-sm dark:bg-input/30">
                   <div className="space-y-0.5">
                     <FormLabel>Is Primary?</FormLabel>
                     <FormDescription>
@@ -437,7 +437,7 @@ export function DiscipleForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
           </fieldset>
         </div>
 
-        <div className="p-4 flex gap-3 items-center justify-end">
+        <div className="flex items-center justify-end gap-3 p-4">
           <Button type="button" variant="ghost" onClick={onAfterSave}>
             Cancel
           </Button>

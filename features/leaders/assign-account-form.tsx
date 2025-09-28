@@ -148,7 +148,7 @@ export function AssignAccountForm({
                 />
               )}
               {leader.userAccountId ? null : (
-                <div className="pt-6 flex justify-end">
+                <div className="flex justify-end pt-6">
                   <SubmitButton
                     disabled={Boolean(leader.userAccountId)}
                     loading={action.isPending}

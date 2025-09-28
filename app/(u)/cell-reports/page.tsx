@@ -31,7 +31,7 @@ async function CellReportsPage({ searchParams }: PageProps) {
         <div>
           <h2 className="font-bold">Cell Reports</h2>
           {dateFilter ? (
-            <div className="text-xs text-muted-foreground flex items-center gap-2">
+            <div className="flex items-center gap-2 text-muted-foreground text-xs">
               <CalendarIcon className="size-3" />
               <span>
                 {formatDate(dateFilter?.start?.toISOString())} -{" "}
@@ -40,7 +40,7 @@ async function CellReportsPage({ searchParams }: PageProps) {
             </div>
           ) : null}
         </div>
-        <div className="flex items-center gap-3 ml-auto">
+        <div className="ml-auto flex items-center gap-3">
           <ViewPDFButton period={dateFilter} cellReports={cellReports} />
           <CellReportCreateFormModal />
         </div>

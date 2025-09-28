@@ -75,7 +75,7 @@ export function CellReportDetails({
         <p className="mb-2 font-semibold">Attendees</p>
         <div>
           <Table>
-            <TableHeader className="bg-card sticky top-0 z-10 backdrop-blur-sm">
+            <TableHeader className="sticky top-0 z-10 bg-card backdrop-blur-sm">
               <TableRow className="hover:bg-transparent">
                 <TableHead className="size-4">#</TableHead>
                 <TableHead>Name</TableHead>

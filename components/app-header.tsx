@@ -20,11 +20,11 @@ export function AppHeader() {
 
   return (
     <header className="flex h-(--header-height) shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)">
-      <div className="flex w-full items-center relative gap-1 px-4 lg:gap-2">
+      <div className="relative flex w-full items-center gap-1 px-4 lg:gap-2">
         <SidebarTrigger className="-ml-1" />
         <Link
           href="/"
-          className="flex lg:hidden items-center gap-x-2 absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2"
+          className="-translate-y-1/2 -translate-x-1/2 absolute top-1/2 left-1/2 flex items-center gap-x-2 lg:hidden"
         >
           <Image
             unoptimized
@@ -35,7 +35,7 @@ export function AppHeader() {
           />
         </Link>
         {user.isLoaded ? (
-          <h1 className="text-base font-medium hidden lg:block">
+          <h1 className="hidden font-medium text-base lg:block">
             Good day, {user.user?.fullName}!
           </h1>
         ) : null}

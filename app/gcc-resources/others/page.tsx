@@ -38,16 +38,16 @@ function OtherResourcesPage() {
         {OTHER_RESOURCES.map((resource) => (
           <li key={`gcc-${resource.label}`}>
             <a href={resource.link} target="_blank" rel="noopener noreferrer">
-              <div className="bg-card/60 border rounded-md py-3 space-y-3 hover:bg-card/80 group">
+              <div className="group space-y-3 rounded-md border bg-card/60 py-3 hover:bg-card/80">
                 <div className="flex items-center gap-2 px-3">
                   <div className="flex items-center gap-2">
                     <FaviconImage url={resource.link} />
                     <div>
-                      <p className="text-sm font-semibold">{resource.label}</p>
+                      <p className="font-semibold text-sm">{resource.label}</p>
                     </div>
                   </div>
                   <div className="ml-auto">
-                    <ExternalLinkIcon className="size-4 text-muted-foreground group-hover:translate-x-1 transition-transform" />
+                    <ExternalLinkIcon className="size-4 text-muted-foreground transition-transform group-hover:translate-x-1" />
                   </div>
                 </div>
               </div>

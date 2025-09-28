@@ -29,7 +29,7 @@ export const metadata: Metadata = {
 
 function GCCResourcesLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="container max-w-5xl mx-auto flex flex-col min-h-screen">
+    <div className="container mx-auto flex min-h-screen max-w-5xl flex-col">
       <header className="flex h-16 items-center justify-between gap-4 border-b px-4">
         <Link href="/" className="flex items-center gap-x-4">
           <Image
@@ -54,10 +54,10 @@ function GCCResourcesLayout({ children }: { children: ReactNode }) {
           </ClerkLoaded>
         </div>
       </header>
-      <main className="py-6 px-4 space-y-4 flex-1 min-h-[90vh]">
+      <main className="min-h-[90vh] flex-1 space-y-4 px-4 py-6">
         <div>
           <h1 className="font-semibold">Welcome to GCC Resources</h1>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             A collection of GCC teaching materials.
           </p>
         </div>

@@ -14,9 +14,9 @@ import {
 
 export function DisciplesFilters() {
   return (
-    <div className="flex items-center gap-3 flex-wrap">
+    <div className="flex flex-wrap items-center gap-3">
       <SearchField paramName="q" />
-      <div className="flex items-center gap-3 flex-wrap">
+      <div className="flex flex-wrap items-center gap-3">
         <FilterField
           label="Cell Status"
           options={cellStatuses}

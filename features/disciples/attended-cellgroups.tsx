@@ -31,7 +31,7 @@ export function AttendedCellGroups() {
       <div className="space-y-4">
         <div>
           <h3 className="font-semibold">Attended Cell Groups</h3>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             List of attended cell groups
           </p>
         </div>
@@ -47,17 +47,17 @@ export function AttendedCellGroups() {
   const attendedCellGroups = query.data?.attendedCellGroups;
 
   return (
-    <div className="space-y-4 flex-1">
+    <div className="flex-1 space-y-4">
       <div>
         <h3 className="font-semibold">Attended Cell Groups</h3>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-muted-foreground text-sm">
           List of attended cell groups
         </p>
       </div>
       {attendedCellGroups?.length === 0 ? (
-        <div className="min-h-[350px] border rounded-md border-dashed flex flex-col items-center justify-center gap-3">
+        <div className="flex min-h-[350px] flex-col items-center justify-center gap-3 rounded-md border border-dashed">
           <PackageIcon className="size-6 text-muted-foreground" />
-          <p className="text-sm text-muted-foreground text-center">
+          <p className="text-center text-muted-foreground text-sm">
             No cell groups attended yet.
           </p>
         </div>
@@ -67,18 +67,18 @@ export function AttendedCellGroups() {
             <li key={cellgroup.id}>
               <Sheet>
                 <SheetTrigger asChild>
-                  <div className="bg-card/60 border rounded-md py-3 space-y-3 hover:bg-card/30">
-                    <div className="grid grid-cols-1 items-center md:grid-cols-2 lg:grid-cols-4 gap-2 px-3">
+                  <div className="space-y-3 rounded-md border bg-card/60 py-3 hover:bg-card/30">
+                    <div className="grid grid-cols-1 items-center gap-2 px-3 md:grid-cols-2 lg:grid-cols-4">
                       <div className="space-y-0.5">
                         <Badge variant={cellgroup.type}>
                           {removeUnderscores(cellgroup.type)}
                         </Badge>
-                        <p className="text-sm font-semibold">
+                        <p className="font-semibold text-sm">
                           {cellgroup.assistantId
                             ? cellgroup.assistant?.name
                             : cellgroup.leader.name}
                         </p>
-                        <p className="text-xs text-muted-foreground line-clamp-1">
+                        <p className="line-clamp-1 text-muted-foreground text-xs">
                           {cellgroup.assistantId
                             ? "Assistant Leader"
                             : "Network Leader"}
@@ -86,14 +86,14 @@ export function AttendedCellGroups() {
                       </div>
 
                       <div className="space-y-0.5">
-                        <p className="text-xs text-muted-foreground flex items-center gap-2">
+                        <p className="flex items-center gap-2 text-muted-foreground text-xs">
                           <CalendarIcon className="size-3" />{" "}
                           {formatCellGroupDate(new Date(cellgroup.date))}
                         </p>
-                        <p className="text-xs text-muted-foreground flex items-center gap-2 line-clamp-1">
+                        <p className="line-clamp-1 flex items-center gap-2 text-muted-foreground text-xs">
                           <MapPinIcon className="size-3" /> {cellgroup.venue}
                         </p>
-                        <p className="text-xs text-muted-foreground flex items-center gap-2 line-clamp-1">
+                        <p className="line-clamp-1 flex items-center gap-2 text-muted-foreground text-xs">
                           <BookOpenIcon className="size-3" />{" "}
                           {cellgroup.lessonTitle
                             ? cellgroup.lessonTitle

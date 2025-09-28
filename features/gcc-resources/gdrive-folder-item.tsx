@@ -3,20 +3,20 @@ import type { GDriveFolder } from "./types";
 
 export function GDriveFolderItem({ folder }: { folder: GDriveFolder }) {
   return (
-    <div className="bg-card/60 border rounded-md py-3 space-y-3 hover:bg-card/80 group">
+    <div className="group space-y-3 rounded-md border bg-card/60 py-3 hover:bg-card/80">
       <div className="flex items-start gap-2 px-3">
-        <FolderIcon className="text-amber-500 size-4 fill-current mt-0.5 shrink-0" />
+        <FolderIcon className="mt-0.5 size-4 shrink-0 fill-current text-amber-500" />
         <div>
-          <p className="text-sm font-semibold line-clamp-1">{folder.name}</p>
+          <p className="line-clamp-1 font-semibold text-sm">{folder.name}</p>
           {folder.description ? (
-            <p className="text-xs text-muted-foreground line-clamp-1">
+            <p className="line-clamp-1 text-muted-foreground text-xs">
               {folder.description}
             </p>
           ) : null}
         </div>
 
-        <div className="ml-auto self-center shrink-0">
-          <ChevronRightIcon className="size-4 text-muted-foreground group-hover:translate-x-1 transition-transform" />
+        <div className="ml-auto shrink-0 self-center">
+          <ChevronRightIcon className="size-4 text-muted-foreground transition-transform group-hover:translate-x-1" />
         </div>
       </div>
     </div>

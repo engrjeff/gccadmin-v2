@@ -53,7 +53,7 @@ export function FaviconImage({
 
   if (pending)
     return (
-      <Loader2Icon size={size} className="text-muted-foreground animate-spin" />
+      <Loader2Icon size={size} className="animate-spin text-muted-foreground" />
     );
 
   if (!favicon)

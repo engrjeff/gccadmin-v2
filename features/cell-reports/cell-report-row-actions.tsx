@@ -84,7 +84,7 @@ export function CellReportRowActions({
             <CellReportDetails cellReport={cellReport} />
           </div>
 
-          <div className="mt-auto flex gap-3 justify-end border-t p-4 text-right">
+          <div className="mt-auto flex justify-end gap-3 border-t p-4 text-right">
             <SheetClose asChild>
               <Button type="button" variant="outline" className="bg-muted/30">
                 Close

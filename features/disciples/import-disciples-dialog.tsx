@@ -85,7 +85,7 @@ export function ImportDisciplesDialog() {
                 download
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-1.5 text-blue-500 hover:underline text-sm"
+                className="inline-flex items-center gap-1.5 text-blue-500 text-sm hover:underline"
               >
                 <ArrowDownIcon size={16} strokeWidth={2} aria-hidden="true" />
                 Download Template
@@ -310,15 +310,15 @@ function DisciplesImportContent({
           <div>
             <label
               htmlFor={fileInputId}
-              className="hover:bg-muted/20 flex h-[200px] cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed group-disabled:cursor-not-allowed group-disabled:hover:bg-transparent"
+              className="flex h-[200px] cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed hover:bg-muted/20 group-disabled:cursor-not-allowed group-disabled:hover:bg-transparent"
             >
               {fileLoading ? (
                 <>
                   <Loader2Icon
                     strokeWidth={1.5}
-                    className="text-muted-foreground size-5 animate-spin"
+                    className="size-5 animate-spin text-muted-foreground"
                   />
-                  <span className="text-muted-foreground text-center text-sm">
+                  <span className="text-center text-muted-foreground text-sm">
                     Loading file...
                   </span>
                 </>
@@ -326,9 +326,9 @@ function DisciplesImportContent({
                 <>
                   <ImportIcon
                     strokeWidth={1.5}
-                    className="text-muted-foreground mb-3 size-6"
+                    className="mb-3 size-6 text-muted-foreground"
                   />
-                  <span className="text-muted-foreground text-center text-sm">
+                  <span className="text-center text-muted-foreground text-sm">
                     Click to select a <Badge variant="outline">.xlsx</Badge>{" "}
                     file
                   </span>
@@ -360,9 +360,9 @@ function DisciplesImportContent({
         ) : null}
 
         {view === "success" && discipleFields.fields.length ? (
-          <div className="w-full space-y-6 max-w-full overflow-x-auto">
+          <div className="w-full max-w-full space-y-6 overflow-x-auto">
             {isAdmin ? (
-              <div className="space-y-2 w-1/4 ml-1">
+              <div className="ml-1 w-1/4 space-y-2">
                 <Label>Leader</Label>
                 <SelectNative
                   disabled={leadersQuery.isLoading}
@@ -381,7 +381,7 @@ function DisciplesImportContent({
             ) : null}
             <div className="[&>div]:max-h-[450px] [&>div]:rounded-md [&>div]:border">
               <Table>
-                <TableHeader className="bg-card sticky top-0 z-10 backdrop-blur-sm">
+                <TableHeader className="sticky top-0 z-10 bg-card backdrop-blur-sm">
                   <TableRow className="hover:bg-transparent">
                     <TableHead className="size-4 text-center">#</TableHead>
                     <TableHead>Name</TableHead>
@@ -398,7 +398,7 @@ function DisciplesImportContent({
                 <TableBody>
                   {discipleFields.fields.map((d, index) => (
                     <TableRow key={d.id} className="hover:bg-transparent">
-                      <TableCell className="bg-card w-4 border-r text-center">
+                      <TableCell className="w-4 border-r bg-card text-center">
                         {index + 1}
                       </TableCell>
                       <TableCell>{d.name}</TableCell>
@@ -488,10 +488,10 @@ function DisciplesImportContent({
         ) : null}
 
         {view === "error" && dataWithError.length ? (
-          <div className="w-full space-y-6 max-w-full overflow-x-auto">
+          <div className="w-full max-w-full space-y-6 overflow-x-auto">
             <div className="[&>div]:max-h-[450px] [&>div]:rounded-md [&>div]:border">
               <Table>
-                <TableHeader className="bg-card sticky top-0 z-10 backdrop-blur-sm">
+                <TableHeader className="sticky top-0 z-10 bg-card backdrop-blur-sm">
                   <TableRow className="hover:bg-transparent">
                     <TableHead className="size-4 text-center">#</TableHead>
                     <TableHead>Name</TableHead>
@@ -513,9 +513,9 @@ function DisciplesImportContent({
                       data-has-error={Object.values(
                         entryErrors[index] ?? {},
                       ).some(Boolean)}
-                      className="data-[has-error=true]:bg-red-500/20 hover:bg-transparent"
+                      className="hover:bg-transparent data-[has-error=true]:bg-red-500/20"
                     >
-                      <TableCell className="bg-card w-4 border-r text-center">
+                      <TableCell className="w-4 border-r bg-card text-center">
                         {index + 1}
                       </TableCell>
                       <TableCell>{d.name}</TableCell>

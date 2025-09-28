@@ -35,7 +35,7 @@ export function CellGroupByType({
   return (
     <div className="flex flex-col gap-3 p-4">
       <div className="flex items-center">
-        <p className="text-sm font-semibold">Reported Cell Groups</p>
+        <p className="font-semibold text-sm">Reported Cell Groups</p>
         {/* {trend ? (
           <Badge
             variant={trend.status === "increased" ? "ACTIVE" : "INACTIVE"}
@@ -47,14 +47,14 @@ export function CellGroupByType({
         ) : null} */}
       </div>
       <div className="flex items-baseline gap-2">
-        <span className="text-xl font-bold text-gray-900 dark:text-gray-50">
+        <span className="font-bold text-gray-900 text-xl dark:text-gray-50">
           {cellReports.length}
         </span>
-        <span className="text-sm text-gray-500">
+        <span className="text-gray-500 text-sm">
           Cell {pluralize("Group", cellReports.length)} {dateRangeLabel}
         </span>
       </div>
-      <div className="flex w-full items-center rounded-full gap-1 bg-muted/30 [&>*]:h-2">
+      <div className="flex w-full items-center gap-1 rounded-full bg-muted/30 [&>*]:h-2">
         <div
           className="h-full bg-blue-500"
           style={{
@@ -77,7 +77,7 @@ export function CellGroupByType({
       </div>
       <ul className="mt-auto flex items-center justify-between">
         <li className="flex flex-col gap-2 text-xs">
-          <span className="text-base font-bold">
+          <span className="font-bold text-base">
             {calcPercent(count.discipleshipCell).toFixed(1)}%
           </span>
           <div className="flex items-center gap-2">
@@ -88,7 +88,7 @@ export function CellGroupByType({
           </div>
         </li>
         <li className="flex flex-col gap-2 text-xs">
-          <span className="text-base font-bold">
+          <span className="font-bold text-base">
             {calcPercent(count.openCell).toFixed(1)}%
           </span>
           <div className="flex items-center gap-2">
@@ -99,7 +99,7 @@ export function CellGroupByType({
           </div>
         </li>
         <li className="flex flex-col gap-2 text-xs">
-          <span className="text-base font-bold">
+          <span className="font-bold text-base">
             {calcPercent(count.soulwinning).toFixed(1)}%
           </span>
           <div className="flex items-center gap-2">

@@ -15,10 +15,10 @@ function UserPagesLayout({ children }: { children: ReactNode }) {
       }
     >
       <AppSidebar variant="sidebar" />
-      <SidebarInset className="overflow-hidden max-h-screen pb-16 sm:pb-0">
+      <SidebarInset className="max-h-screen overflow-hidden pb-16 sm:pb-0">
         <AppHeader />
-        <div className="flex-1 max-h-[100%-48px] overflow-y-auto">
-          <div className="container max-w-6xl mx-auto h-full">{children}</div>
+        <div className="max-h-[100%-48px] flex-1 overflow-y-auto">
+          <div className="container mx-auto h-full max-w-6xl">{children}</div>
         </div>
         <BottomNavigation />
       </SidebarInset>

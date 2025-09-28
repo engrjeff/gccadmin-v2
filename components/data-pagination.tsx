@@ -37,11 +37,11 @@ export function DataPagination({
 
   if (totalPages <= 1) {
     return (
-      <Pagination className="pb-6 flex flex-col lg:flex-row items-center gap-4">
+      <Pagination className="flex flex-col items-center gap-4 pb-6 lg:flex-row">
         <PageSizeSelect options={pageSizeOptions} />
 
         {total === 0 ? null : (
-          <p className="text-sm text-muted-foreground lg:ml-auto">
+          <p className="text-muted-foreground text-sm lg:ml-auto">
             Showing {(page - 1) * pageSize + 1} to{" "}
             {Math.min(page * pageSize, total)} of {total} {name}
           </p>
@@ -102,10 +102,10 @@ export function DataPagination({
   };
 
   return (
-    <Pagination className="pb-6 flex flex-col lg:flex-row items-center gap-4">
+    <Pagination className="flex flex-col items-center gap-4 pb-6 lg:flex-row">
       <PageSizeSelect options={pageSizeOptions} />
 
-      <p className="text-sm text-muted-foreground lg:ml-auto">
+      <p className="text-muted-foreground text-sm lg:ml-auto">
         Showing {(page - 1) * pageSize + 1} to{" "}
         {Math.min(page * pageSize, total)} of {total} {name}
       </p>

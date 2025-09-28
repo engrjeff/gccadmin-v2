@@ -40,7 +40,7 @@ export function ViewPDFButton({
           View PDF
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-5xl px-0">
+      <DialogContent className="px-0 sm:max-w-5xl">
         <DialogHeader className="px-4">
           <DialogTitle>Cell Reports</DialogTitle>
           {period ? (

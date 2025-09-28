@@ -26,7 +26,7 @@ export function DiscipleDetails({
   disciple: Disciple & { leader: Disciple | null; handledBy: Disciple | null };
 }) {
   return (
-    <div className="rounded-md border py-4 relative">
+    <div className="relative rounded-md border py-4">
       <div className="px-4">
         <h3 className="font-semibold">Disciple Details</h3>
         <div className="absolute top-4 right-4">

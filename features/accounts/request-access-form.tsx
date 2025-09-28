@@ -16,7 +16,7 @@ export function RequestAccessForm() {
   );
 
   return (
-    <div className="text-center space-y-3 mt-4">
+    <div className="mt-4 space-y-3 text-center">
       <p>Click the button below to request access.</p>
       <Button size="sm" asChild>
         <a

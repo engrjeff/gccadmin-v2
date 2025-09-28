@@ -63,7 +63,7 @@ export function PageSizeSelect({
         defaultValue={currentPageSize}
         onChange={handlePageSizeChange}
         disabled={isPending}
-        className={cn("h-7 w-max grow-0 shrink-0 text-center", className)}
+        className={cn("h-7 w-max shrink-0 grow-0 text-center", className)}
         aria-label="Page Size"
       >
         {options.map((size) => (

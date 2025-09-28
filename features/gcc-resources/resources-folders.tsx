@@ -10,7 +10,7 @@ export function ResourcesFolders() {
 
   if (foldersQuery.isLoading)
     return (
-      <div className="flex flex-col items-center h-[60vh] justify-center gap-2 py-10 text-muted-foreground">
+      <div className="flex h-[60vh] flex-col items-center justify-center gap-2 py-10 text-muted-foreground">
         <Loader2Icon className="size-5 animate-spin" />
         <p>Please wait</p>
         <p>Loading lessons...</p>

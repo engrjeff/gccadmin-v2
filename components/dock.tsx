@@ -6,7 +6,7 @@ import type * as React from "react";
 import { cn } from "@/lib/utils";
 
 const dockVariants = cva(
-  "fixed bottom-0 left-0 right-0 border-t z-50 flex items-center justify-center gap-1 px-2.5 py-2.5 shadow-lg sm:hidden",
+  "fixed right-0 bottom-0 left-0 z-50 flex items-center justify-center gap-1 border-t px-2.5 py-2.5 shadow-lg sm:hidden",
   {
     variants: {
       variant: {
@@ -24,12 +24,12 @@ const dockVariants = cva(
 );
 
 const dockItemVariants = cva(
-  "flex flex-col items-center justify-center gap-1 p-1.5 rounded-lg transition-all duration-200 min-w-0 flex-1 text-xs font-medium",
+  "flex min-w-0 flex-1 flex-col items-center justify-center gap-1 rounded-lg p-1.5 font-medium text-xs transition-all duration-200",
   {
     variants: {
       variant: {
         default:
-          "text-muted-foreground hover:text-foreground hover:bg-accent/50 active:bg-accent active:scale-95",
+          "text-muted-foreground hover:bg-accent/50 hover:text-foreground active:scale-95 active:bg-accent",
         active: "text-foreground [&_svg]:text-blue-500",
       },
     },
@@ -107,7 +107,7 @@ function DockIcon({ className, children, ...props }: DockIconProps) {
 function DockLabel({ className, children, ...props }: DockLabelProps) {
   return (
     <span
-      className={cn("text-center leading-tight truncate max-w-full", className)}
+      className={cn("max-w-full truncate text-center leading-tight", className)}
       {...props}
     >
       {children}

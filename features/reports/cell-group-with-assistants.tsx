@@ -35,7 +35,7 @@ export function CellGroupWithAssistants({
 
   return (
     <div className="flex flex-col gap-3 p-4">
-      <p className="text-sm font-semibold">Cell Groups Handled</p>
+      <p className="font-semibold text-sm">Cell Groups Handled</p>
       <div className="flex flex-nowrap items-center gap-10 gap-y-4">
         <dd className="space-y-3">
           <div>
@@ -46,7 +46,7 @@ export function CellGroupWithAssistants({
               ></span>
               <span className="text-sm">With Assistant</span>
             </div>
-            <span className="mt-1 block text-2xl font-semibold text-gray-900 dark:text-gray-50">
+            <span className="mt-1 block font-semibold text-2xl text-gray-900 dark:text-gray-50">
               {calcPercent(count.withAssistants).toFixed(1)}%
             </span>
           </div>
@@ -56,11 +56,11 @@ export function CellGroupWithAssistants({
                 className="size-2.5 shrink-0 bg-gray-500 dark:bg-gray-500"
                 aria-hidden="true"
               ></span>
-              <span className="text-sm text-gray-900 dark:text-gray-50">
+              <span className="text-gray-900 text-sm dark:text-gray-50">
                 By Primary
               </span>
             </div>
-            <span className="mt-1 block text-2xl font-semibold text-gray-900 dark:text-gray-50">
+            <span className="mt-1 block font-semibold text-2xl text-gray-900 dark:text-gray-50">
               {calcPercent(count.byPrimary).toFixed(1)}%
             </span>
           </div>

@@ -24,18 +24,18 @@ export function HandledDisciples({
   disciples: Disciple[];
 }) {
   return (
-    <div className="space-y-4 flex-1">
+    <div className="flex-1 space-y-4">
       <div>
         <h3 className="font-semibold">
           Handled Disciples ({disciples.length})
         </h3>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-muted-foreground text-sm">
           List of disciples being handled by {handledBy}
         </p>
       </div>
-      <div className="[&>div]:rounded-md rounded-md border min-h-min overflow-hidden [&>div]:min-h-[60vh] lg:[&>div]:max-h-[490px]">
+      <div className="min-h-min overflow-hidden rounded-md border [&>div]:min-h-[60vh] [&>div]:rounded-md lg:[&>div]:max-h-[490px]">
         <Table>
-          <TableHeader className="bg-card sticky top-0 z-10 backdrop-blur-sm">
+          <TableHeader className="sticky top-0 z-10 bg-card backdrop-blur-sm">
             <TableRow className="hover:bg-transparent">
               <TableHead className="size-4 text-center">#</TableHead>
               <TableHead>Name</TableHead>
@@ -50,9 +50,9 @@ export function HandledDisciples({
             {disciples.length === 0 ? (
               <TableRow className="hover:bg-transparent">
                 <TableCell colSpan={7}>
-                  <div className="min-h-[300px] flex flex-col items-center justify-center gap-3">
+                  <div className="flex min-h-[300px] flex-col items-center justify-center gap-3">
                     <PackageIcon className="size-6 text-muted-foreground" />
-                    <p className="text-sm text-muted-foreground text-center">
+                    <p className="text-center text-muted-foreground text-sm">
                       No disciples being handled yet.
                     </p>
                   </div>
@@ -72,7 +72,7 @@ export function HandledDisciples({
                       >
                         {d.name}
                       </Link>
-                      <p className="text-xs text-muted-foreground capitalize">
+                      <p className="text-muted-foreground text-xs capitalize">
                         {removeUnderscores(d.memberType)},{" "}
                         {d.gender.toLowerCase()}
                       </p>

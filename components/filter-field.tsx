@@ -143,11 +143,11 @@ function FilterFieldComponent({
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        className="min-w-52 max-w-60 p-0 select-none"
+        className="min-w-52 max-w-60 select-none p-0"
         align="start"
       >
         <div className="border-b px-3 py-2">
-          <h4 className="text-sm font-medium">{label}</h4>
+          <h4 className="font-medium text-sm">{label}</h4>
         </div>
         <div className="max-h-64 overflow-y-auto p-1">
           <div className="space-y-0.5">
@@ -156,7 +156,7 @@ function FilterFieldComponent({
               return (
                 <div
                   key={option.value}
-                  className="flex items-center space-x-2 p-1.5 rounded hover:bg-secondary"
+                  className="flex items-center space-x-2 rounded p-1.5 hover:bg-secondary"
                 >
                   <Checkbox
                     id={`${queryName}-${option.value}`}
@@ -168,7 +168,7 @@ function FilterFieldComponent({
                   />
                   <label
                     htmlFor={`${queryName}-${option.value}`}
-                    className="text-sm flex-1 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer capitalize"
+                    className="flex-1 cursor-pointer font-medium text-sm capitalize leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   >
                     {option.label}
                   </label>
@@ -208,7 +208,7 @@ export function FilterField({ Icon = FilterIcon, ...props }: FilterFieldProps) {
   return (
     <Suspense
       fallback={
-        <Button variant="outline" className="border-dashed h-7" disabled>
+        <Button variant="outline" className="h-7 border-dashed" disabled>
           <Icon className="size-4" />
           {props.label}
         </Button>

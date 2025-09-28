@@ -8,7 +8,7 @@ export function GCCResourcesTabs() {
   const pathname = usePathname();
 
   return (
-    <div className="border-b flex items-center pb-2 gap-1">
+    <div className="flex items-center gap-1 border-b pb-2">
       <Button
         size="sm"
         variant={

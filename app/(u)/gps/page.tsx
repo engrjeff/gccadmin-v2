@@ -10,7 +10,7 @@ function LeadershipPage() {
       <div className="flex items-center gap-4">
         <div>
           <h2 className="font-bold">Growth Process System</h2>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             GCC Growth Process System
           </p>
         </div>

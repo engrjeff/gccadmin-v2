@@ -20,7 +20,7 @@ export function GDriveFolderContent({ preaching }: { preaching?: boolean }) {
 
   if (folderContentQuery.isLoading)
     return (
-      <div className="flex flex-col items-center justify-center h-[60vh] gap-2 py-10 text-muted-foreground">
+      <div className="flex h-[60vh] flex-col items-center justify-center gap-2 py-10 text-muted-foreground">
         <Loader2Icon className="size-5 animate-spin" />
         <p>Please wait</p>
         <p>Loading resources...</p>
@@ -44,17 +44,17 @@ export function GDriveFolderContent({ preaching }: { preaching?: boolean }) {
         href={
           preaching ? "/gcc-resources/preachings" : "/gcc-resources/lessons"
         }
-        className="text-sm hover:underline inline-block"
+        className="inline-block text-sm hover:underline"
       >
         &larr; Back to {preaching ? "Preachings" : "Lessons"}
       </Link>
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
         <div>
           <div className="flex items-center gap-2">
-            <FolderIcon className="size-4 text-amber-500 fill-current" />
+            <FolderIcon className="size-4 fill-current text-amber-500" />
             <h2 className="font-semibold">{folder?.name}</h2>
           </div>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             {searchTerm ? "Found " : ""} {filesToDisplay.length}{" "}
             {pluralize("resource", filesToDisplay.length)}
           </p>

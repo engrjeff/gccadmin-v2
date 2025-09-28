@@ -62,12 +62,12 @@ export function DiscipleDetailTabs({ children }: { children: ReactNode }) {
           router.push(`/disciples/${params.discipleId}?tab=${value}`)
         }
       >
-        <TabsList className="sticky top-0 justify-start bg-background z-10 text-foreground h-auto gap-2 rounded-none border-b w-full px-0 py-1">
+        <TabsList className="sticky top-0 z-10 h-auto w-full justify-start gap-2 rounded-none border-b bg-background px-0 py-1 text-foreground">
           {discipleMobilePages.map((page) => (
             <TabsTrigger
               key={page.id}
               value={page.id}
-              className="hover:bg-accent flex-0 dark:data-[state=active]:text-primary hover:text-foreground data-[state=active]:after:bg-primary data-[state=active]:hover:bg-accent relative inline-flex after:absolute after:inset-x-0 after:bottom-0 after:-mb-1 after:h-0.5 data-[state=active]:shadow-none dark:data-[state=active]:border-transparent dark:data-[state=active]:bg-transparent"
+              className="after:-mb-1 relative inline-flex flex-0 after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 hover:bg-accent hover:text-foreground data-[state=active]:shadow-none data-[state=active]:hover:bg-accent data-[state=active]:after:bg-primary dark:data-[state=active]:border-transparent dark:data-[state=active]:bg-transparent dark:data-[state=active]:text-primary"
             >
               {page.label}
             </TabsTrigger>
@@ -85,12 +85,12 @@ export function DiscipleDetailTabs({ children }: { children: ReactNode }) {
         router.push(`/disciples/${params.discipleId}?tab=${value}`)
       }
     >
-      <TabsList className="sticky top-0 justify-start bg-background z-10 text-foreground h-auto gap-2 rounded-none border-b w-full px-0 py-1">
+      <TabsList className="sticky top-0 z-10 h-auto w-full justify-start gap-2 rounded-none border-b bg-background px-0 py-1 text-foreground">
         {disciplePages.map((page) => (
           <TabsTrigger
             key={page.id}
             value={page.id}
-            className="hover:bg-accent flex-0 dark:data-[state=active]:text-primary hover:text-foreground data-[state=active]:after:bg-primary data-[state=active]:hover:bg-accent relative inline-flex after:absolute after:inset-x-0 after:bottom-0 after:-mb-1 after:h-0.5 data-[state=active]:shadow-none dark:data-[state=active]:border-transparent dark:data-[state=active]:bg-transparent"
+            className="after:-mb-1 relative inline-flex flex-0 after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 hover:bg-accent hover:text-foreground data-[state=active]:shadow-none data-[state=active]:hover:bg-accent data-[state=active]:after:bg-primary dark:data-[state=active]:border-transparent dark:data-[state=active]:bg-transparent dark:data-[state=active]:text-primary"
           >
             {page.label}
           </TabsTrigger>

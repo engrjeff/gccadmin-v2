@@ -87,9 +87,9 @@ export function DiscipleProfileForm({ disciple }: { disciple: Disciple }) {
           <form onSubmit={form.handleSubmit(onSubmit, onFormError)}>
             <fieldset
               disabled={isBusy}
-              className="gap-3.5 disabled:opacity-90 flex flex-col h-full"
+              className="flex h-full flex-col gap-3.5 disabled:opacity-90"
             >
-              <p className="text-sm text-foreground">Personal Information</p>
+              <p className="text-foreground text-sm">Personal Information</p>
               <FormField
                 control={form.control}
                 name="name"
@@ -137,7 +137,7 @@ export function DiscipleProfileForm({ disciple }: { disciple: Disciple }) {
               />
             </fieldset>
 
-            <div className="flex gap-3 items-center justify-end">
+            <div className="flex items-center justify-end gap-3">
               <Button
                 type="button"
                 variant="ghost"

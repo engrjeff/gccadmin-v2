@@ -5,28 +5,28 @@ import type { GDriveFile } from "./types";
 
 export function GDriveFileItem({ file }: { file: GDriveFile }) {
   return (
-    <div className="bg-card/60 border rounded-md py-3 space-y-3">
+    <div className="space-y-3 rounded-md border bg-card/60 py-3">
       <div className="flex items-start gap-2 px-3">
-        <FileIcon className="text-blue-500 size-4 fill-current mt-0.5 shrink-0" />
+        <FileIcon className="mt-0.5 size-4 shrink-0 fill-current text-blue-500" />
         <div>
           {file.webViewLink ? (
             <a href={file.webViewLink} target="_blank" rel="noreferrer">
-              <p className="text-sm font-semibold hover:underline line-clamp-1">
+              <p className="line-clamp-1 font-semibold text-sm hover:underline">
                 {file.name}
               </p>
             </a>
           ) : (
-            <p className="text-sm font-semibold line-clamp-1">{file.name}</p>
+            <p className="line-clamp-1 font-semibold text-sm">{file.name}</p>
           )}
 
           {file.createdTime ? (
-            <p className="text-xs text-muted-foreground line-clamp-1">
+            <p className="line-clamp-1 text-muted-foreground text-xs">
               {formatDateDistance(file.createdTime)}
             </p>
           ) : null}
         </div>
 
-        <div className="ml-auto self-end shrink-0">
+        <div className="ml-auto shrink-0 self-end">
           {file.webContentLink ? (
             <Button size="iconSm" variant="ghost" asChild>
               <a

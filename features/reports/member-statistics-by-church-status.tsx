@@ -21,13 +21,13 @@ export function MemberStatisticsByChurchStatus() {
     members.data?.reduce((total, a) => total + a._count.churchStatus, 0) ?? 100;
 
   return (
-    <div className="flex flex-col gap-4 pb-4 border-b-0">
-      <p className="text-sm font-semibold">Members by Church Status</p>
+    <div className="flex flex-col gap-4 border-b-0 pb-4">
+      <p className="font-semibold text-sm">Members by Church Status</p>
       <ul className="space-y-4">
         {members.data?.map((member) => (
           <li key={`stat-${member.churchStatus}`}>
             <p className="flex justify-between text-sm">
-              <span className="font-medium capitalize text-gray-900 dark:text-gray-50">
+              <span className="font-medium text-gray-900 capitalize dark:text-gray-50">
                 {removeUnderscores(member.churchStatus)}
               </span>
               <span className="font-medium text-gray-900 dark:text-gray-50">
@@ -52,7 +52,7 @@ export function MemberStatisticsByChurchStatus() {
         ))}
       </ul>
 
-      <p className="mt-auto text-sm text-muted-foreground">
+      <p className="mt-auto text-muted-foreground text-sm">
         The majority of members are{" "}
         <span className="text-blue-500">
           {getChurchStatusLabel(

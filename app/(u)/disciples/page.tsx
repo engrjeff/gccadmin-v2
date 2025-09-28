@@ -27,15 +27,15 @@ export default async function DisciplesPage({ searchParams }: PageProps) {
   const { disciples, pageInfo, isAdmin } = await getDisciples(pageSearchParams);
 
   return (
-    <div className="flex flex-1 flex-col gap-4 p-4 h-full">
+    <div className="flex h-full flex-1 flex-col gap-4 p-4">
       <div className="flex items-center gap-4">
         <div>
           <h2 className="font-bold">Disciples</h2>
-          <p className="text-sm text-muted-foreground hidden md:block">
+          <p className="hidden text-muted-foreground text-sm md:block">
             View and manage your disciples.
           </p>
         </div>
-        <div className="flex items-center gap-3 ml-auto">
+        <div className="ml-auto flex items-center gap-3">
           <ExportDisciplesButton data={disciples} />
           <div className="hidden lg:block">
             <ImportDisciplesDialog />

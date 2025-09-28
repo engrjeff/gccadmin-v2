@@ -35,16 +35,16 @@ async function LeaderDetailPage({ params }: PageProps) {
 
   return (
     <div className="flex-1">
-      <div className="max-w-5xl mx-auto flex flex-col gap-4 p-4">
+      <div className="mx-auto flex max-w-5xl flex-col gap-4 p-4">
         <Link
           href="/leaders"
-          className="text-sm inline-flex w-max items-center gap-2 hover:underline"
+          className="inline-flex w-max items-center gap-2 text-sm hover:underline"
         >
           <ArrowLeftIcon className="size-4" /> Back to List
         </Link>
         <div className="flex items-center gap-4">
           <div>
-            <h2 className="font-bold flex items-center gap-2">
+            <h2 className="flex items-center gap-2 font-bold">
               {leader.name}{" "}
               {leader.userAccountId ? (
                 <Badge variant="ACTIVE">
@@ -57,7 +57,7 @@ async function LeaderDetailPage({ params }: PageProps) {
                 </Badge>
               )}
             </h2>
-            <p className="text-sm text-muted-foreground">Primary Leader</p>
+            <p className="text-muted-foreground text-sm">Primary Leader</p>
           </div>
         </div>
         <Separator />

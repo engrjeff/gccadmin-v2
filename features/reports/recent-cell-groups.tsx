@@ -38,7 +38,7 @@ export function RecentCellGroups() {
 
   if (cgQuery.isLoading)
     return (
-      <Card className="py-4 gap-0">
+      <Card className="gap-0 py-4">
         <CardHeader className="border-b px-4 [.border-b]:pb-4">
           <CardTitle>Recent Cell Groups</CardTitle>
           <CardDescription className="flex items-center gap-2">
@@ -52,7 +52,7 @@ export function RecentCellGroups() {
     );
 
   return (
-    <Card className="py-4 gap-0">
+    <Card className="gap-0 py-4">
       <CardHeader className="border-b px-4 [.border-b]:pb-4">
         <CardTitle>Recent Cell Groups</CardTitle>
         <CardDescription className="flex items-center gap-2 text-xs">
@@ -68,7 +68,7 @@ export function RecentCellGroups() {
               size="sm"
               variant="link"
               asChild
-              className="text-blue-500 px-0 has-[>svg]:px-0"
+              className="px-0 text-blue-500 has-[>svg]:px-0"
             >
               <Link
                 href={{
@@ -83,10 +83,10 @@ export function RecentCellGroups() {
         )}
       </CardHeader>
 
-      <CardContent className="px-4 flex-1 [&>div]:h-full">
+      <CardContent className="flex-1 px-4 [&>div]:h-full">
         <Table>
           <TableHeader>
-            <TableRow className="hover:bg-card bg-card">
+            <TableRow className="bg-card hover:bg-card">
               <TableHead>Led by</TableHead>
               <TableHead>Type</TableHead>
               <TableHead>Date & Venue</TableHead>
@@ -98,9 +98,9 @@ export function RecentCellGroups() {
             {cellGroups?.length === 0 ? (
               <TableRow className="hover:bg-transparent">
                 <TableCell colSpan={5}>
-                  <div className="min-h-[300px] flex flex-col items-center justify-center gap-3">
+                  <div className="flex min-h-[300px] flex-col items-center justify-center gap-3">
                     <PackageIcon className="size-6 text-muted-foreground" />
-                    <p className="text-sm text-muted-foreground text-center">
+                    <p className="text-center text-muted-foreground text-sm">
                       No recent cell reports yet.
                     </p>
                     <Button asChild>
@@ -121,7 +121,7 @@ export function RecentCellGroups() {
                         >
                           {cellgroup.assistant.name}
                         </Link>
-                        <p className="text-xs text-muted-foreground capitalize">
+                        <p className="text-muted-foreground text-xs capitalize">
                           Assistant Leader
                         </p>
                       </div>
@@ -133,7 +133,7 @@ export function RecentCellGroups() {
                         >
                           {cellgroup.leader.name}
                         </Link>
-                        <p className="text-xs text-muted-foreground capitalize">
+                        <p className="text-muted-foreground text-xs capitalize">
                           Primary Leader
                         </p>
                       </div>
@@ -145,8 +145,8 @@ export function RecentCellGroups() {
                     </Badge>
                   </TableCell>
                   <TableCell className="whitespace-nowrap">
-                    <p className="text-sm line-clamp-1">{cellgroup.venue}</p>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="line-clamp-1 text-sm">{cellgroup.venue}</p>
+                    <p className="text-muted-foreground text-xs">
                       {formatCellGroupDate(new Date(cellgroup.date))}
                     </p>
                   </TableCell>
@@ -154,7 +154,7 @@ export function RecentCellGroups() {
                     {cellgroup.lessonTitle ? (
                       <div>
                         <p className="font-semibold">{cellgroup.lessonTitle}</p>
-                        <p className="text-xs text-muted-foreground">
+                        <p className="text-muted-foreground text-xs">
                           Custom Lesson
                         </p>
                       </div>
@@ -163,7 +163,7 @@ export function RecentCellGroups() {
                         <p className="font-semibold hover:underline">
                           {cellgroup.lesson?.title}
                         </p>
-                        <p className="text-xs text-muted-foreground">
+                        <p className="text-muted-foreground text-xs">
                           {cellgroup.lesson?.lessonSeries.title}
                         </p>
                       </div>

@@ -25,9 +25,9 @@ export function DisciplesTable({
   disciples: Array<Disciple & { leader: { id: string; name: string } | null }>;
 }) {
   return (
-    <div className="[&>div]:rounded-md rounded-md border min-h-min overflow-hidden lg:[&>div]:max-h-[490px] hidden sm:block">
+    <div className="hidden min-h-min overflow-hidden rounded-md border sm:block [&>div]:rounded-md lg:[&>div]:max-h-[490px]">
       <Table>
-        <TableHeader className="bg-card sticky top-0 z-10 backdrop-blur-sm">
+        <TableHeader className="sticky top-0 z-10 bg-card backdrop-blur-sm">
           <TableRow className="hover:bg-transparent">
             <TableHead className="size-4 text-center">#</TableHead>
             <TableHead>
@@ -57,9 +57,9 @@ export function DisciplesTable({
           {disciples.length === 0 ? (
             <TableRow className="hover:bg-transparent">
               <TableCell colSpan={isAdmin ? 8 : 7}>
-                <div className="min-h-[300px] flex flex-col items-center justify-center gap-3">
+                <div className="flex min-h-[300px] flex-col items-center justify-center gap-3">
                   <PackageIcon className="size-6 text-muted-foreground" />
-                  <p className="text-sm text-muted-foreground text-center">
+                  <p className="text-center text-muted-foreground text-sm">
                     No disciple records found.
                   </p>
                 </div>
@@ -75,7 +75,7 @@ export function DisciplesTable({
                   <div>
                     <Link
                       href={`/disciples/${d.id}`}
-                      className="font-semibold hover:underline inline-flex items-center gap-1.5"
+                      className="inline-flex items-center gap-1.5 font-semibold hover:underline"
                     >
                       {d.name}{" "}
                       {d.isMyPrimary && !d.isPrimary ? (
@@ -85,7 +85,7 @@ export function DisciplesTable({
                         <ShieldCheckIcon className="size-3 text-yellow-500" />
                       ) : null}
                     </Link>
-                    <p className="text-xs text-muted-foreground capitalize">
+                    <p className="text-muted-foreground text-xs capitalize">
                       {removeUnderscores(d.memberType)},{" "}
                       {d.gender.toLowerCase()}
                     </p>

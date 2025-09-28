@@ -147,7 +147,7 @@ export function DiscipleRowMobileActions({ disciple }: { disciple: Disciple }) {
             <DrawerTitle className="text-sm">{disciple.name}</DrawerTitle>
             <DrawerDescription>Pick an action to do.</DrawerDescription>
           </DrawerHeader>
-          <div className="p-2 py-2 flex flex-col gap-1">
+          <div className="flex flex-col gap-1 p-2 py-2">
             <Button
               size="lg"
               variant="ghost"
@@ -192,7 +192,7 @@ export function DiscipleRowMobileActions({ disciple }: { disciple: Disciple }) {
 
           <Separator />
 
-          <div className="px-2 py-2 flex flex-col gap-1">
+          <div className="flex flex-col gap-1 px-2 py-2">
             <Button
               size="lg"
               variant="ghost"
@@ -221,7 +221,7 @@ export function DiscipleRowMobileActions({ disciple }: { disciple: Disciple }) {
               Delete
             </Button>
           </div>
-          <DrawerFooter className="border-t text-xs text-muted-foreground gap-2 flex-row">
+          <DrawerFooter className="flex-row gap-2 border-t text-muted-foreground text-xs">
             nn
           </DrawerFooter>
         </DrawerContent>

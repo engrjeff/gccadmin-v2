@@ -56,7 +56,7 @@ export function AttendeesPicker() {
     return (
       <div className="relative min-h-[300px] rounded-md border">
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <p className="text-center text-sm text-muted-foreground">
+          <p className="text-center text-muted-foreground text-sm">
             Select a leader first
           </p>
         </div>
@@ -71,7 +71,7 @@ export function AttendeesPicker() {
             size={32}
             className="animate-spin text-muted-foreground"
           />
-          <p className="text-center text-sm text-muted-foreground">
+          <p className="text-center text-muted-foreground text-sm">
             Getting disciples data...
           </p>
         </div>
@@ -92,7 +92,7 @@ export function AttendeesPicker() {
             value={attendeesSearchQuery}
             disabled={disciplesOfLeader.data?.length === 0}
             onChange={(e) => setAttendeesSearchQuery(e.currentTarget.value)}
-            className="peer h-10 pe-9 ps-9 lg:h-9"
+            className="peer h-10 ps-9 pe-9 lg:h-9"
           />
           <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 text-muted-foreground/80 peer-disabled:opacity-50">
             <SearchIcon size={16} strokeWidth={2} />
@@ -101,7 +101,7 @@ export function AttendeesPicker() {
           {attendeesSearchQuery ? (
             <button
               type="button"
-              className="absolute right-1 top-1/2 inline-flex size-7 -translate-y-1/2 items-center justify-center text-muted-foreground hover:text-foreground"
+              className="-translate-y-1/2 absolute top-1/2 right-1 inline-flex size-7 items-center justify-center text-muted-foreground hover:text-foreground"
               onClick={() => setAttendeesSearchQuery("")}
             >
               <XIcon size={16} />
@@ -110,7 +110,7 @@ export function AttendeesPicker() {
         </div>
         {disciplesOfLeader.data?.length === 0 && disciplesOfLeader.isSuccess ? (
           <div className="py-2">
-            <p className="mt-1 text-sm text-center text-muted-foreground">
+            <p className="mt-1 text-center text-muted-foreground text-sm">
               No disciple found for the selected leader.
             </p>
           </div>
@@ -149,11 +149,11 @@ export function AttendeesPicker() {
                     disabled={assistantId === d.id}
                     onClick={() => handleAttendeesSelection(d.id)}
                     className={cn(
-                      "inline-flex disabled:opacity-40 disabled:hover:bg-transparent disabled:text-muted-foreground disabled:cursor-not-allowed w-full items-center justify-between p-2.5 transition-colors hover:bg-muted",
+                      "inline-flex w-full items-center justify-between p-2.5 transition-colors hover:bg-muted disabled:cursor-not-allowed disabled:text-muted-foreground disabled:opacity-40 disabled:hover:bg-transparent",
                       attendees.includes(d.id) ? "bg-muted/30" : "",
                     )}
                   >
-                    <span className="text-sm text-foreground">{d.name}</span>
+                    <span className="text-foreground text-sm">{d.name}</span>
                     <CheckIcon size={16} className="text-green-500" />
                   </button>
                 </li>
@@ -164,15 +164,15 @@ export function AttendeesPicker() {
       ) : null}
 
       {attendeesSearchQuery && !unSelectedAttendees?.length ? (
-        <div className="flex flex-col items-center justify-center gap-2 pb-6 pt-2">
-          <p className="text-center text-sm text-muted-foreground">{`No unselected disciple found for keyword : "${attendeesSearchQuery}"`}</p>
+        <div className="flex flex-col items-center justify-center gap-2 pt-2 pb-6">
+          <p className="text-center text-muted-foreground text-sm">{`No unselected disciple found for keyword : "${attendeesSearchQuery}"`}</p>
         </div>
       ) : null}
 
       {unSelectedAttendees?.length ? (
         <section className="border-t">
           <div className="flex items-center justify-between border-b bg-muted/20 px-2.5 py-1">
-            <h3 className="text-xs font-medium">Disciples</h3>
+            <h3 className="font-medium text-xs">Disciples</h3>
             <Button
               type="button"
               size="sm"
@@ -195,7 +195,7 @@ export function AttendeesPicker() {
                     attendees.includes(d.id) ? "bg-muted/30" : "",
                   )}
                 >
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-muted-foreground text-sm">
                     {d.name}
                   </span>
                 </button>

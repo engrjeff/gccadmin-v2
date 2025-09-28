@@ -20,12 +20,12 @@ export function MemberStatisticsByType() {
 
   return (
     <div className="flex flex-col gap-4 border-b pb-4 sm:border-b-0">
-      <p className="text-sm font-semibold">Members by Type</p>
+      <p className="font-semibold text-sm">Members by Type</p>
       <ul className="space-y-4">
         {members.data?.map((member) => (
           <li key={`stat-${member.memberType}`}>
             <p className="flex justify-between text-sm">
-              <span className="font-medium capitalize text-gray-900 dark:text-gray-50">
+              <span className="font-medium text-gray-900 capitalize dark:text-gray-50">
                 {removeUnderscores(member.memberType)}
               </span>
               <span className="font-medium text-gray-900 dark:text-gray-50">

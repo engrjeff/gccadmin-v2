@@ -127,7 +127,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 />
                 <div className="flex flex-col gap-0.5 leading-none">
                   <span className="font-semibold">{data.app.name}</span>
-                  <span className="text-xs text-muted-foreground">
+                  <span className="text-muted-foreground text-xs">
                     {data.app.subtitle}
                   </span>
                 </div>
@@ -142,13 +142,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavProcess menuItems={data.navProcess} />
       </SidebarContent>
       <SidebarFooter>
-        <p className="text-xs text-muted-foreground">
+        <p className="text-muted-foreground text-xs">
           Made with ♥️ by{" "}
           <a
             href="http://jeffsegovia.dev"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-semibold hover:underline hover:text-foreground"
+            className="font-semibold hover:text-foreground hover:underline"
           >
             Jeff Segovia
           </a>

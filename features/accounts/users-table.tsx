@@ -14,10 +14,10 @@ import { formatDateDistance } from "@/lib/utils";
 
 export function UsersTable({ users }: { users: User[] }) {
   return (
-    <div className="bg-background overflow-hidden rounded-md border">
+    <div className="overflow-hidden rounded-md border bg-background">
       <Table>
         <TableHeader>
-          <TableRow className="hover:bg-card bg-card">
+          <TableRow className="bg-card hover:bg-card">
             <TableHead className="w-5">#</TableHead>
             <TableHead>Name</TableHead>
             <TableHead>Role</TableHead>
@@ -30,9 +30,9 @@ export function UsersTable({ users }: { users: User[] }) {
           {users?.length === 0 ? (
             <TableRow className="hover:bg-transparent">
               <TableCell colSpan={3}>
-                <div className="min-h-[300px] flex flex-col items-center justify-center gap-3">
+                <div className="flex min-h-[300px] flex-col items-center justify-center gap-3">
                   <PackageIcon className="size-6 text-muted-foreground" />
-                  <p className="text-sm text-muted-foreground text-center">
+                  <p className="text-center text-muted-foreground text-sm">
                     No user found.
                   </p>
                 </div>
@@ -59,7 +59,7 @@ export function UsersTable({ users }: { users: User[] }) {
                     </Avatar>
                     <div>
                       <p className="font-semibold">{user.fullName}</p>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-muted-foreground text-xs">
                         {user.primaryEmailAddress?.emailAddress}
                       </p>
                     </div>

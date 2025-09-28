@@ -14,7 +14,7 @@ export default function UnauthorizedPage() {
   return (
     <>
       <Header />
-      <main className="flex flex-1 flex-col items-center max-w-6xl container mx-auto justify-center min-h-[80vh] gap-3 px-6">
+      <main className="container mx-auto flex min-h-[80vh] max-w-6xl flex-1 flex-col items-center justify-center gap-3 px-6">
         <Image
           unoptimized
           src="/gcc-logo.svg"
@@ -22,10 +22,10 @@ export default function UnauthorizedPage() {
           width={64}
           height={64}
         />
-        <h1 className="font-bold text-3xl md:text-5xl text-center">
+        <h1 className="text-center font-bold text-3xl md:text-5xl">
           Unauthorized.
         </h1>
-        <p className="text-lg text-muted-foreground text-center">
+        <p className="text-center text-lg text-muted-foreground">
           Your account has no rights to access that page.
         </p>
         <RequestAccessForm />

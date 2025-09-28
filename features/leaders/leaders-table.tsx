@@ -22,10 +22,10 @@ export function LeadersTable({
   >;
 }) {
   return (
-    <div className="bg-background overflow-hidden rounded-md border">
+    <div className="overflow-hidden rounded-md border bg-background">
       <Table>
         <TableHeader>
-          <TableRow className="hover:bg-card bg-card">
+          <TableRow className="bg-card hover:bg-card">
             <TableHead>#</TableHead>
             <TableHead>Name</TableHead>
             <TableHead>Email</TableHead>
@@ -39,9 +39,9 @@ export function LeadersTable({
           {leaders.length === 0 ? (
             <TableRow className="hover:bg-transparent">
               <TableCell colSpan={6}>
-                <div className="min-h-[300px] flex flex-col items-center justify-center gap-3">
+                <div className="flex min-h-[300px] flex-col items-center justify-center gap-3">
                   <PackageIcon className="size-6 text-muted-foreground" />
-                  <p className="text-sm text-muted-foreground text-center">
+                  <p className="text-center text-muted-foreground text-sm">
                     No leader found.
                   </p>
                 </div>
@@ -59,7 +59,7 @@ export function LeadersTable({
                     >
                       {leader.name}
                     </Link>
-                    <p className="text-xs text-muted-foreground capitalize">
+                    <p className="text-muted-foreground text-xs capitalize">
                       {removeUnderscores(leader.memberType)},{" "}
                       {leader.gender.toLowerCase()}
                     </p>

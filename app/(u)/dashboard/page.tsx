@@ -16,10 +16,10 @@ export default function DashboardPage() {
       <div className="flex items-center justify-between gap-4">
         <div>
           <h2 className="font-bold">Dashboard</h2>
-          <p className="text-sm hidden md:block text-muted-foreground">
+          <p className="hidden text-muted-foreground text-sm md:block">
             Quick insights on cell groups and members.
           </p>
-          <p className="text-sm md:hidden text-muted-foreground">
+          <p className="text-muted-foreground text-sm md:hidden">
             Quick cell group insights.
           </p>
         </div>
@@ -28,7 +28,7 @@ export default function DashboardPage() {
 
       <CellGroupStatistics />
       <CellReportTrend />
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
         <div className="lg:col-span-2">
           <RecentCellGroups />
         </div>

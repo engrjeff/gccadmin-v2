@@ -26,19 +26,19 @@ async function ResourcesPage({ searchParams }: PageProps) {
       <div className="flex items-center gap-4">
         <div>
           <h2 className="font-bold">Resources</h2>
-          <p className="text-sm text-muted-foreground">Cell Group lessons</p>
+          <p className="text-muted-foreground text-sm">Cell Group lessons</p>
         </div>
         {lessonSeriesList.length === 0 ? null : (
-          <div className="flex items-center gap-3 ml-auto">
+          <div className="ml-auto flex items-center gap-3">
             <LessonSeriesFormDialog />
           </div>
         )}
       </div>
 
       {lessonSeriesList.length === 0 ? (
-        <div className="min-h-[350px] border rounded-md border-dashed flex-1 flex flex-col items-center justify-center gap-3">
+        <div className="flex min-h-[350px] flex-1 flex-col items-center justify-center gap-3 rounded-md border border-dashed">
           <PackageIcon className="size-6 text-muted-foreground" />
-          <p className="text-sm text-muted-foreground text-center">
+          <p className="text-center text-muted-foreground text-sm">
             No lesson records found.
           </p>
 
@@ -49,7 +49,7 @@ async function ResourcesPage({ searchParams }: PageProps) {
           <div className="flex items-center gap-3">
             <SearchField paramName="q" />
           </div>
-          <ul className="flex-1 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+          <ul className="grid flex-1 grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
             {lessonSeriesList.map((lessonSeries) => (
               <li key={`lesson-series-${lessonSeries.id}`}>
                 <LessonSeriesCard lessonSeries={lessonSeries} />

@@ -40,14 +40,14 @@ export function CellReportTrend() {
 
   if (trendQuery.isLoading)
     return (
-      <Card className="py-4 gap-0">
+      <Card className="gap-0 py-4">
         <CardHeader className="border-b px-4 [.border-b]:pb-4">
           <CardTitle>Cell Report Trend</CardTitle>
           <CardDescription>
             <Skeleton className="h-4 w-32" />
           </CardDescription>
         </CardHeader>
-        <CardContent className="p-4 flex-1">
+        <CardContent className="flex-1 p-4">
           <Skeleton className="h-[250px]" />
         </CardContent>
       </Card>
@@ -60,14 +60,14 @@ export function CellReportTrend() {
   const begin = chartData?.at(0)?.month;
 
   return (
-    <Card className="py-4 gap-0">
+    <Card className="gap-0 py-4">
       <CardHeader className="border-b px-4 [.border-b]:pb-4">
         <CardTitle>Cell Report Trend</CardTitle>
         <CardDescription>
           {begin} - December {year}
         </CardDescription>
       </CardHeader>
-      <CardContent className="px-4 pt-4 flex-1">
+      <CardContent className="flex-1 px-4 pt-4">
         <ChartContainer
           config={chartConfig}
           className="aspect-auto h-[240px] w-full"

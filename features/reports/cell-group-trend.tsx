@@ -76,17 +76,17 @@ export function CellGroupTrend({
   const trend = percentDelta < 0 ? "up" : "down";
 
   return (
-    <div className="flex flex-col gap-3 relative p-4">
-      <p className="text-sm font-semibold">Cell Group Trend</p>
-      <div className="text-sm text-muted-foreground">Total Cell Groups</div>
+    <div className="relative flex flex-col gap-3 p-4">
+      <p className="font-semibold text-sm">Cell Group Trend</p>
+      <div className="text-muted-foreground text-sm">Total Cell Groups</div>
       <div className="flex items-end gap-2">
-        <div className="text-4xl font-semibold tabular-nums">
+        <div className="font-semibold text-4xl tabular-nums">
           {currentCount}
         </div>
         {selectedDateRange === "year_to_date" ? (
-          <p className="text-sm text-muted-foreground">cell groups this year</p>
+          <p className="text-muted-foreground text-sm">cell groups this year</p>
         ) : (
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             compared to {previousCount} {pluralize("report", previousCount)}{" "}
             {dateRangeLabel}
           </p>
@@ -111,7 +111,7 @@ export function CellGroupTrend({
           size="sm"
           variant="link"
           asChild
-          className="text-blue-500 px-0 has-[>svg]:px-0"
+          className="px-0 text-blue-500 has-[>svg]:px-0"
         >
           <Link
             href={{

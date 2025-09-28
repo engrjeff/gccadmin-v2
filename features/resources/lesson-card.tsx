@@ -33,15 +33,15 @@ export function LessonCard({ lesson }: { lesson: Lesson }) {
   const [editing, setEditing] = useState(false);
 
   return (
-    <div className="bg-card/60 border rounded-md py-3 space-y-3">
+    <div className="space-y-3 rounded-md border bg-card/60 py-3">
       <div className="flex items-center gap-2 px-3">
         <div className="space-y-0.5">
-          <p className="text-sm font-semibold">{lesson.title}</p>
-          <p className="text-xs text-muted-foreground line-clamp-1">
+          <p className="font-semibold text-sm">{lesson.title}</p>
+          <p className="line-clamp-1 text-muted-foreground text-xs">
             {lesson.description}
           </p>
           {lesson.scriptureReferences.length === 0 ? null : (
-            <div className="flex items-center gap-1.5 flex-wrap">
+            <div className="flex flex-wrap items-center gap-1.5">
               {lesson.scriptureReferences.slice(0, 4).map((sc) => (
                 <Badge key={`${lesson.id}-scriptureref-${sc}`} variant="MALE">
                   {sc}
@@ -71,7 +71,7 @@ export function LessonCard({ lesson }: { lesson: Lesson }) {
               target="_blank"
               rel="noopener noreferrer"
               download={lesson.title}
-              className="aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:opacity-80 aria-disabled:text-muted-foreground"
+              className="aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:text-muted-foreground aria-disabled:opacity-80"
               aria-disabled={!lesson.fileUrl}
             >
               <DownloadIcon /> <span className="sr-only">Download</span>
@@ -206,7 +206,7 @@ function LessonEditForm({
               <FormItem>
                 <FormLabel>
                   File URL{" "}
-                  <span className="text-xs italic text-muted-foreground">
+                  <span className="text-muted-foreground text-xs italic">
                     (Optional)
                   </span>
                 </FormLabel>
@@ -220,7 +220,7 @@ function LessonEditForm({
                       {...field}
                     />
                   </FormControl>
-                  <div className="absolute left-2 top-1/2 -translate-y-1/2">
+                  <div className="-translate-y-1/2 absolute top-1/2 left-2">
                     <FaviconImage
                       url={form.watch("fileUrl") as string}
                       size={12}

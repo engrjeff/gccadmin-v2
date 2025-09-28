@@ -15,7 +15,7 @@ async function MyProfilePage() {
   if (!discipleProfile)
     return (
       <div className="flex-1">
-        <div className="max-w-5xl mx-auto flex flex-col gap-4 p-4">
+        <div className="mx-auto flex max-w-5xl flex-col gap-4 p-4">
           <Card>
             <CardContent>
               <p>No disciple profile found.</p>
@@ -27,14 +27,14 @@ async function MyProfilePage() {
 
   return (
     <div className="flex-1">
-      <div className="max-w-5xl mx-auto flex flex-col gap-4 p-4">
+      <div className="mx-auto flex max-w-5xl flex-col gap-4 p-4">
         <div className="flex items-center gap-4">
           <div>
-            <h2 className="font-bold flex items-center gap-2">
+            <h2 className="flex items-center gap-2 font-bold">
               {discipleProfile.name}{" "}
             </h2>
             {discipleProfile.isPrimary ? (
-              <p className="text-sm text-muted-foreground">Primary Leader</p>
+              <p className="text-muted-foreground text-sm">Primary Leader</p>
             ) : null}
           </div>
         </div>

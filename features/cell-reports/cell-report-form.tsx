@@ -178,7 +178,7 @@ export function CellReportForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
             className="space-y-3 px-4 disabled:opacity-90"
             disabled={isBusy}
           >
-            <legend className="text-sm font-medium">General Details</legend>
+            <legend className="font-medium text-sm">General Details</legend>
             {isAdmin ? (
               <FormField
                 control={form.control}
@@ -213,7 +213,7 @@ export function CellReportForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
               />
             ) : null}
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <FormField
                 control={form.control}
                 name="type"
@@ -222,7 +222,7 @@ export function CellReportForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
                     <FormLabel>Cell Type</FormLabel>
                     <FormControl>
                       <SelectNative
-                        className="normal-case w-min md:w-full"
+                        className="w-min normal-case md:w-full"
                         id="type"
                         {...field}
                       >
@@ -341,7 +341,7 @@ export function CellReportForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
             className="space-y-3 px-4 disabled:opacity-90"
             disabled={isBusy}
           >
-            <legend className="text-sm font-medium">Lesson Details</legend>
+            <legend className="font-medium text-sm">Lesson Details</legend>
 
             <Tabs
               defaultValue="pick-lesson"
@@ -464,7 +464,7 @@ export function CellReportForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
                 <FormItem>
                   <FormLabel>
                     Worship{" "}
-                    <span className="text-xs italic text-muted-foreground">
+                    <span className="text-muted-foreground text-xs italic">
                       (Optional)
                     </span>
                   </FormLabel>
@@ -491,7 +491,7 @@ export function CellReportForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
                 <FormItem>
                   <FormLabel>
                     Work{" "}
-                    <span className="text-xs italic text-muted-foreground">
+                    <span className="text-muted-foreground text-xs italic">
                       (Optional)
                     </span>
                   </FormLabel>
@@ -525,7 +525,7 @@ export function CellReportForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
           </fieldset>
         </div>
 
-        <div className="mt-auto p-4 flex gap-3 items-center justify-end">
+        <div className="mt-auto flex items-center justify-end gap-3 p-4">
           <div className="mb-2 hidden select-none items-center space-x-2 md:mb-0">
             <Checkbox
               id="create-more-flag"
@@ -535,7 +535,7 @@ export function CellReportForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
             />
             <label
               htmlFor="create-more-flag"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              className="font-medium text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
               Create another report
             </label>
@@ -544,7 +544,7 @@ export function CellReportForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
             variant="outline"
             type="reset"
             disabled={false}
-            className="bg-muted/30 md:ml-auto hidden"
+            className="hidden bg-muted/30 md:ml-auto"
             onClick={() => {
               form.reset(defaultValues);
               setSelectedSeries(undefined);

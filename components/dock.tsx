@@ -6,7 +6,7 @@ import type * as React from "react";
 import { cn } from "@/lib/utils";
 
 const dockVariants = cva(
-  "fixed bottom-0 left-0 right-0 border-t z-50 flex items-center justify-center gap-1 px-1 py-2.5 shadow-lg sm:hidden",
+  "fixed bottom-0 left-0 right-0 border-t z-50 flex items-center justify-center gap-1 px-2.5 py-2.5 shadow-lg sm:hidden",
   {
     variants: {
       variant: {

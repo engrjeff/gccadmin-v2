@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { DataPagination } from "@/components/data-pagination";
 import { DiscipleCreateFormModal } from "@/features/disciples/disciple-create-form-modal";
 import { DisciplesFilters } from "@/features/disciples/disciples-filters";
+import { DisciplesList } from "@/features/disciples/disciples-list";
 import { DisciplesTable } from "@/features/disciples/disciples-table";
 import { ExportDisciplesButton } from "@/features/disciples/export-disciples-button";
 import { ImportDisciplesDialog } from "@/features/disciples/import-disciples-dialog";
@@ -44,6 +45,7 @@ export default async function DisciplesPage({ searchParams }: PageProps) {
       </div>
       <DisciplesFilters />
       <DisciplesTable isAdmin={isAdmin} disciples={disciples} />
+      <DisciplesList isAdmin={isAdmin} disciples={disciples} />
       <DataPagination name="disciples" pageInfo={pageInfo} />
     </div>
   );

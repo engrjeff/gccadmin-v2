@@ -145,7 +145,7 @@ export function QuickActions() {
   );
 }
 
-function AddDiscipleForm({
+export function AddDiscipleForm({
   open,
   setOpen,
 }: {
@@ -169,7 +169,7 @@ function AddDiscipleForm({
   );
 }
 
-function CreateCellReportForm({
+export function CreateCellReportForm({
   open,
   setOpen,
 }: {

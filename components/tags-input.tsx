@@ -76,6 +76,7 @@ export function TagsInput({
           aria-invalid={props["aria-invalid"]}
         />
         <input
+          tabIndex={-1}
           ref={inputRef}
           placeholder={placeholder}
           className="flex-1 bg-transparent px-1 py-px text-sm outline-none placeholder:text-muted-foreground"

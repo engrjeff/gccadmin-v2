@@ -1,9 +1,11 @@
 "use client";
 
+import { isSunday } from "date-fns";
 import {
   BookIcon,
   HomeIcon,
   InfoIcon,
+  LockIcon,
   PlusIcon,
   UserPlusIcon,
   UsersIcon,
@@ -69,6 +71,8 @@ function MobileCreateDockItem() {
 
   const [action, setAction] = useState<QuickActionType>();
 
+  const lockReporting = isSunday(new Date());
+
   function reset() {
     setAction(undefined);
     setOpen(false);
@@ -108,9 +112,10 @@ function MobileCreateDockItem() {
               size="lg"
               variant="ghost"
               className="w-full justify-start"
+              disabled={lockReporting}
               onClick={() => triggerAction("create-cell-report")}
             >
-              <PlusIcon /> Create Cell Report
+              {lockReporting ? <LockIcon /> : <PlusIcon />} Create Cell Report
             </Button>
           </div>
           <DrawerFooter className="flex-row items-center gap-2 border-t text-muted-foreground text-xs">

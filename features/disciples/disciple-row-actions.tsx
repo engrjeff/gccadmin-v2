@@ -62,22 +62,41 @@ export function DiscipleRowActions({ disciple }: { disciple: Disciple }) {
               <span>Details</span>
             </Link>
           </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href={`/disciples/${disciple.id}?tab=lessons-taken`}>
+              <BookIcon /> <span>Lessons Taken</span>
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href={`/disciples/${disciple.id}?tab=attended-cellgroups`}>
+              <HomeIcon /> <span>Attended Cell Groups</span>
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href={`/disciples/${disciple.id}?tab=handled-disciples`}>
+              <UsersIcon /> <span>Handled Disciples</span>
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setAction("edit")}>
             <PencilIcon />
             Update
           </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => setAction("change-status")}>
-            <RotateCcwIcon />
-            {disciple.isActive ? "Make Inactive" : "Make Active"}
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            variant="destructive"
-            onClick={() => setAction("delete")}
-          >
-            <TrashIcon />
-            Delete
-          </DropdownMenuItem>
+          {disciple.isPrimary ? null : (
+            <>
+              <DropdownMenuItem onClick={() => setAction("change-status")}>
+                <RotateCcwIcon />
+                {disciple.isActive ? "Make Inactive" : "Make Active"}
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                variant="destructive"
+                onClick={() => setAction("delete")}
+              >
+                <TrashIcon />
+                Delete
+              </DropdownMenuItem>
+            </>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
 
@@ -134,9 +153,16 @@ export function DiscipleRowActions({ disciple }: { disciple: Disciple }) {
 export function DiscipleRowMobileActions({ disciple }: { disciple: Disciple }) {
   const [action, setAction] = useState<RowAction>();
 
+  const [open, setOpen] = useState(false);
+
+  const triggerAction = (action: RowAction) => {
+    setAction(action);
+    setOpen(false);
+  };
+
   return (
     <>
-      <Drawer>
+      <Drawer open={open} onOpenChange={setOpen}>
         <DrawerTrigger asChild>
           <Button size="iconSm" variant="ghost" aria-label="Disciple actions">
             <MoreHorizontalIcon />
@@ -197,33 +223,35 @@ export function DiscipleRowMobileActions({ disciple }: { disciple: Disciple }) {
               size="lg"
               variant="ghost"
               className="w-full justify-start"
-              onClick={() => setAction("edit")}
+              onClick={() => triggerAction("edit")}
             >
               <PencilIcon />
               Update
             </Button>
-            <Button
-              size="lg"
-              variant="ghost"
-              className="w-full justify-start"
-              onClick={() => setAction("change-status")}
-            >
-              <RotateCcwIcon />
-              {disciple.isActive ? "Make Inactive" : "Make Active"}
-            </Button>
-            <Button
-              size="lg"
-              className="w-full justify-start bg-destructive/10"
-              variant="destructive"
-              onClick={() => setAction("delete")}
-            >
-              <TrashIcon />
-              Delete
-            </Button>
+            {disciple.isPrimary ? (
+              <>
+                <Button
+                  size="lg"
+                  variant="ghost"
+                  className="w-full justify-start"
+                  onClick={() => triggerAction("change-status")}
+                >
+                  <RotateCcwIcon />
+                  {disciple.isActive ? "Make Inactive" : "Make Active"}
+                </Button>
+                <Button
+                  size="lg"
+                  className="w-full justify-start text-destructive hover:text-destructive"
+                  variant="ghost"
+                  onClick={() => triggerAction("delete")}
+                >
+                  <TrashIcon />
+                  Delete
+                </Button>
+              </>
+            ) : null}
           </div>
-          <DrawerFooter className="flex-row gap-2 border-t text-muted-foreground text-xs">
-            nn
-          </DrawerFooter>
+          <DrawerFooter className="flex-row gap-2 text-muted-foreground text-xs"></DrawerFooter>
         </DrawerContent>
       </Drawer>
 

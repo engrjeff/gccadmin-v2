@@ -56,7 +56,7 @@ async function CellReportsPage({ searchParams }: PageProps) {
       </div>
 
       {/* filters */}
-      <CellReportsFilters isForPastor={isPastor} />
+      <CellReportsFilters />
 
       {/* table */}
       <CellReportTable

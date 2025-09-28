@@ -55,7 +55,7 @@ function DiscipleListItem({
           <ListItemSecondary>Leader: {disciple.leader?.name}</ListItemSecondary>
         ) : null}
       </ListItemLinkContent>
-      <ListItemTrailing>
+      <ListItemTrailing onClick={() => {}}>
         <DiscipleRowMobileActions disciple={disciple} />
       </ListItemTrailing>
     </ListItem>

@@ -110,7 +110,7 @@ export function RecentCellGroups() {
                 </TableCell>
               </TableRow>
             ) : (
-              cellGroups?.slice(0, 6)?.map((cellgroup) => (
+              cellGroups?.slice(0, 5)?.map((cellgroup) => (
                 <TableRow key={cellgroup.id} className="hover:bg-card">
                   <TableCell>
                     {cellgroup.assistant ? (

@@ -18,7 +18,6 @@ import {
   Drawer,
   DrawerContent,
   DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
@@ -152,10 +151,15 @@ export function DiscipleRowActions({ disciple }: { disciple: Disciple }) {
 
 export function DiscipleRowMobileActions({ disciple }: { disciple: Disciple }) {
   const [action, setAction] = useState<RowAction>();
+  const [open, setOpen] = useState(false);
+
+  function reset() {
+    setAction(undefined);
+  }
 
   return (
     <>
-      <Drawer>
+      <Drawer open={open} onOpenChange={setOpen}>
         <DrawerTrigger asChild>
           <Button size="iconSm" variant="ghost" aria-label="Disciple actions">
             <MoreHorizontalIcon />
@@ -244,7 +248,6 @@ export function DiscipleRowMobileActions({ disciple }: { disciple: Disciple }) {
               </>
             )}
           </div>
-          <DrawerFooter className="flex-row gap-2 text-muted-foreground text-xs"></DrawerFooter>
         </DrawerContent>
       </Drawer>
 
@@ -254,7 +257,7 @@ export function DiscipleRowMobileActions({ disciple }: { disciple: Disciple }) {
         open={action === "delete"}
         onOpenChange={(isOpen) => {
           if (!isOpen) {
-            setAction(undefined);
+            reset();
           }
         }}
       />
@@ -266,7 +269,7 @@ export function DiscipleRowMobileActions({ disciple }: { disciple: Disciple }) {
         open={action === "change-status"}
         onOpenChange={(isOpen) => {
           if (!isOpen) {
-            setAction(undefined);
+            reset();
           }
         }}
       />
@@ -275,14 +278,13 @@ export function DiscipleRowMobileActions({ disciple }: { disciple: Disciple }) {
         open={action === "edit"}
         onOpenChange={(isOpen) => {
           if (!isOpen) {
-            setAction(undefined);
+            reset();
           }
         }}
       >
         <SheetContent
           side="right"
           className="inset-y-2 right-2 flex h-auto w-[95%] flex-col gap-0 overflow-y-hidden rounded-lg border bg-background p-0 focus-visible:outline-none sm:max-w-lg"
-          onInteractOutside={(e) => e.preventDefault()}
         >
           <SheetHeader className="space-y-1 border-b p-4 text-left">
             <SheetTitle>Update Disciple</SheetTitle>

@@ -11,7 +11,7 @@ export const List = React.forwardRef<
   <ul
     ref={ref}
     className={cn(
-      "w-full rounded-md border border-border bg-background divide-y divide-border",
+      "w-full divide-y divide-border rounded-md border border-border bg-background",
       className,
     )}
     {...props}
@@ -29,7 +29,7 @@ export const ListItem = React.forwardRef<HTMLLIElement, ListItemProps>(
       <li
         ref={ref}
         className={cn(
-          "relative flex w-full cursor-pointer select-none items-center px-4 p0-3 transition",
+          "p0-3 relative flex w-full cursor-pointer select-none items-center px-4 transition",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
           "active:bg-accent/80",
           disabled && "pointer-events-none opacity-50",
@@ -50,7 +50,7 @@ export const ListItemLeading = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex mr-4 shrink-0 items-center justify-center", className)}
+    className={cn("mr-4 flex shrink-0 items-center justify-center", className)}
     onClick={(e) => e.stopPropagation()}
     {...props}
   />
@@ -63,7 +63,7 @@ export const ListItemContent = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex py-3 flex-1 flex-col overflow-hidden", className)}
+    className={cn("flex flex-1 flex-col overflow-hidden py-3", className)}
     {...props}
   />
 ));
@@ -74,7 +74,7 @@ export const ListItemLinkContent = React.forwardRef<
   React.ComponentProps<typeof Link>
 >(({ className, ...props }, ref) => (
   <Link
-    className={cn("flex py-3 flex-1 flex-col overflow-hidden", className)}
+    className={cn("flex flex-1 flex-col overflow-hidden py-3", className)}
     {...props}
     ref={ref}
   />
@@ -87,7 +87,7 @@ export const ListItemPrimary = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <span
     ref={ref}
-    className={cn("truncate text-sm font-medium w-max", className)}
+    className={cn("w-max truncate font-medium text-sm", className)}
     {...props}
   />
 ));
@@ -99,7 +99,7 @@ export const ListItemSecondary = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <span
     ref={ref}
-    className={cn("truncate text-xs text-muted-foreground", className)}
+    className={cn("truncate text-muted-foreground text-xs", className)}
     {...props}
   />
 ));

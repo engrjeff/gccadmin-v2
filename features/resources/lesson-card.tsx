@@ -35,8 +35,8 @@ export function LessonCard({ lesson }: { lesson: Lesson }) {
   return (
     <div className="space-y-3 rounded-md border bg-card/60 py-3">
       <div className="flex items-center gap-2 px-3">
-        <div className="space-y-0.5">
-          <p className="font-semibold text-sm">{lesson.title}</p>
+        <div className="max-w-[90%] space-y-0.5">
+          <p className="line-clamp-1 font-semibold text-sm">{lesson.title}</p>
           <p className="line-clamp-1 text-muted-foreground text-xs">
             {lesson.description}
           </p>
@@ -51,7 +51,7 @@ export function LessonCard({ lesson }: { lesson: Lesson }) {
           )}
         </div>
 
-        <div className="ml-auto">
+        <div className="ml-auto flex shrink-0 flex-nowrap items-center gap-3">
           <Button
             size="iconSm"
             variant="ghost"

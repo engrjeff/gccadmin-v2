@@ -67,25 +67,17 @@ export function BottomNavigation() {
 type QuickActionType = "add-disciple" | "create-cell-report";
 
 function MobileCreateDockItem() {
-  const [open, setOpen] = useState(false);
-
   const [action, setAction] = useState<QuickActionType>();
 
   const lockReporting = isSunday(new Date());
 
   function reset() {
     setAction(undefined);
-    setOpen(false);
-  }
-
-  function triggerAction(action: QuickActionType) {
-    setAction(action);
-    setOpen(false);
   }
 
   return (
     <>
-      <Drawer open={open} onOpenChange={setOpen}>
+      <Drawer>
         <DrawerTrigger asChild>
           <DockItem>
             <DockIcon>
@@ -104,7 +96,7 @@ function MobileCreateDockItem() {
               size="lg"
               variant="ghost"
               className="w-full justify-start"
-              onClick={() => triggerAction("add-disciple")}
+              onClick={() => setAction("add-disciple")}
             >
               <UserPlusIcon /> Add a Disciple
             </Button>
@@ -113,7 +105,7 @@ function MobileCreateDockItem() {
               variant="ghost"
               className="w-full justify-start"
               disabled={lockReporting}
-              onClick={() => triggerAction("create-cell-report")}
+              onClick={() => setAction("create-cell-report")}
             >
               {lockReporting ? <LockIcon /> : <PlusIcon />} Create Cell Report
             </Button>

@@ -270,7 +270,11 @@ export function DiscipleEditForm({
                   <FormItem>
                     <FormLabel>Leader</FormLabel>
                     <FormControl>
-                      <SelectNative {...field} className="capitalize">
+                      <SelectNative
+                        {...field}
+                        disabled={disciple.isPrimary}
+                        className="capitalize"
+                      >
                         <option value="">Leader</option>
                         {leadersQuery.data?.map((leader) => (
                           <option key={leader.id} value={leader.id}>

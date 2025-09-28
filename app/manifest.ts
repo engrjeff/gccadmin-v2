@@ -27,7 +27,7 @@ export default function manifest(): MetadataRoute.Manifest {
         type: "image/png",
       },
     ],
-    orientation: "natural",
+    orientation: "portrait",
     display: "standalone",
     dir: "auto",
     lang: "en-US",

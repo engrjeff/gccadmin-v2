@@ -153,16 +153,9 @@ export function DiscipleRowActions({ disciple }: { disciple: Disciple }) {
 export function DiscipleRowMobileActions({ disciple }: { disciple: Disciple }) {
   const [action, setAction] = useState<RowAction>();
 
-  const [open, setOpen] = useState(false);
-
-  const triggerAction = (action: RowAction) => {
-    setAction(action);
-    setOpen(false);
-  };
-
   return (
     <>
-      <Drawer open={open} onOpenChange={setOpen}>
+      <Drawer>
         <DrawerTrigger asChild>
           <Button size="iconSm" variant="ghost" aria-label="Disciple actions">
             <MoreHorizontalIcon />
@@ -223,18 +216,18 @@ export function DiscipleRowMobileActions({ disciple }: { disciple: Disciple }) {
               size="lg"
               variant="ghost"
               className="w-full justify-start"
-              onClick={() => triggerAction("edit")}
+              onClick={() => setAction("edit")}
             >
               <PencilIcon />
               Update
             </Button>
-            {disciple.isPrimary ? (
+            {disciple.isPrimary ? null : (
               <>
                 <Button
                   size="lg"
                   variant="ghost"
                   className="w-full justify-start"
-                  onClick={() => triggerAction("change-status")}
+                  onClick={() => setAction("change-status")}
                 >
                   <RotateCcwIcon />
                   {disciple.isActive ? "Make Inactive" : "Make Active"}
@@ -243,13 +236,13 @@ export function DiscipleRowMobileActions({ disciple }: { disciple: Disciple }) {
                   size="lg"
                   className="w-full justify-start text-destructive hover:text-destructive"
                   variant="ghost"
-                  onClick={() => triggerAction("delete")}
+                  onClick={() => setAction("delete")}
                 >
                   <TrashIcon />
                   Delete
                 </Button>
               </>
-            ) : null}
+            )}
           </div>
           <DrawerFooter className="flex-row gap-2 text-muted-foreground text-xs"></DrawerFooter>
         </DrawerContent>

@@ -16,6 +16,8 @@ export type CellReportsQueryArgs = {
   leader?: string;
   cellType?: CellType;
   dateRange?: DateRange;
+  // showMyReportsOnly
+  showMyReportsOnly?: "true" | undefined;
 };
 
 const DEFAULT_PAGE_SIZE = 10;
@@ -83,9 +85,15 @@ export async function getCellReports(args: CellReportsQueryArgs) {
     ? getDateRange(args.dateRange)
     : getDateRange("this_week"); // default to the current week
 
+  const leaderFilter = args.leader
+    ? args.leader
+    : isPastor
+      ? undefined
+      : leader?.id;
+
   const totalFilteredQuery = prisma.cellReport.count({
     where: {
-      leaderId: args.leader ? args.leader : isPastor ? undefined : leader?.id,
+      leaderId: args.showMyReportsOnly === "true" ? leader?.id : leaderFilter,
       type: cellType,
       date: {
         gte: dateFilter?.start,
@@ -96,7 +104,7 @@ export async function getCellReports(args: CellReportsQueryArgs) {
 
   const cellReportsQuery = prisma.cellReport.findMany({
     where: {
-      leaderId: args.leader ? args.leader : isPastor ? undefined : leader?.id,
+      leaderId: args.showMyReportsOnly === "true" ? leader?.id : leaderFilter,
       type: cellType,
       date: {
         gte: dateFilter?.start,

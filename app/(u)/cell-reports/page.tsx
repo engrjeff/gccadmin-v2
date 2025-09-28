@@ -4,6 +4,7 @@ import { DataPagination } from "@/components/data-pagination";
 import { CellReportCreateFormModal } from "@/features/cell-reports/cell-report-create-form-modal";
 import { CellReportTable } from "@/features/cell-reports/cell-report-table";
 import { CellReportsFilters } from "@/features/cell-reports/cell-reports-filters";
+import { MineSwitch } from "@/features/cell-reports/mine-switch";
 import {
   type CellReportsQueryArgs,
   getCellReports,
@@ -40,10 +41,18 @@ async function CellReportsPage({ searchParams }: PageProps) {
             </div>
           ) : null}
         </div>
+
         <div className="ml-auto flex items-center gap-3">
+          <div className="hidden md:block">
+            <MineSwitch />
+          </div>
           <ViewPDFButton period={dateFilter} cellReports={cellReports} />
           <CellReportCreateFormModal />
         </div>
+      </div>
+
+      <div className="md:hidden">
+        <MineSwitch />
       </div>
 
       {/* filters */}

@@ -74,6 +74,11 @@ function MobileCreateDockItem() {
     setOpen(false);
   }
 
+  function triggerAction(action: QuickActionType) {
+    setAction(action);
+    setOpen(false);
+  }
+
   return (
     <>
       <Drawer open={open} onOpenChange={setOpen}>
@@ -95,7 +100,7 @@ function MobileCreateDockItem() {
               size="lg"
               variant="ghost"
               className="w-full justify-start"
-              onClick={() => setAction("add-disciple")}
+              onClick={() => triggerAction("add-disciple")}
             >
               <UserPlusIcon /> Add a Disciple
             </Button>
@@ -103,7 +108,7 @@ function MobileCreateDockItem() {
               size="lg"
               variant="ghost"
               className="w-full justify-start"
-              onClick={() => setAction("create-cell-report")}
+              onClick={() => triggerAction("create-cell-report")}
             >
               <PlusIcon /> Create Cell Report
             </Button>

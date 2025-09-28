@@ -28,10 +28,10 @@ export default function Home() {
 
         <div className="flex gap-4 pt-10">
           <SignedIn>
-            <Button asChild>
-              <Link href="/dashboard">Go to Dashboard</Link>
+            <Button size="lg" asChild>
+              <Link href="/dashboard">Dashboard</Link>
             </Button>
-            <Button asChild variant="secondary">
+            <Button size="lg" asChild variant="secondary">
               <Link href="/cell-reports">Cell Reports</Link>
             </Button>
           </SignedIn>

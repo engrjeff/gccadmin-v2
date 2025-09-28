@@ -30,7 +30,7 @@ const dockItemVariants = cva(
       variant: {
         default:
           "text-muted-foreground hover:bg-accent/50 hover:text-foreground active:scale-95 active:bg-accent",
-        active: "text-foreground [&_svg]:text-blue-500",
+        active: "text-blue-500 [&_svg]:text-blue-500",
       },
     },
     defaultVariants: {
@@ -97,7 +97,7 @@ function DockItem({
 function DockIcon({ className, children, ...props }: DockIconProps) {
   return (
     <div className={cn("relative", className)} {...props}>
-      <div className="flex items-center justify-center [&_svg]:size-3.5">
+      <div className="flex items-center justify-center [&_svg]:size-5">
         {children}
       </div>
     </div>

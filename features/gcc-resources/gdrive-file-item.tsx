@@ -1,4 +1,5 @@
 import { DownloadIcon, FileIcon } from "lucide-react";
+import { CopyButton } from "@/components/copy-button";
 import { Button } from "@/components/ui/button";
 import { formatDateDistance } from "@/lib/utils";
 import type { GDriveFile } from "./types";
@@ -26,7 +27,13 @@ export function GDriveFileItem({ file }: { file: GDriveFile }) {
           ) : null}
         </div>
 
-        <div className="ml-auto shrink-0 self-end">
+        <div className="ml-auto flex shrink-0 items-center gap-1 self-end">
+          {file.webViewLink ? (
+            <CopyButton
+              textToCopy={file.webViewLink}
+              ariaLabel={`Copy link to ${file.name}`}
+            />
+          ) : null}
           {file.webContentLink ? (
             <Button size="iconSm" variant="ghost" asChild>
               <a

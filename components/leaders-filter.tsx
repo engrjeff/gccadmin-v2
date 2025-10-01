@@ -19,7 +19,7 @@ export function LeadersFilter({ isForPastor }: { isForPastor?: boolean }) {
     <FilterField
       label="Leader"
       queryName="leader"
-      singleSection
+      singleSelection
       Icon={ShieldIcon}
       useLabelDisplay
       options={

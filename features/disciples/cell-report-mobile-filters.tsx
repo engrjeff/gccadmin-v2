@@ -4,6 +4,7 @@ import * as AccordionPrimitive from "@radix-ui/react-accordion";
 import { type LucideIcon, PlusIcon, Settings2Icon } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useMemo, useState, useTransition } from "react";
+import { CellType } from "@/app/generated/prisma";
 import {
   Accordion,
   AccordionContent,
@@ -21,26 +22,13 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { SearchField } from "@/components/ui/search-field";
 import { useIsAdmin } from "@/hooks/use-is-admin";
 import { useLeaders } from "@/hooks/use-leaders";
-import {
-  cellStatuses,
-  churchStatuses,
-  discipleStatusOptions,
-  processLevels,
-} from "@/lib/constants";
 import { removeUnderscores } from "@/lib/utils";
 
-const validFilters = [
-  "cellStatus",
-  "churchStatus",
-  "processLevel",
-  "leader",
-  "status",
-];
+const validFilters = ["cellType", "dateRange", "leader"];
 
-export function DisciplesMobileFilter() {
+export function CellReportsMobileFilter() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -119,7 +107,6 @@ export function DisciplesMobileFilter() {
 
   return (
     <div className="flex items-center gap-3 md:hidden">
-      <SearchField paramName="q" />
       <Drawer open={isOpen} onOpenChange={setIsOpen}>
         <div className="relative">
           <DrawerTrigger asChild>
@@ -143,34 +130,29 @@ export function DisciplesMobileFilter() {
           <div className="max-h-[60vh] overflow-y-auto">
             <Accordion type="multiple" className="w-full">
               <FilterContent
-                label="Status"
-                options={discipleStatusOptions}
-                queryName="status"
+                label="Cell Type"
+                queryName="cellType"
+                options={[
+                  { label: "Soul Winning", value: CellType.SOULWINNING },
+                  { label: "Open Cell", value: CellType.OPEN },
+                  { label: "Discipleship", value: CellType.DISCIPLESHIP },
+                ]}
                 tempFilters={tempFilters}
                 updateTempFilter={updateTempFilter}
                 singleSelection
                 isPending={isPending}
               />
               <FilterContent
-                label="Cell Status"
-                options={cellStatuses}
-                queryName="cellStatus"
-                tempFilters={tempFilters}
-                updateTempFilter={updateTempFilter}
-                isPending={isPending}
-              />
-              <FilterContent
-                label="Church Status"
-                options={churchStatuses}
-                queryName="churchStatus"
-                tempFilters={tempFilters}
-                updateTempFilter={updateTempFilter}
-                isPending={isPending}
-              />
-              <FilterContent
-                label="Process Level"
-                options={processLevels}
-                queryName="processLevel"
+                queryName="dateRange"
+                label="Date Range"
+                singleSelection
+                options={[
+                  { label: "This Week", value: "this_week" },
+                  { label: "Last Week", value: "last_week" },
+                  { label: "This Month", value: "this_month" },
+                  { label: "Last Month", value: "last_month" },
+                  { label: "Year To Date (YTD)", value: "year_to_date" },
+                ]}
                 tempFilters={tempFilters}
                 updateTempFilter={updateTempFilter}
                 isPending={isPending}

@@ -12,7 +12,7 @@ export function CellReportsFilters() {
       <FilterField
         label="Cell Type"
         queryName="cellType"
-        singleSection
+        singleSelection
         Icon={CircleDotDashedIcon}
         options={[
           { label: "Soul Winning", value: CellType.SOULWINNING },
@@ -24,7 +24,7 @@ export function CellReportsFilters() {
       <FilterField
         queryName="dateRange"
         label="Date Range"
-        singleSection
+        singleSelection
         Icon={CalendarIcon}
         options={[
           { label: "This Week", value: "this_week" },

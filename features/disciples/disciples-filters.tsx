@@ -18,6 +18,13 @@ export function DisciplesFilters() {
       <SearchField paramName="q" />
       <div className="flex flex-wrap items-center gap-3">
         <FilterField
+          label="Status"
+          options={discipleStatusOptions}
+          Icon={FlameIcon}
+          queryName="status"
+          singleSelection
+        />
+        <FilterField
           label="Cell Status"
           options={cellStatuses}
           Icon={CircleDotIcon}
@@ -35,13 +42,7 @@ export function DisciplesFilters() {
           Icon={TrendingUpIcon}
           queryName="processLevel"
         />
-        <FilterField
-          label="Status"
-          options={discipleStatusOptions}
-          Icon={FlameIcon}
-          queryName="status"
-          singleSection
-        />
+
         <LeadersFilter />
 
         <ResetFiltersButton

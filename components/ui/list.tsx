@@ -8,14 +8,7 @@ export const List = React.forwardRef<
   HTMLUListElement,
   React.HTMLAttributes<HTMLUListElement>
 >(({ className, ...props }, ref) => (
-  <ul
-    ref={ref}
-    className={cn(
-      "w-full divide-y divide-border rounded-md border border-border bg-background",
-      className,
-    )}
-    {...props}
-  />
+  <ul ref={ref} className={cn("w-full space-y-3", className)} {...props} />
 ));
 List.displayName = "List";
 
@@ -29,7 +22,7 @@ export const ListItem = React.forwardRef<HTMLLIElement, ListItemProps>(
       <li
         ref={ref}
         className={cn(
-          "p0-3 relative flex w-full cursor-pointer select-none items-center px-4 transition",
+          "p0-3 relative flex w-full cursor-pointer select-none items-center rounded-md border px-4 transition",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
           "active:bg-accent/80",
           disabled && "pointer-events-none opacity-50",

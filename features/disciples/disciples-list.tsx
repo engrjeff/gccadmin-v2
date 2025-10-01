@@ -1,5 +1,6 @@
 "use client";
 
+import { BadgeCheckIcon, PackageIcon, ShieldCheckIcon } from "lucide-react";
 import {
   List,
   ListItem,
@@ -21,15 +22,24 @@ export function DisciplesList({
 }) {
   return (
     <div className="sm:hidden">
-      <List>
-        {disciples.map((disciple) => (
-          <DiscipleListItem
-            key={disciple.id}
-            isAdmin={isAdmin}
-            disciple={disciple}
-          />
-        ))}
-      </List>
+      {disciples.length === 0 ? (
+        <div className="flex min-h-[60vh] flex-col items-center justify-center gap-3">
+          <PackageIcon className="size-6 text-muted-foreground" />
+          <p className="text-center text-muted-foreground text-sm">
+            No disciple records found.
+          </p>
+        </div>
+      ) : (
+        <List className="min-h-[40vh]">
+          {disciples.map((disciple) => (
+            <DiscipleListItem
+              key={disciple.id}
+              isAdmin={isAdmin}
+              disciple={disciple}
+            />
+          ))}
+        </List>
+      )}
     </div>
   );
 }
@@ -42,9 +52,15 @@ function DiscipleListItem({
   isAdmin: boolean;
 }) {
   return (
-    <ListItem>
+    <ListItem className="bg-card/40">
       <ListItemLinkContent href={`/disciples/${disciple.id}`}>
-        <ListItemPrimary className="hover:underline">
+        <ListItemPrimary className="flex items-center gap-2 hover:underline">
+          {disciple.isMyPrimary && !disciple.isPrimary ? (
+            <BadgeCheckIcon className="size-3 text-blue-500" />
+          ) : null}
+          {disciple.isPrimary ? (
+            <ShieldCheckIcon className="size-3 text-yellow-500" />
+          ) : null}{" "}
           {disciple.name}
         </ListItemPrimary>
         <ListItemSecondary className="capitalize">

@@ -24,7 +24,7 @@ interface FilterFieldProps {
   options: FilterOption[];
   queryName: string;
   className?: string;
-  singleSection?: boolean;
+  singleSelection?: boolean;
   Icon?: LucideIcon;
   useLabelDisplay?: boolean;
 }
@@ -34,7 +34,7 @@ function FilterFieldComponent({
   options,
   queryName,
   className,
-  singleSection,
+  singleSelection,
   Icon = FilterIcon,
   useLabelDisplay,
 }: FilterFieldProps) {
@@ -84,14 +84,14 @@ function FilterFieldComponent({
       let newValues: string[];
 
       if (checked) {
-        newValues = singleSection ? [value] : [...tempSelectedValues, value];
+        newValues = singleSelection ? [value] : [...tempSelectedValues, value];
       } else {
         newValues = tempSelectedValues.filter((v) => v !== value);
       }
 
       setTempSelectedValues(newValues);
     },
-    [tempSelectedValues, singleSection],
+    [tempSelectedValues, singleSelection],
   );
 
   const handleApply = useCallback(() => {

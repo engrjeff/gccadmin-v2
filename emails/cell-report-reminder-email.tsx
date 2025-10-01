@@ -74,6 +74,11 @@ export default function CellReportReminderEmail({
                 Create Cell Report
               </Link>
               <br />
+              <Text style={text}>
+                Disregard this message if you have already created your cell
+                reports.
+              </Text>
+              <br />
               <br />
               <Text style={text}>
                 With grace,

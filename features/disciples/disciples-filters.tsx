@@ -14,7 +14,7 @@ import {
 
 export function DisciplesFilters() {
   return (
-    <div className="flex flex-wrap items-center gap-3">
+    <div className="hidden flex-wrap items-center gap-3 md:flex">
       <SearchField paramName="q" />
       <div className="flex flex-wrap items-center gap-3">
         <FilterField

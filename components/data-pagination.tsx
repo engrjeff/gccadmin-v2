@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   Pagination,
   PaginationContent,
@@ -31,6 +31,7 @@ export function DataPagination({
   name,
   pageSizeOptions,
 }: DataPaginationProps) {
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
   const { total, page, pageSize, totalPages } = pageInfo;
@@ -63,7 +64,7 @@ export function DataPagination({
   };
 
   const navigateToPage = (newPage: number) => {
-    router.push(`/disciples${createPageUrl(newPage)}`);
+    router.push(`${pathname}${createPageUrl(newPage)}`);
   };
 
   const renderPageNumbers = () => {

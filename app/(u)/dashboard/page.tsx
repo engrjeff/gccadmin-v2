@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { QuickActions } from "@/components/quick-actions";
 import { CellGroupStatistics } from "@/features/reports/cell-group-statistics";
 import { CellReportTrend } from "@/features/reports/cell-report-trend";
+import { DashboardRefreshButton } from "@/features/reports/dashboard-refresh-button";
 import { DisciplesWithCellGroups } from "@/features/reports/disciples-with-cellgroups";
 import { MemberStatistics } from "@/features/reports/member-statistics";
 import { RecentCellGroups } from "@/features/reports/recent-cell-groups";
@@ -23,7 +24,10 @@ export default function DashboardPage() {
             Quick cell group insights.
           </p>
         </div>
-        <QuickActions />
+        <div className="ml-auto flex items-center gap-3">
+          <QuickActions />
+          <DashboardRefreshButton />
+        </div>
       </div>
 
       <CellGroupStatistics />

@@ -1,10 +1,9 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
+import type { DateRange } from "react-day-picker";
 import type { CellReportRecord } from "@/features/cell-reports/queries";
 import { API_ENDPOINTS, apiClient } from "@/lib/api-client";
-import { getClientDateRange } from "@/lib/utils";
-import type { DateRange } from "@/types/globals";
 
 interface ReturnData {
   cellReports: CellReportRecord[];
@@ -15,15 +14,15 @@ async function getCellGroupStatistics(args: {
   dateRange: DateRange;
 }): Promise<ReturnData | null> {
   try {
-    const period =
-      getClientDateRange(args.dateRange) ?? getClientDateRange("this_week");
+    // const period =
+    //   getClientDateRange(args.dateRange) ?? getClientDateRange("this_week");
 
     const response = await apiClient.get<ReturnData>(
       API_ENDPOINTS.GET_CELLGROUP_STATISTICS,
       {
         params: {
-          dateRangeStart: period?.start.toISOString(),
-          dateRangeEnd: period?.end.toISOString(),
+          dateRangeStart: args.dateRange?.from?.toISOString(),
+          dateRangeEnd: args.dateRange.to?.toISOString(),
         },
       },
     );

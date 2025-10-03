@@ -141,7 +141,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavAdmin menuItems={data.navAdmin} />
         <NavProcess menuItems={data.navProcess} />
       </SidebarContent>
-      <SidebarFooter>
+      <SidebarFooter className="border-t p-4">
         <p className="text-muted-foreground text-xs">
           Made with ♥️ by{" "}
           <a

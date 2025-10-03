@@ -2,6 +2,8 @@
 
 import { CalendarIcon } from "lucide-react";
 import { useState } from "react";
+import type { DateRange } from "react-day-picker";
+import { DateRangePicker } from "@/components/date-range-picker";
 import {
   Card,
   CardAction,
@@ -10,25 +12,19 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useCellGroupStatistics } from "@/hooks/use-cell-group-statistics";
-import { formatDate } from "@/lib/utils";
-import type { DateRange } from "@/types/globals";
+import { formatDate, getClientDateRange } from "@/lib/utils";
+import type { DateRange as Preset } from "@/types/globals";
 import { CellGroupByType } from "./cell-group-by-type";
 import { CellGroupTrend } from "./cell-group-trend";
 import { CellGroupWithAssistants } from "./cell-group-with-assistants";
 
-function getDateRangeLabel(dateRange: DateRange) {
+function getDateRangeLabel(dateRange: Preset) {
   switch (dateRange) {
+    case "today":
+      return "today";
     case "this_week":
       return "this week";
     case "last_week":
@@ -45,18 +41,25 @@ function getDateRangeLabel(dateRange: DateRange) {
 }
 
 export function CellGroupStatistics() {
-  const [dateRange, setDateRange] = useState<DateRange | string>("this_week");
+  const [preset, setPreset] = useState<Preset>("this_week");
 
-  const dateRangeLabel = getDateRangeLabel(dateRange as DateRange);
+  const thisWeek = getClientDateRange(preset);
+
+  const dateRangeLabel = getDateRangeLabel(preset);
+
+  const [date, setDate] = useState<DateRange>({
+    from: thisWeek?.start,
+    to: thisWeek?.end,
+  });
 
   const cgStatsQuery = useCellGroupStatistics({
-    dateRange: dateRange as DateRange,
+    dateRange: date,
   });
 
   const periodDate = cgStatsQuery.data?.dateRangeFilter;
 
   return (
-    <Card className="@container/card gap-0 pt-4 pb-0">
+    <Card className="@container/card gap-0 bg-card/60 pt-4 pb-0">
       <CardHeader className="border-b px-4 [.border-b]:pb-4">
         <CardTitle>Cell Groups</CardTitle>
         {cgStatsQuery.isLoading ? (
@@ -71,6 +74,14 @@ export function CellGroupStatistics() {
           </CardDescription>
         )}
         <CardAction>
+          <DateRangePicker
+            dateRangeValue={date}
+            setDateRangeValue={setDate}
+            preset={preset}
+            setPreset={setPreset}
+          />
+        </CardAction>
+        {/* <CardAction className="hidden">
           <ToggleGroup
             type="single"
             value={dateRange}
@@ -112,7 +123,7 @@ export function CellGroupStatistics() {
               </SelectItem>
             </SelectContent>
           </Select>
-        </CardAction>
+        </CardAction> */}
       </CardHeader>
       <CardContent className="px-0">
         {cgStatsQuery.isLoading ? (
@@ -136,7 +147,7 @@ export function CellGroupStatistics() {
             <Separator className="lg:hidden" />
             <CellGroupTrend
               currentCellReports={cgStatsQuery.data?.cellReports ?? []}
-              selectedDateRange={dateRange as DateRange}
+              selectedDateRange={preset as Preset}
             />
           </div>
         )}

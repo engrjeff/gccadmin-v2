@@ -11,7 +11,7 @@ import { MemberStatisticsByType } from "./member-statistics-by-type";
 
 export function MemberStatistics() {
   return (
-    <Card className="gap-0 pt-4 pb-0">
+    <Card className="gap-0 bg-card/60 pt-4 pb-0">
       <CardHeader className="border-b px-4 [.border-b]:pb-4">
         <CardTitle>Member Statistics</CardTitle>
         <CardDescription className="text-xs">As of today</CardDescription>

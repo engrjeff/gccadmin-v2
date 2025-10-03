@@ -28,11 +28,13 @@ import {
   cellStatuses,
   churchStatuses,
   discipleStatusOptions,
+  memberTypes,
   processLevels,
 } from "@/lib/constants";
 import { removeUnderscores } from "@/lib/utils";
 
 const validFilters = [
+  "memberType",
   "cellStatus",
   "churchStatus",
   "processLevel",
@@ -172,6 +174,15 @@ export function DisciplesMobileFilter() {
                 options={processLevels}
                 queryName="processLevel"
                 tempFilters={tempFilters}
+                updateTempFilter={updateTempFilter}
+                isPending={isPending}
+              />
+              <FilterContent
+                label="Member Type"
+                options={memberTypes}
+                queryName="memberType"
+                tempFilters={tempFilters}
+                singleSelection
                 updateTempFilter={updateTempFilter}
                 isPending={isPending}
               />

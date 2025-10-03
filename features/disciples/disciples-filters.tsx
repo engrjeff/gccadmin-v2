@@ -9,12 +9,13 @@ import {
   cellStatuses,
   churchStatuses,
   discipleStatusOptions,
+  memberTypes,
   processLevels,
 } from "@/lib/constants";
 
 export function DisciplesFilters() {
   return (
-    <div className="hidden flex-wrap items-center gap-3 md:flex">
+    <div className="hidden flex-col gap-3 md:flex">
       <SearchField paramName="q" />
       <div className="flex flex-wrap items-center gap-3">
         <FilterField
@@ -24,6 +25,7 @@ export function DisciplesFilters() {
           queryName="status"
           singleSelection
         />
+
         <FilterField
           label="Cell Status"
           options={cellStatuses}
@@ -42,11 +44,18 @@ export function DisciplesFilters() {
           Icon={TrendingUpIcon}
           queryName="processLevel"
         />
+        <FilterField
+          label="Member Type"
+          options={memberTypes}
+          queryName="memberType"
+          singleSelection
+        />
 
         <LeadersFilter />
 
         <ResetFiltersButton
           validFilters={[
+            "memberType",
             "cellStatus",
             "churchStatus",
             "processLevel",

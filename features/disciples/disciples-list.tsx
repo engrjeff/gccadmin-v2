@@ -55,13 +55,13 @@ function DiscipleListItem({
     <ListItem className="bg-card/40">
       <ListItemLinkContent href={`/disciples/${disciple.id}`}>
         <ListItemPrimary className="flex items-center gap-2 hover:underline">
+          {disciple.name}
           {disciple.isMyPrimary && !disciple.isPrimary ? (
             <BadgeCheckIcon className="size-3 text-blue-500" />
           ) : null}
           {disciple.isPrimary ? (
             <ShieldCheckIcon className="size-3 text-yellow-500" />
           ) : null}{" "}
-          {disciple.name}
         </ListItemPrimary>
         <ListItemSecondary className="capitalize">
           {removeUnderscores(disciple.memberType)},{" "}

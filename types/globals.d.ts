@@ -26,12 +26,14 @@ export type Option = {
 };
 
 export type DateRange =
+  | "today"
   | "this_week"
   | "last_week"
   | "this_month"
   | "last_month"
   | "last_last_month"
-  | "year_to_date";
+  | "year_to_date"
+  | "custom";
 
 export interface DiscipleRecord extends Disciple {
   leader: Pick<Disciple, "id" | "name"> | null;

@@ -5,6 +5,7 @@ import { cache } from "react";
 import type {
   CellStatus,
   ChurchStatus,
+  MemberType,
   ProcessLevel,
 } from "@/app/generated/prisma";
 import prisma from "@/lib/prisma";
@@ -15,6 +16,7 @@ export type DisciplesQueryArgs = {
   pageSize?: number;
   sort?: string;
   order?: "asc" | "desc";
+  memberType?: string;
   cellStatus?: string;
   churchStatus?: string;
   processLevel?: string;
@@ -43,6 +45,7 @@ function getDiscipleSort(sortBy?: string, order?: "asc" | "desc") {
 
   const acceptedSortKeys = [
     "name",
+    "memberType",
     "cellStatus",
     "churchStatus",
     "processLevel",
@@ -118,6 +121,10 @@ export async function getDisciples(args: DisciplesQueryArgs) {
     ? (args.cellStatus.split(",") as Array<CellStatus>)
     : undefined;
 
+  const memberTypeFilter = args?.memberType
+    ? (args.memberType.split(",") as Array<MemberType>)
+    : undefined;
+
   const churchStatusFilter = args?.churchStatus
     ? (args.churchStatus.split(",") as Array<ChurchStatus>)
     : undefined;
@@ -137,6 +144,9 @@ export async function getDisciples(args: DisciplesQueryArgs) {
             mode: "insensitive",
           }
         : undefined,
+      memberType: {
+        in: memberTypeFilter,
+      },
       cellStatus: {
         in: cellStatusFilter,
       },
@@ -160,6 +170,9 @@ export async function getDisciples(args: DisciplesQueryArgs) {
             mode: "insensitive",
           }
         : undefined,
+      memberType: {
+        in: memberTypeFilter,
+      },
       cellStatus: {
         in: cellStatusFilter,
       },

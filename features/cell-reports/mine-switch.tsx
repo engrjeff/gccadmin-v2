@@ -14,7 +14,7 @@ interface MineSwitchProps {
 
 export function MineSwitch({
   queryName = "showMyReportsOnly",
-  className
+  className,
 }: MineSwitchProps) {
   const searchParams = useSearchParams();
   const router = useRouter();

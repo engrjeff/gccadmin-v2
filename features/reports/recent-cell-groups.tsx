@@ -26,11 +26,16 @@ import { useCellGroupStatistics } from "@/hooks/use-cell-group-statistics";
 import {
   formatCellGroupDate,
   formatDate,
+  getClientDateRange,
   removeUnderscores,
 } from "@/lib/utils";
 
 export function RecentCellGroups() {
-  const cgQuery = useCellGroupStatistics({ dateRange: "this_week" });
+  const thisWeek = getClientDateRange("this_week");
+
+  const cgQuery = useCellGroupStatistics({
+    dateRange: { from: thisWeek?.start, to: thisWeek?.end },
+  });
 
   const periodDate = cgQuery.data?.dateRangeFilter;
 
@@ -38,7 +43,7 @@ export function RecentCellGroups() {
 
   if (cgQuery.isLoading)
     return (
-      <Card className="gap-0 py-4">
+      <Card className="gap-0 bg-card/60 py-4">
         <CardHeader className="border-b px-4 [.border-b]:pb-4">
           <CardTitle>Recent Cell Groups</CardTitle>
           <CardDescription className="flex items-center gap-2">
@@ -52,7 +57,7 @@ export function RecentCellGroups() {
     );
 
   return (
-    <Card className="gap-0 py-4">
+    <Card className="gap-0 bg-card/60 py-4">
       <CardHeader className="border-b px-4 [.border-b]:pb-4">
         <CardTitle>Recent Cell Groups</CardTitle>
         <CardDescription className="flex items-center gap-2 text-xs">
@@ -83,7 +88,7 @@ export function RecentCellGroups() {
         )}
       </CardHeader>
 
-      <CardContent className="flex-1 px-4 [&>div]:h-full">
+      <CardContent className="flex-1 px-2 [&>div]:h-full">
         <Table>
           <TableHeader>
             <TableRow className="bg-card hover:bg-card">

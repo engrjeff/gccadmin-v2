@@ -88,7 +88,7 @@ export function AttendedCellGroups() {
                       <div className="space-y-0.5">
                         <p className="flex items-center gap-2 text-muted-foreground text-xs">
                           <CalendarIcon className="size-3" />{" "}
-                          {formatCellGroupDate(cellgroup.date)}
+                          {formatCellGroupDate(new Date(cellgroup.date))}
                         </p>
                         <p className="line-clamp-1 flex items-center gap-2 text-muted-foreground text-xs">
                           <MapPinIcon className="size-3" /> {cellgroup.venue}

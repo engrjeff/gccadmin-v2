@@ -152,7 +152,7 @@ export function RecentCellGroups() {
                   <TableCell className="whitespace-nowrap">
                     <p className="line-clamp-1 text-sm">{cellgroup.venue}</p>
                     <p className="text-muted-foreground text-xs">
-                      {formatCellGroupDate(cellgroup.date)}
+                      {formatCellGroupDate(new Date(cellgroup.date))}
                     </p>
                   </TableCell>
                   <TableCell className="whitespace-nowrap">

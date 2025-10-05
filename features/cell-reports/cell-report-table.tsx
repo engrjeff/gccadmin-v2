@@ -134,7 +134,7 @@ export function CellReportTable({
                 </TableCell>
                 <TableCell>
                   <span className="text-muted-foreground text-xs">
-                    {formatCellGroupDate(cellReport.date)}
+                    {formatCellGroupDate(new Date(cellReport.date))}
                   </span>
                 </TableCell>
                 <TableCell>

@@ -83,7 +83,7 @@ function CellReportItem({ cellReport }: { cellReport: CellReportRecord }) {
           {cellReport.venue}
         </ListItemSecondary>
         <ListItemSecondary>
-          {formatCellGroupDate(cellReport.date)}
+          {formatCellGroupDate(new Date(cellReport.date))}
         </ListItemSecondary>
       </ListItemContent>
       <ListItemTrailing onClick={() => {}}>

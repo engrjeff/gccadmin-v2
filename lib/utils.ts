@@ -2,6 +2,7 @@ import { type ClassValue, clsx } from "clsx";
 import {
   endOfMonth,
   endOfWeek,
+  format,
   intlFormatDistance,
   startOfMonth,
   startOfWeek,
@@ -36,16 +37,17 @@ export const formatDate = (dateString: string) => {
 };
 
 export const formatCellGroupDate = (date: Date) => {
-  const timeZone = "Asia/Manila";
-  const _date = toZonedTime(date, timeZone);
+  // const timeZone = "Asia/Manila";
+  // const _date = toZonedTime(date, timeZone);
 
-  return _date.toLocaleDateString("en-PH", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+  // return _date.toLocaleDateString("en-PH", {
+  //   year: "numeric",
+  //   month: "short",
+  //   day: "numeric",
+  //   hour: "2-digit",
+  //   minute: "2-digit",
+  // });
+  return format(date, "PPp");
 };
 
 export const formatTime = (timeStr: string) => {

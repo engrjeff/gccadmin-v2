@@ -2,6 +2,7 @@ import { type ClassValue, clsx } from "clsx";
 import {
   endOfMonth,
   endOfWeek,
+  format,
   intlFormatDistance,
   startOfMonth,
   startOfWeek,
@@ -9,7 +10,7 @@ import {
   subDays,
   subMonths,
 } from "date-fns";
-import { formatInTimeZone, toZonedTime } from "date-fns-tz";
+import { toZonedTime } from "date-fns-tz";
 import { twMerge } from "tailwind-merge";
 import type { DateRange } from "@/types/globals";
 
@@ -35,9 +36,8 @@ export const formatDate = (dateString: string) => {
   });
 };
 
-export const formatCellGroupDate = (date: Date | string) => {
-  // Format the date directly in PH timezone
-  return formatInTimeZone(date, "Asia/Manila", "PPp");
+export const formatCellGroupDate = (date: Date) => {
+  return format(date.toISOString(), "PPp");
 };
 
 export const formatTime = (timeStr: string) => {

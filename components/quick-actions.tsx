@@ -1,12 +1,6 @@
 "use client";
 
-import { isSunday } from "date-fns";
-import {
-  ChevronDownIcon,
-  LockIcon,
-  PlusIcon,
-  UserPlusIcon,
-} from "lucide-react";
+import { ChevronDownIcon, PlusIcon, UserPlusIcon } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -32,8 +26,6 @@ export function QuickActions() {
 
   const [action, setAction] = useState<QuickActionType>();
 
-  const lockReporting = isSunday(new Date());
-
   function reset() {
     setAction(undefined);
     setOpen(false);
@@ -51,11 +43,8 @@ export function QuickActions() {
           <DropdownMenuItem onClick={() => setAction("add-disciple")}>
             <UserPlusIcon /> Add Disciple
           </DropdownMenuItem>
-          <DropdownMenuItem
-            disabled={lockReporting}
-            onClick={() => setAction("create-cell-report")}
-          >
-            {lockReporting ? <LockIcon /> : <PlusIcon />} Create Cell Report
+          <DropdownMenuItem onClick={() => setAction("create-cell-report")}>
+            <PlusIcon /> Create Cell Report
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

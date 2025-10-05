@@ -5,7 +5,6 @@ import {
   BookIcon,
   HomeIcon,
   InfoIcon,
-  LockIcon,
   PlusIcon,
   UserPlusIcon,
   UsersIcon,
@@ -107,7 +106,7 @@ function MobileCreateDockItem() {
               disabled={lockReporting}
               onClick={() => setAction("create-cell-report")}
             >
-              {lockReporting ? <LockIcon /> : <PlusIcon />} Create Cell Report
+              <PlusIcon /> Create Cell Report
             </Button>
           </div>
           <DrawerFooter className="flex-row items-center gap-2 border-t text-muted-foreground text-xs">

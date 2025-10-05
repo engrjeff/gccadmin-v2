@@ -1,7 +1,6 @@
 "use client";
 
-import { isSunday } from "date-fns";
-import { LockIcon } from "lucide-react";
+import { PlusIcon } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,13 +16,11 @@ import { CellReportForm } from "./cell-report-form";
 export function CellReportCreateFormModal() {
   const [open, setOpen] = useState(false);
 
-  const lockReporting = isSunday(new Date());
-
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button size="sm" disabled={lockReporting}>
-          {lockReporting ? <LockIcon /> : null} Create Report
+        <Button size="sm">
+          <PlusIcon /> Create Report
         </Button>
       </SheetTrigger>
       <SheetContent

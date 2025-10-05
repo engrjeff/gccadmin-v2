@@ -6,21 +6,21 @@ import { toast } from "sonner";
 import { Button } from "./ui/button";
 
 export function Announcement() {
-  const [ok, setOk] = useState<string | null>(
-    () => localStorage.getItem("gcc-admin-ok") as string,
-  );
+  const [ok, setOk] = useState<boolean>(true);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
     const isOk = localStorage.getItem("gcc-admin-ok");
 
     if (isOk === "okay") {
-      setOk("okay");
+      setOk(true);
     } else {
-      setOk(null);
+      setOk(false);
     }
   }, []);
 
-  if (ok === "okay") return null;
+  if (ok) return null;
 
   return (
     <div className="flex items-center gap-2 border-b bg-red-500/20 px-3 py-2 text-red-500">
@@ -33,7 +33,7 @@ export function Announcement() {
         variant="destructive"
         className="ml-auto"
         onClick={() => {
-          setOk("okay");
+          setOk(true);
           localStorage.setItem("gcc-admin-ok", "okay");
           toast.info("Thanks!");
         }}

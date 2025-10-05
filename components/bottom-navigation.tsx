@@ -1,6 +1,5 @@
 "use client";
 
-import { isSunday } from "date-fns";
 import {
   BookIcon,
   HomeIcon,
@@ -68,8 +67,6 @@ type QuickActionType = "add-disciple" | "create-cell-report";
 function MobileCreateDockItem() {
   const [action, setAction] = useState<QuickActionType>();
 
-  const lockReporting = isSunday(new Date());
-
   function reset() {
     setAction(undefined);
   }
@@ -103,7 +100,6 @@ function MobileCreateDockItem() {
               size="lg"
               variant="ghost"
               className="w-full justify-start"
-              disabled={lockReporting}
               onClick={() => setAction("create-cell-report")}
             >
               <PlusIcon /> Create Cell Report

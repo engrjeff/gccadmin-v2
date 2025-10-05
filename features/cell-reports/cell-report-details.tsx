@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -8,7 +9,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { formatCellGroupDate } from "@/lib/utils";
 import { CellStatusBadge } from "../disciples/cell-status-badge";
 import { ChurchStatusBadge } from "../disciples/church-status-badge";
 import type { CellReportRecord } from "./queries";
@@ -37,7 +37,8 @@ export function CellReportDetails({
       <div className="px-4 py-2 text-sm">
         <p className="font-semibold">Date</p>
         <p className="text-muted-foreground">
-          {formatCellGroupDate(new Date(cellReport.date))}
+          {/* {formatCellGroupDate(new Date(cellReport.date))} */}
+          {format(cellReport.date.toISOString(), "PPp")}
         </p>
       </div>
       <div className="px-4 py-2 text-sm">

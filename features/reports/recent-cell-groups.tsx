@@ -1,5 +1,6 @@
 "use client";
 
+import { format } from "date-fns";
 import { ArrowRightIcon, CalendarIcon, PackageIcon } from "lucide-react";
 import Link from "next/link";
 import pluralize from "pluralize";
@@ -23,12 +24,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useCellGroupStatistics } from "@/hooks/use-cell-group-statistics";
-import {
-  formatCellGroupDate,
-  formatDate,
-  getClientDateRange,
-  removeUnderscores,
-} from "@/lib/utils";
+import { formatDate, getClientDateRange, removeUnderscores } from "@/lib/utils";
 
 export function RecentCellGroups() {
   const thisWeek = getClientDateRange("this_week");
@@ -152,7 +148,7 @@ export function RecentCellGroups() {
                   <TableCell className="whitespace-nowrap">
                     <p className="line-clamp-1 text-sm">{cellgroup.venue}</p>
                     <p className="text-muted-foreground text-xs">
-                      {formatCellGroupDate(new Date(cellgroup.date))}
+                      {format(new Date(cellgroup.date).toISOString(), "PPp")}
                     </p>
                   </TableCell>
                   <TableCell className="whitespace-nowrap">

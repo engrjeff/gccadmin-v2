@@ -1,5 +1,6 @@
 "use client";
 
+import { format } from "date-fns";
 import { ChevronRightIcon, PackageIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -20,7 +21,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { formatCellGroupDate } from "@/lib/utils";
 import { CellReportDetails } from "./cell-report-details";
 import { GeneratePDFButtonWide } from "./cell-report-pdf";
 import type { CellReportRecord } from "./queries";
@@ -83,7 +83,7 @@ function CellReportItem({ cellReport }: { cellReport: CellReportRecord }) {
           {cellReport.venue}
         </ListItemSecondary>
         <ListItemSecondary>
-          {formatCellGroupDate(new Date(cellReport.date))}
+          {format(cellReport.date.toISOString(), "PPp")}
         </ListItemSecondary>
       </ListItemContent>
       <ListItemTrailing onClick={() => {}}>

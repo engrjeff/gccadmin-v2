@@ -1,5 +1,6 @@
 "use client";
 
+import { format } from "date-fns";
 import {
   BookOpenIcon,
   CalendarIcon,
@@ -20,7 +21,7 @@ import {
 } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useLessonsTaken } from "@/hooks/use-lessons-taken";
-import { formatCellGroupDate, removeUnderscores } from "@/lib/utils";
+import { removeUnderscores } from "@/lib/utils";
 import { CellReportDetails } from "../cell-reports/cell-report-details";
 
 export function AttendedCellGroups() {
@@ -88,7 +89,10 @@ export function AttendedCellGroups() {
                       <div className="space-y-0.5">
                         <p className="flex items-center gap-2 text-muted-foreground text-xs">
                           <CalendarIcon className="size-3" />{" "}
-                          {formatCellGroupDate(new Date(cellgroup.date))}
+                          {format(
+                            new Date(cellgroup.date).toISOString(),
+                            "PPp",
+                          )}
                         </p>
                         <p className="line-clamp-1 flex items-center gap-2 text-muted-foreground text-xs">
                           <MapPinIcon className="size-3" /> {cellgroup.venue}

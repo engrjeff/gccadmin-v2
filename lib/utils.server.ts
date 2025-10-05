@@ -1,6 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 import {
   endOfMonth,
+  endOfToday,
   endOfWeek,
   startOfMonth,
   startOfWeek,
@@ -85,7 +86,7 @@ export function getDateRange(
   if (preset === "year_to_date") {
     return {
       start: startOfYear(now),
-      end: now,
+      end: endOfToday(),
     };
   }
 }

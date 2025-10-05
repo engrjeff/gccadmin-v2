@@ -10,15 +10,12 @@ import {
   usePDF,
   View,
 } from "@react-pdf/renderer/lib/react-pdf.browser";
+import { format } from "date-fns";
 import { StickyNoteIcon } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
-import {
-  formatCellGroupDate,
-  formatDate,
-  removeUnderscores,
-} from "@/lib/utils";
+import { formatDate, removeUnderscores } from "@/lib/utils";
 import type { CellReportRecord } from "./queries";
 
 const DOCUMENT_TITLE = "Cell Reports";
@@ -144,7 +141,7 @@ const CellReportPDFTemplate = ({
           <View style={styles.detailRow}>
             <Text style={styles.detailRowTitle}>Date: </Text>
             <Text style={styles.detailRowValue}>
-              {formatCellGroupDate(new Date(cellReport.date))}
+              {format(cellReport.date.toISOString(), "PPp")}
             </Text>
           </View>
         </View>

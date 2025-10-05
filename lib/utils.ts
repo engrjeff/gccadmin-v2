@@ -1,6 +1,7 @@
 import { type ClassValue, clsx } from "clsx";
 import {
   endOfMonth,
+  endOfToday,
   endOfWeek,
   format,
   intlFormatDistance,
@@ -107,7 +108,7 @@ export function getClientDateRange(
   if (preset === "year_to_date") {
     return {
       start: startOfYear(now),
-      end: now,
+      end: endOfToday(),
     };
   }
 }

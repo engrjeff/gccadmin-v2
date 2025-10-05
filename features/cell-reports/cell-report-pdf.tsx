@@ -144,7 +144,7 @@ const CellReportPDFTemplate = ({
           <View style={styles.detailRow}>
             <Text style={styles.detailRowTitle}>Date: </Text>
             <Text style={styles.detailRowValue}>
-              {formatCellGroupDate(new Date(cellReport.date))}
+              {formatCellGroupDate(cellReport.date)}
             </Text>
           </View>
         </View>

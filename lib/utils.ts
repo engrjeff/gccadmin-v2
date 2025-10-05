@@ -37,8 +37,8 @@ export const formatDate = (dateString: string) => {
 };
 
 export const formatCellGroupDate = (date: Date) => {
-  // const timeZone = "Asia/Manila";
-  // const _date = toZonedTime(date, timeZone);
+  const timeZone = "Asia/Manila";
+  const _date = toZonedTime(date, timeZone);
 
   // return _date.toLocaleDateString("en-PH", {
   //   year: "numeric",
@@ -47,7 +47,7 @@ export const formatCellGroupDate = (date: Date) => {
   //   hour: "2-digit",
   //   minute: "2-digit",
   // });
-  return format(date, "PPp");
+  return format(_date, "PPp");
 };
 
 export const formatTime = (timeStr: string) => {

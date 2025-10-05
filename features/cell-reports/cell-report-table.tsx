@@ -72,7 +72,7 @@ export function CellReportTable({
                         {cellReport.leader?.name}
                       </Link>
                       <p className="text-muted-foreground text-xs capitalize">
-                        {userId === cellReport.leader.userAccountId
+                        {cellReport.leader.name === "John De Guzman"
                           ? "GCC Pastor"
                           : "Primary Leader"}
                       </p>

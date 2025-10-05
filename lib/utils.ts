@@ -36,7 +36,7 @@ export const formatDate = (dateString: string) => {
 };
 
 export const formatCellGroupDate = (date: Date) => {
-  return date.toLocaleDateString("en-US", {
+  return date.toLocaleDateString("en-PH", {
     year: "numeric",
     month: "short",
     day: "numeric",

@@ -82,9 +82,17 @@ export async function getCellReports(args: CellReportsQueryArgs) {
 
   const cellType = args?.cellType;
 
-  const dateFilter = args?.dateRange
+  const rawDateFilter = args?.dateRange
     ? getDateRange(args.dateRange)
     : getDateRange("this_week"); // default to the current week
+
+  const dateFilterStart = new Date(
+    format(rawDateFilter?.start as Date, "yyyy-MM-dd"),
+  );
+
+  const dateFilterEnd = new Date(
+    format(rawDateFilter?.end as Date, "yyyy-MM-dd"),
+  );
 
   const leaderFilter = args.leader
     ? args.leader
@@ -97,8 +105,8 @@ export async function getCellReports(args: CellReportsQueryArgs) {
       leaderId: args.showMyReportsOnly === "true" ? leader?.id : leaderFilter,
       type: cellType,
       date: {
-        gte: dateFilter?.start,
-        lte: dateFilter?.end,
+        gte: dateFilterStart,
+        lte: dateFilterEnd,
       },
     },
   });
@@ -108,8 +116,8 @@ export async function getCellReports(args: CellReportsQueryArgs) {
       leaderId: args.showMyReportsOnly === "true" ? leader?.id : leaderFilter,
       type: cellType,
       date: {
-        gte: dateFilter?.start,
-        lte: dateFilter?.end,
+        gte: dateFilterStart,
+        lte: dateFilterEnd,
       },
     },
     include: {
@@ -176,7 +184,10 @@ export async function getCellReports(args: CellReportsQueryArgs) {
       itemCount: cellReports.length,
       totalPages: Math.ceil(totalFiltered / pageSizeParam),
     },
-    dateFilter,
+    dateFilter: {
+      start: dateFilterStart,
+      end: dateFilterEnd,
+    },
   };
 }
 

@@ -1,4 +1,3 @@
-import { format } from "date-fns";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -36,10 +35,7 @@ export function CellReportDetails({
       </div>
       <div className="px-4 py-2 text-sm">
         <p className="font-semibold">Date</p>
-        <p className="text-muted-foreground">
-          {/* {formatCellGroupDate(new Date(cellReport.date))} */}
-          {format(cellReport.date.toISOString(), "PPp")}
-        </p>
+        <p className="text-muted-foreground">{cellReport.date}</p>
       </div>
       <div className="px-4 py-2 text-sm">
         <p className="font-semibold">Lesson</p>

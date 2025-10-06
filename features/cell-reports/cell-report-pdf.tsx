@@ -10,7 +10,6 @@ import {
   usePDF,
   View,
 } from "@react-pdf/renderer/lib/react-pdf.browser";
-import { format } from "date-fns";
 import { StickyNoteIcon } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -140,9 +139,7 @@ const CellReportPDFTemplate = ({
           </View>
           <View style={styles.detailRow}>
             <Text style={styles.detailRowTitle}>Date: </Text>
-            <Text style={styles.detailRowValue}>
-              {format(cellReport.date.toISOString(), "PPp")}
-            </Text>
+            <Text style={styles.detailRowValue}>{cellReport.date}</Text>
           </View>
         </View>
         <View style={{ height: 10 }}></View>

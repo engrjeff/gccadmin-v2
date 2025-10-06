@@ -1,6 +1,7 @@
 "use server";
 
 import { auth } from "@clerk/nextjs/server";
+import { format } from "date-fns";
 import type { CellType } from "@/app/generated/prisma";
 import prisma from "@/lib/prisma";
 import { getDateRange, getSkip } from "@/lib/utils.server";
@@ -163,7 +164,10 @@ export async function getCellReports(args: CellReportsQueryArgs) {
   };
 
   return {
-    cellReports,
+    cellReports: cellReports.map((report) => ({
+      ...report,
+      date: format(report.date, "PPp"),
+    })),
     user,
     isAdmin,
     isPastor,

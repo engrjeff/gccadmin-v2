@@ -1,6 +1,5 @@
 "use client";
 
-import { format } from "date-fns";
 import {
   BookOpenIcon,
   CalendarIcon,
@@ -88,11 +87,7 @@ export function AttendedCellGroups() {
 
                       <div className="space-y-0.5">
                         <p className="flex items-center gap-2 text-muted-foreground text-xs">
-                          <CalendarIcon className="size-3" />{" "}
-                          {format(
-                            new Date(cellgroup.date).toISOString(),
-                            "PPp",
-                          )}
+                          <CalendarIcon className="size-3" /> {cellgroup.date}
                         </p>
                         <p className="line-clamp-1 flex items-center gap-2 text-muted-foreground text-xs">
                           <MapPinIcon className="size-3" /> {cellgroup.venue}

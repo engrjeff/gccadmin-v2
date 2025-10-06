@@ -11,7 +11,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { formatCellGroupDate } from "@/lib/utils";
 import { CellReportRowActions } from "./cell-report-row-actions";
 import type { CellReportRecord } from "./queries";
 
@@ -134,7 +133,7 @@ export function CellReportTable({
                 </TableCell>
                 <TableCell>
                   <span className="text-muted-foreground text-xs">
-                    {formatCellGroupDate(new Date(cellReport.date))}
+                    {cellReport.date}
                   </span>
                 </TableCell>
                 <TableCell>

@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { type NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
@@ -46,7 +47,10 @@ export async function GET(request: NextRequest) {
     });
 
     return NextResponse.json({
-      cellReports,
+      cellReports: cellReports.map((report) => ({
+        ...report,
+        date: format(report.date, "PPp"),
+      })),
       dateRangeFilter: { start: dateRangeStart, end: dateRangeEnd },
     });
   } catch (error) {

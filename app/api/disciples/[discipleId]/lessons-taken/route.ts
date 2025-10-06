@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { type NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
@@ -60,7 +61,10 @@ export async function GET(
 
     return NextResponse.json({
       lessonsTaken,
-      attendedCellGroups: cellGroups.map((cg) => cg.cellReport),
+      attendedCellGroups: cellGroups.map((cg) => ({
+        ...cg.cellReport,
+        date: format(cg.cellReport.date, "PPp"),
+      })),
     });
   } catch (error) {
     console.log(

@@ -1,6 +1,5 @@
 "use client";
 
-import { format } from "date-fns";
 import { ArrowRightIcon, CalendarIcon, PackageIcon } from "lucide-react";
 import Link from "next/link";
 import pluralize from "pluralize";
@@ -148,7 +147,7 @@ export function RecentCellGroups() {
                   <TableCell className="whitespace-nowrap">
                     <p className="line-clamp-1 text-sm">{cellgroup.venue}</p>
                     <p className="text-muted-foreground text-xs">
-                      {format(new Date(cellgroup.date).toISOString(), "PPp")}
+                      {cellgroup.date}
                     </p>
                   </TableCell>
                   <TableCell className="whitespace-nowrap">

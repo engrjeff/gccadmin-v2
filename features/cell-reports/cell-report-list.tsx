@@ -1,6 +1,5 @@
 "use client";
 
-import { format } from "date-fns";
 import { ChevronRightIcon, PackageIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -82,9 +81,7 @@ function CellReportItem({ cellReport }: { cellReport: CellReportRecord }) {
         <ListItemSecondary className="mt-3 text-foreground">
           {cellReport.venue}
         </ListItemSecondary>
-        <ListItemSecondary>
-          {format(cellReport.date.toISOString(), "PPp")}
-        </ListItemSecondary>
+        <ListItemSecondary>{cellReport.date}</ListItemSecondary>
       </ListItemContent>
       <ListItemTrailing onClick={() => {}}>
         <Sheet>

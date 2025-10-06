@@ -13,8 +13,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { formatDate } from "@/lib/utils";
+import type { CellReportRecord } from "@/types/globals";
 import { CellReportPDF } from "./cell-report-pdf";
-import type { CellReportRecord } from "./queries";
 
 export function ViewPDFButton({
   period,

@@ -20,9 +20,9 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import type { CellReportRecord } from "@/types/globals";
 import { CellReportDetails } from "./cell-report-details";
 import { GeneratePDFButtonWide } from "./cell-report-pdf";
-import type { CellReportRecord } from "./queries";
 
 export function CellReportList({
   cellReports,

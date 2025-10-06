@@ -8,12 +8,11 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import pluralize from "pluralize";
-import type { CellReport } from "@/app/generated/prisma";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useCellGroupStatistics } from "@/hooks/use-cell-group-statistics";
 import { getClientDateRange } from "@/lib/utils";
-import type { DateRange } from "@/types/globals";
+import type { DateRange, SimpleCellReport } from "@/types/globals";
 
 function getDateRangeLabel(dateRange: DateRange) {
   switch (dateRange) {
@@ -56,7 +55,7 @@ export function CellGroupTrend({
   currentCellReports,
 }: {
   selectedDateRange: DateRange;
-  currentCellReports: CellReport[];
+  currentCellReports: SimpleCellReport[];
 }) {
   const dateRange = getPreviousDateRangeType(selectedDateRange);
 

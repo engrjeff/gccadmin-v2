@@ -18,9 +18,9 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
+import type { CellReportRecord } from "@/types/globals";
 import { CellReportDetails } from "./cell-report-details";
 import { GeneratePDFButton, GeneratePDFButtonWide } from "./cell-report-pdf";
-import type { CellReportRecord } from "./queries";
 
 type RowAction = "view" | "edit" | "generate-pdf";
 

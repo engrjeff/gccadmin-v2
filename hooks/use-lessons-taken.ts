@@ -3,8 +3,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import type { Lesson, LessonSeries } from "@/app/generated/prisma";
-import type { CellReportRecord } from "@/features/cell-reports/queries";
 import { API_ENDPOINTS, apiClient } from "@/lib/api-client";
+import type { CellReportRecord } from "@/types/globals";
 
 type LessonsTakenResponse = {
   lessonsTaken: Array<Lesson & { lessonSeries: LessonSeries }>;

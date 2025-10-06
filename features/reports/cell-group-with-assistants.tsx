@@ -1,6 +1,6 @@
 "use client";
 
-import type { CellReport } from "@/app/generated/prisma";
+import type { SimpleCellReport } from "@/types/globals";
 
 const RADIUS = 41.5;
 
@@ -12,7 +12,7 @@ function calcStrokeDashArrayValue(percent: number) {
 export function CellGroupWithAssistants({
   cellReports,
 }: {
-  cellReports: CellReport[];
+  cellReports: SimpleCellReport[];
 }) {
   const withAssistants = cellReports?.filter((cg) => cg.assistantId);
 

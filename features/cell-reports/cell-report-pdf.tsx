@@ -15,7 +15,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { formatDate, removeUnderscores } from "@/lib/utils";
-import type { CellReportRecord } from "./queries";
+import type { CellReportRecord } from "@/types/globals";
 
 const DOCUMENT_TITLE = "Cell Reports";
 const LOGO_SRC =

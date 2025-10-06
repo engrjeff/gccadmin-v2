@@ -181,5 +181,3 @@ export async function getCellReports(args: CellReportsQueryArgs) {
 }
 
 export type GetCellReportQueryData = Awaited<ReturnType<typeof getCellReports>>;
-
-export type CellReportRecord = GetCellReportQueryData["cellReports"][number];

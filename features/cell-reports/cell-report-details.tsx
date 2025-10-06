@@ -8,9 +8,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import type { CellReportRecord } from "@/types/globals";
 import { CellStatusBadge } from "../disciples/cell-status-badge";
 import { ChurchStatusBadge } from "../disciples/church-status-badge";
-import type { CellReportRecord } from "./queries";
 
 export function CellReportDetails({
   cellReport,

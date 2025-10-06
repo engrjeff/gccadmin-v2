@@ -1,14 +1,15 @@
 "use client";
 
 import pluralize from "pluralize";
-import { type CellReport, CellType } from "@/app/generated/prisma";
+import { CellType } from "@/app/generated/prisma";
+import type { SimpleCellReport } from "@/types/globals";
 
 export function CellGroupByType({
   dateRangeLabel,
   cellReports,
 }: {
   dateRangeLabel: string;
-  cellReports: CellReport[];
+  cellReports: SimpleCellReport[];
 }) {
   const openCell = cellReports?.filter((cg) => cg.type === CellType.OPEN);
 

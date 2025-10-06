@@ -2,8 +2,8 @@
 
 import { useQuery } from "@tanstack/react-query";
 import type { DateRange } from "react-day-picker";
-import type { CellReportRecord } from "@/features/cell-reports/queries";
 import { API_ENDPOINTS, apiClient } from "@/lib/api-client";
+import type { CellReportRecord } from "@/types/globals";
 
 interface ReturnData {
   cellReports: CellReportRecord[];

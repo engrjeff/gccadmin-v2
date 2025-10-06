@@ -1,4 +1,9 @@
-import type { Disciple } from "@/app/generated/prisma";
+import type {
+  CellReport,
+  CellStatus,
+  ChurchStatus,
+  Disciple,
+} from "@/app/generated/prisma";
 
 // Create a type for the roles
 export type UserAccountRole = "admin" | "leader" | "stranger";
@@ -38,4 +43,40 @@ export type DateRange =
 export interface DiscipleRecord extends Disciple {
   leader: Pick<Disciple, "id" | "name"> | null;
   handledBy: Pick<Disciple, "name"> | null;
+}
+
+export interface CellReportRecord extends CellReport {
+  date: string;
+  leader: {
+    name: string;
+    id: string;
+    userAccountId: string | null;
+  };
+  lesson: {
+    id: string;
+    scriptureReferences: string[];
+    lessonSeries: {
+      id: string;
+      title: string;
+    };
+    title: string;
+  } | null;
+  assistant: {
+    name: string;
+    id: string;
+  } | null;
+  cellReportAttendeeSnapshots: {
+    name: string;
+    id: string;
+    createdAt: Date;
+    updatedAt: Date;
+    churchStatus: ChurchStatus;
+    status: CellStatus;
+    discipleId: string;
+    cellReportId: string;
+  }[];
+}
+
+export interface SimpleCellReport extends CellReport {
+  date: string;
 }

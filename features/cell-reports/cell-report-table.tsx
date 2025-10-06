@@ -11,8 +11,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import type { CellReportRecord } from "@/types/globals";
 import { CellReportRowActions } from "./cell-report-row-actions";
-import type { CellReportRecord } from "./queries";
 
 export function CellReportTable({
   withLeader,

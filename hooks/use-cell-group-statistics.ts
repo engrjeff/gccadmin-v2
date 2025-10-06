@@ -1,6 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
+import { format } from "date-fns";
 import type { DateRange } from "react-day-picker";
 import { API_ENDPOINTS, apiClient } from "@/lib/api-client";
 import type { CellReportRecord } from "@/types/globals";
@@ -21,8 +22,8 @@ async function getCellGroupStatistics(args: {
       API_ENDPOINTS.GET_CELLGROUP_STATISTICS,
       {
         params: {
-          dateRangeStart: args.dateRange?.from?.toISOString(),
-          dateRangeEnd: args.dateRange.to?.toISOString(),
+          dateRangeStart: format(args.dateRange?.from as Date, "yyyy-MM-dd"),
+          dateRangeEnd: format(args.dateRange?.to as Date, "yyyy-MM-dd"),
         },
       },
     );

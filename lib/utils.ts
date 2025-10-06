@@ -11,6 +11,7 @@ import {
   subDays,
   subMonths,
 } from "date-fns";
+import { toZonedTime } from "date-fns-tz";
 import { twMerge } from "tailwind-merge";
 import type { DateRange } from "@/types/globals";
 
@@ -65,10 +66,9 @@ export function getClientDateRange(
   if (!preset) return undefined;
 
   // const now = new Date().toLocaleDateString("en-PH");
-  // const timeZone = "Asia/Manila";
+  const timeZone = "Asia/Manila";
   const dateToday = new Date();
-  // const now = toZonedTime(dateToday, timeZone);
-  const now = format(dateToday, "yyyy-MM-dd");
+  const now = toZonedTime(dateToday, timeZone);
 
   if (preset === "this_week") {
     return {

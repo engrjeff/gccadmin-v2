@@ -34,6 +34,10 @@ export async function GET(request: NextRequest) {
       },
     });
 
+    if (!leader?.disciples) {
+      return NextResponse.json([]);
+    }
+
     return NextResponse.json(leader?.disciples);
   } catch (error) {
     console.log("Error at GET /api/disciples", error);

@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/sheet";
 import type { CellReportRecord } from "@/types/globals";
 import { CellReportDetails } from "./cell-report-details";
+import { CellReportEditForm } from "./cell-report-edit-form";
 import { GeneratePDFButton, GeneratePDFButtonWide } from "./cell-report-pdf";
 
 type RowAction = "view" | "edit" | "generate-pdf";
@@ -49,11 +50,11 @@ export function CellReportRowActions({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <GeneratePDFButton cellReport={cellReport} />
-            <DropdownMenuItem disabled onClick={() => setAction("edit")}>
+            <DropdownMenuItem onClick={() => setAction("edit")}>
               <PencilIcon />
-              Edit
+              Edit Details
             </DropdownMenuItem>
+            <GeneratePDFButton cellReport={cellReport} />
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
@@ -92,6 +93,30 @@ export function CellReportRowActions({
             </SheetClose>
             <GeneratePDFButtonWide cellReport={cellReport} />
           </div>
+        </SheetContent>
+      </Sheet>
+
+      <Sheet
+        open={action === "edit"}
+        onOpenChange={(isOpen) => {
+          if (!isOpen) {
+            setAction(undefined);
+          }
+        }}
+      >
+        <SheetContent
+          side="right"
+          className="inset-y-2 right-2 flex h-auto w-[95%] flex-col gap-0 overflow-y-hidden rounded-lg border bg-background p-0 focus-visible:outline-none sm:max-w-lg"
+          onInteractOutside={(e) => e.preventDefault()}
+        >
+          <SheetHeader className="space-y-1 border-b p-4 text-left">
+            <SheetTitle>Update Cell Report Details</SheetTitle>
+            <SheetDescription>Make sure to save your changes.</SheetDescription>
+          </SheetHeader>
+          <CellReportEditForm
+            cellReport={cellReport}
+            onAfterSave={() => setAction(undefined)}
+          />
         </SheetContent>
       </Sheet>
     </>

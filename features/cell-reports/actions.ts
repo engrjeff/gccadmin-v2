@@ -6,7 +6,7 @@ import { CellStatus } from "@/app/generated/prisma";
 import prisma from "@/lib/prisma";
 import { leaderActionClient } from "@/lib/safe-action";
 import { getNextCellStatus } from "@/lib/utils.server";
-import { cellReportCreateSchema } from "./schema";
+import { cellReportCreateSchema, cellReportEditSchema } from "./schema";
 
 export const createCellReport = leaderActionClient
   .metadata({ actionName: "createCellReport" })
@@ -94,5 +94,33 @@ export const createCellReport = leaderActionClient
 
     return {
       cellReport: result,
+    };
+  });
+
+export const editCellReport = leaderActionClient
+  .metadata({ actionName: "editCellReport" })
+  .inputSchema(cellReportEditSchema)
+  .action(async ({ parsedInput }) => {
+    const cellReport = await prisma.cellReport.update({
+      where: {
+        id: parsedInput.id,
+      },
+      data: {
+        date: new Date(parsedInput.date),
+        hasCustomLesson: Boolean(parsedInput.lessonTitle),
+        type: parsedInput.type,
+        venue: parsedInput.venue,
+        lessonId: parsedInput.lessonId ?? undefined,
+        lessonTitle: parsedInput.lessonTitle ?? undefined,
+        scriptureReferences: parsedInput.scriptureReferences,
+        worship: parsedInput.worship,
+        work: parsedInput.work,
+      },
+    });
+
+    revalidatePath("/cell-reports");
+
+    return {
+      cellReport,
     };
   });

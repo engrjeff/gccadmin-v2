@@ -47,6 +47,7 @@ export interface DiscipleRecord extends Disciple {
 
 export interface CellReportRecord extends CellReport {
   date: string;
+  rawDate: Date;
   leader: {
     name: string;
     id: string;

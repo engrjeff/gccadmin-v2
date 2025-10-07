@@ -175,6 +175,7 @@ export async function getCellReports(args: CellReportsQueryArgs) {
     cellReports: cellReports.map((report) => ({
       ...report,
       date: format(report.date, "PPp"),
+      rawDate: report.date,
     })),
     user,
     isAdmin,

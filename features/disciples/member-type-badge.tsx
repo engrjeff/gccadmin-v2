@@ -53,7 +53,7 @@ export function MemberTypeBadge({ memberType }: { memberType: MemberType }) {
           className="size-1.5 rounded-full bg-blue-900"
           aria-hidden="true"
         ></span>
-        Youth
+        Women
       </Badge>
     );
 

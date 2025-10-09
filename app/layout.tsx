@@ -3,6 +3,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { ClerkProvider } from "@/components/providers/clerk-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import "./globals.css";
+import { ClerkLoaded, ClerkLoading } from "@clerk/nextjs";
+import { Loader2Icon } from "lucide-react";
+import Image from "next/image";
 import NextTopLoader from "nextjs-toploader";
 import { QueryProvider } from "@/components/providers/query-provider";
 import { Toaster } from "@/components/ui/sonner";
@@ -56,7 +59,20 @@ export default function RootLayout({
               enableSystem
               disableTransitionOnChange
             >
-              {children}
+              <ClerkLoading>
+                <div className="inset-0 flex h-screen w-screen flex-col items-center justify-center gap-4">
+                  <Image
+                    unoptimized
+                    src="/gcc-logo.svg"
+                    alt={app.title}
+                    width={40}
+                    height={40}
+                  />
+                  <p className="text-lg">The app is loading...</p>
+                  <Loader2Icon className="size-6 animate-spin" />
+                </div>
+              </ClerkLoading>
+              <ClerkLoaded>{children}</ClerkLoaded>
               <Toaster richColors />
             </ThemeProvider>
           </QueryProvider>

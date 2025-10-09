@@ -84,7 +84,7 @@ export function DisciplesWithCellGroups() {
           </span>
         </CardDescription>
       </CardHeader>
-      <CardContent className="max-h-[260px] flex-1 overflow-auto px-4 pt-4 [&>div]:h-full">
+      <CardContent className="flex-1 overflow-auto px-4 pt-4 [&>div]:h-full">
         {data.length === 0 ? (
           <div className="flex min-h-[240px] flex-col items-center justify-center gap-3">
             <PackageIcon className="size-6 text-muted-foreground" />

@@ -118,10 +118,10 @@ export function DiscipleForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
         onSubmit={form.handleSubmit(onSubmit, onFormError)}
         className="relative flex max-h-[calc(100%-88px)] flex-1 flex-col"
       >
-        <div className="mb-4 max-h-[calc(100%-69px)] flex-1 overflow-y-auto">
+        <div className="max-h-[calc(100%-69px)] flex-1">
           <fieldset
             disabled={isBusy}
-            className="flex h-full flex-col gap-3.5 p-4 disabled:opacity-90"
+            className="flex h-full flex-col gap-3.5 overflow-y-auto p-4 disabled:opacity-90"
           >
             <p className="text-foreground text-sm">Personal Information</p>
             <FormField
@@ -437,7 +437,7 @@ export function DiscipleForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
           </fieldset>
         </div>
 
-        <div className="flex items-center justify-end gap-3 p-4">
+        <div className="flex items-center justify-end gap-3 border-t p-4">
           <Button type="button" variant="ghost" onClick={onAfterSave}>
             Cancel
           </Button>

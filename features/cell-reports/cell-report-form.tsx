@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { useAction } from "next-safe-action/hooks";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   type SubmitErrorHandler,
   type SubmitHandler,
@@ -100,6 +100,12 @@ export function CellReportForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
       toast.error(error.serverError ?? `Error creating cell report`);
     },
   });
+
+  useEffect(() => {
+    if (disciplesOfLeader.data?.length !== 0) return;
+
+    setWithAssistant(false);
+  }, [disciplesOfLeader.data?.length]);
 
   const isBusy = createAction.isPending;
 
@@ -289,7 +295,9 @@ export function CellReportForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
 
             <div className="flex items-center space-x-2 pt-4">
               <Checkbox
-                disabled={!leaderId && isAdmin}
+                disabled={
+                  (!leaderId && isAdmin) || disciplesOfLeader.data?.length === 0
+                }
                 checked={withAssistant}
                 onCheckedChange={(checked) => {
                   setWithAssistant(checked === true);
@@ -316,7 +324,11 @@ export function CellReportForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
                     <Select
                       defaultValue={field.value}
                       value={field.value}
-                      disabled={!leaderId}
+                      disabled={
+                        !leaderId ||
+                        disciplesOfLeader.isLoading ||
+                        disciplesOfLeader.data?.length === 0
+                      }
                       onValueChange={(value) => {
                         if (value) {
                           form.setValue("attendees", [
@@ -552,7 +564,7 @@ export function CellReportForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
           </fieldset>
         </div>
 
-        <div className="mt-auto flex items-center justify-end gap-3 p-4">
+        <div className="mt-auto flex items-center justify-end gap-3 border-t p-4">
           <div className="mb-2 hidden select-none items-center space-x-2 md:mb-0">
             <Checkbox
               id="create-more-flag"

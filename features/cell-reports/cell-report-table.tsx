@@ -24,7 +24,7 @@ export function CellReportTable({
   cellReports: CellReportRecord[];
 }) {
   return (
-    <div className="hidden min-h-min flex-1 overflow-hidden rounded-md border sm:block [&>div]:rounded-md lg:[&>div]:max-h-[500px]">
+    <div className="hidden min-h-min flex-1 overflow-hidden rounded-md border sm:block [&>div]:rounded-md lg:[&>div]:max-h-[480px]">
       <Table>
         <TableHeader className="sticky top-0 z-10 bg-card backdrop-blur-sm">
           <TableRow className="hover:bg-transparent">

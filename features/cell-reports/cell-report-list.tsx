@@ -16,7 +16,7 @@ import {
   ListItemSecondary,
 } from "@/components/ui/list";
 import type { CellReportRecord } from "@/types/globals";
-import { CellReportRowActions } from "./cell-report-row-actions";
+import { CellReportMobileActions } from "./cell-report-row-actions";
 
 export function CellReportList({
   cellReports,
@@ -46,19 +46,19 @@ export function CellReportList({
 function CellTypeIndicator({ cellType }: { cellType: CellType }) {
   if (cellType === CellType.OPEN) {
     return (
-      <span className="inline-block h-10 w-1 rounded-full bg-green-500"></span>
+      <span className="-ml-1.5 inline-block h-14 w-1 rounded-full bg-green-500"></span>
     );
   }
 
   if (cellType === CellType.DISCIPLESHIP) {
     return (
-      <span className="inline-block h-10 w-1 rounded-full bg-blue-500"></span>
+      <span className="-ml-1 .-ml-1.5inline-block h-14 w-1 rounded-full bg-blue-500"></span>
     );
   }
 
   if (cellType === CellType.SOULWINNING) {
     return (
-      <span className="inline-block h-10 w-1 rounded-full bg-yellow-500"></span>
+      <span className="-ml-1.5 inline-block h-14 w-1 rounded-full bg-yellow-500"></span>
     );
   }
 }
@@ -81,18 +81,16 @@ function CellReportItem({ cellReport }: { cellReport: CellReportRecord }) {
           {cellReport.lessonTitle
             ? cellReport.lessonTitle
             : cellReport.lesson?.title}{" "}
-          &bull;{" "}
-          {cellReport.hasCustomLesson
-            ? "Custom Lesson"
-            : cellReport.lesson?.lessonSeries?.title}
         </ListItemSecondary>
         <ListItemSecondary className="flex items-center gap-2 truncate whitespace-nowrap text-muted-foreground text-xs">
-          <MapPinIcon className="size-3 shrink-0" /> {cellReport.venue} &bull;{" "}
+          <MapPinIcon className="size-3 shrink-0" /> {cellReport.venue}
+        </ListItemSecondary>
+        <ListItemSecondary className="flex items-center gap-2 truncate whitespace-nowrap text-muted-foreground text-xs">
           <CalendarIcon className="size-3 shrink-0" />
           {cellReport.date}
         </ListItemSecondary>
       </ListItemContent>
-      <CellReportRowActions cellReport={cellReport} />
+      <CellReportMobileActions cellReport={cellReport} />
     </ListItem>
   );
 }

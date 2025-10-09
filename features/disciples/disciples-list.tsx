@@ -70,6 +70,11 @@ function DiscipleListItem({
         {isAdmin ? (
           <ListItemSecondary>Leader: {disciple.leader?.name}</ListItemSecondary>
         ) : null}
+        {disciple.handledBy ? (
+          <ListItemSecondary>
+            Handled by: {disciple.handledBy.name}
+          </ListItemSecondary>
+        ) : null}
       </ListItemLinkContent>
       <ListItemTrailing onClick={() => {}}>
         <DiscipleRowMobileActions disciple={disciple} />

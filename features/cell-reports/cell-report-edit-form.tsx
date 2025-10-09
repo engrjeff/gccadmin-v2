@@ -414,7 +414,7 @@ export function CellReportEditForm({
           </fieldset>
         </div>
 
-        <div className="mt-auto flex items-center justify-end gap-3 p-4">
+        <div className="mt-auto flex items-center justify-end gap-3 border-t p-4">
           <Button type="button" variant="ghost" onClick={handleCancelClick}>
             Cancel
           </Button>

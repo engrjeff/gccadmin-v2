@@ -73,11 +73,11 @@ export function CellGroupTrend({
   const previousCount = previousReports.length ?? 0;
 
   const percentDelta =
-    currentCount === 0
+    previousCount === 0
       ? 100
-      : ((previousCount - currentCount) / currentCount) * 100;
+      : ((currentCount - previousCount) / previousCount) * 100;
 
-  const trend = percentDelta < 0 ? "up" : "down";
+  const trend = percentDelta > 0 ? "up" : "down";
 
   return (
     <div className="relative flex flex-col gap-3 p-4">

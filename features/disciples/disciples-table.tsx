@@ -22,10 +22,15 @@ export function DisciplesTable({
   disciples,
 }: {
   isAdmin: boolean;
-  disciples: Array<Disciple & { leader: { id: string; name: string } | null }>;
+  disciples: Array<
+    Disciple & {
+      leader: { id: string; name: string } | null;
+      handledBy: { id: string; name: string } | null;
+    }
+  >;
 }) {
   return (
-    <div className="hidden min-h-min overflow-hidden rounded-md border sm:block [&>div]:rounded-md lg:[&>div]:max-h-[490px]">
+    <div className="hidden min-h-min overflow-hidden rounded-md border sm:block [&>div]:rounded-md lg:[&>div]:max-h-[450px]">
       <Table>
         <TableHeader className="sticky top-0 z-10 bg-card backdrop-blur-sm">
           <TableRow className="hover:bg-transparent">
@@ -35,9 +40,10 @@ export function DisciplesTable({
             </TableHead>
             {isAdmin ? (
               <TableHead>
-                <SortLink sortValue="leader" title="Leader" />
+                <SortLink sortValue="leader" title="Network Leader" />
               </TableHead>
             ) : null}
+            <TableHead>Handled by</TableHead>
             <TableHead>
               <SortLink sortValue="cellStatus" title="Cell Status" />
             </TableHead>
@@ -56,7 +62,7 @@ export function DisciplesTable({
         <TableBody>
           {disciples.length === 0 ? (
             <TableRow className="hover:bg-transparent">
-              <TableCell colSpan={isAdmin ? 8 : 7}>
+              <TableCell colSpan={isAdmin ? 9 : 8}>
                 <div className="flex min-h-[300px] flex-col items-center justify-center gap-3">
                   <PackageIcon className="size-6 text-muted-foreground" />
                   <p className="text-center text-muted-foreground text-sm">
@@ -95,12 +101,20 @@ export function DisciplesTable({
                   <TableCell>
                     <Link
                       href={`/leaders/${d.leader?.id}`}
-                      className="font-semibold hover:underline"
+                      className="hover:underline"
                     >
                       {d.leader?.name}
                     </Link>
                   </TableCell>
                 ) : null}
+                <TableCell>
+                  <Link
+                    href={`/disciples/${d.handledById ? d.handledById : d.leader?.id}`}
+                    className="hover:underline"
+                  >
+                    {d.handledBy ? d.handledBy.name : d.leader?.name}
+                  </Link>
+                </TableCell>
                 <TableCell>
                   <CellStatusBadge cellStatus={d.cellStatus} />
                 </TableCell>

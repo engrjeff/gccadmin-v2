@@ -191,7 +191,7 @@ export async function getDisciples(args: DisciplesQueryArgs) {
         },
       },
       handledBy: {
-        select: { name: true },
+        select: { id: true, name: true },
       },
     },
 

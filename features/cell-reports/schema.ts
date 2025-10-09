@@ -31,14 +31,8 @@ export const cellReportCreateSchema = z.object({
 
 export type CellReportCreateInputs = z.infer<typeof cellReportCreateSchema>;
 
-export const cellReportEditSchema = cellReportCreateSchema
-  .omit({
-    leaderId: true,
-    assistantId: true,
-    attendees: true,
-  })
-  .extend({
-    id: z.string({ error: "Cell Report ID is required." }),
-  });
+export const cellReportEditSchema = cellReportCreateSchema.extend({
+  id: z.string({ error: "Cell Report ID is required." }),
+});
 
 export type CellReportEditInputs = z.infer<typeof cellReportEditSchema>;

@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { useAction } from "next-safe-action/hooks";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   type SubmitErrorHandler,
   type SubmitHandler,
@@ -14,6 +14,7 @@ import { toast } from "sonner";
 import { AppCombobox } from "@/components/app-combobox";
 import { TagsInput } from "@/components/tags-input";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -36,9 +37,13 @@ import { Separator } from "@/components/ui/separator";
 import { SubmitButton } from "@/components/ui/submit-button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
+import { useDisciples } from "@/hooks/use-disciples";
+import { useIsAdmin } from "@/hooks/use-is-admin";
+import { useLeaders } from "@/hooks/use-leaders";
 import { useLessonSeries } from "@/hooks/use-lesson-series";
 import type { CellReportRecord } from "@/types/globals";
 import { editCellReport } from "./actions";
+import { AttendeesPicker } from "./attendees-picker";
 import { type CellReportEditInputs, cellReportEditSchema } from "./schema";
 
 export function CellReportEditForm({
@@ -48,33 +53,53 @@ export function CellReportEditForm({
   cellReport: CellReportRecord;
   onAfterSave: VoidFunction;
 }) {
+  const isAdmin = useIsAdmin();
+
+  const [createMore, setCreateMore] = useState(false);
+
+  const [withAssistant, setWithAssistant] = useState(() =>
+    Boolean(cellReport.assistantId),
+  );
+
   const [selectedSeries, setSelectedSeries] = useState<string | undefined>(
     () => cellReport.lesson?.lessonSeries?.id,
   );
+
+  const leadersQuery = useLeaders({ enabled: isAdmin });
 
   const lessonSeriesQuery = useLessonSeries();
 
   const queryClient = useQueryClient();
 
+  const defaultValues: Partial<CellReportEditInputs> = {
+    id: cellReport.id,
+    leaderId: cellReport.leaderId,
+    type: cellReport.type,
+    venue: cellReport.venue,
+    date: cellReport.date
+      ? format(cellReport.date, "yyyy-MM-dd'T'HH:mm")
+      : undefined,
+    lessonId: cellReport.lessonId ?? undefined,
+    lessonTitle: cellReport.lessonTitle ?? undefined,
+    scriptureReferences: cellReport.scriptureReferences,
+    worship: cellReport.worship,
+    work: cellReport.work,
+    assistantId: cellReport.assistantId ?? undefined,
+    attendees: cellReport.cellReportAttendeeSnapshots.map((c) => c.discipleId),
+  };
+
   const form = useForm<CellReportEditInputs>({
-    defaultValues: {
-      id: cellReport.id,
-      type: cellReport.type,
-      venue: cellReport.venue,
-      date: cellReport.date
-        ? format(cellReport.date, "yyyy-MM-dd'T'HH:mm")
-        : undefined,
-      lessonId: cellReport.lessonId ?? undefined,
-      lessonTitle: cellReport.lessonTitle ?? undefined,
-      scriptureReferences: cellReport.scriptureReferences,
-      worship: cellReport.worship,
-      work: cellReport.work,
-    },
+    defaultValues,
     resolver: zodResolver(cellReportEditSchema),
     mode: "onChange",
   });
 
+  const leaderId = form.watch("leaderId");
   const selectedLesson = form.watch("lessonId");
+  const selectedAssistant = form.watch("assistantId");
+  const currentAttendees = form.watch("attendees");
+
+  const disciplesOfLeader = useDisciples({ leaderId });
 
   const lessons =
     lessonSeriesQuery.data?.find((i) => i.id === selectedSeries)?.lessons ?? [];
@@ -84,19 +109,31 @@ export function CellReportEditForm({
       .find((i) => i.id === selectedLesson)
       ?.scriptureReferences.join(", ") ?? "";
 
-  const updateAction = useAction(editCellReport, {
+  const editAction = useAction(editCellReport, {
     onError: ({ error }) => {
       console.error(error);
       toast.error(error.serverError ?? `Error updating cell report`);
     },
   });
 
-  const isBusy = updateAction.isPending;
+  useEffect(() => {
+    if (disciplesOfLeader.data?.length !== 0) return;
+
+    setWithAssistant(false);
+  }, [disciplesOfLeader.data?.length]);
+
+  const isBusy = editAction.isPending;
 
   const onFormError: SubmitErrorHandler<CellReportEditInputs> = (errors) => {
     console.log(`Cell Report Edit Form Errors: `, errors);
 
-    const { lessonId, lessonTitle, scriptureReferences } = form.watch();
+    const { lessonId, lessonTitle, assistantId, scriptureReferences } =
+      form.watch();
+
+    if (withAssistant && !assistantId) {
+      form.setError("assistantId", { message: "Assistant is required." });
+      return false;
+    }
 
     if (!lessonId && !lessonTitle) {
       form.setError("lessonId", { message: "Lesson is required" });
@@ -123,11 +160,16 @@ export function CellReportEditForm({
 
   const onSubmit: SubmitHandler<CellReportEditInputs> = async (data) => {
     try {
+      if (isAdmin && !form.getValues("leaderId")) {
+        form.setError("leaderId", { message: "Leader is required" });
+        return;
+      }
+
       const hasNoError = onFormError(form.formState.errors);
 
       if (!hasNoError) return;
 
-      const result = await updateAction.executeAsync(data);
+      const result = await editAction.executeAsync(data);
 
       if (result.data?.cellReport) {
         toast.success(`Cell Report updated!`);
@@ -144,8 +186,9 @@ export function CellReportEditForm({
   };
 
   function handleCancelClick() {
-    form.reset();
+    form.reset(defaultValues);
     setSelectedSeries(undefined);
+    setWithAssistant(false);
     onAfterSave();
   }
 
@@ -161,6 +204,41 @@ export function CellReportEditForm({
             disabled={isBusy}
           >
             <legend className="font-medium text-sm">General Details</legend>
+            {isAdmin ? (
+              <FormField
+                control={form.control}
+                name="leaderId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Leader</FormLabel>
+                    <Select
+                      defaultValue={field.value}
+                      disabled={leadersQuery.isLoading}
+                      value={field.value}
+                      onValueChange={(value) => {
+                        field.onChange(value);
+                        form.setValue("attendees", []);
+                      }}
+                    >
+                      <FormControl>
+                        <SelectTrigger id="leaderId" className="w-full">
+                          <SelectValue placeholder="Select a leader" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {leadersQuery.data?.map((item) => (
+                          <SelectItem key={item.id} value={item.id}>
+                            {item.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            ) : null}
+
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <FormField
                 control={form.control}
@@ -229,6 +307,88 @@ export function CellReportEditForm({
                 </FormItem>
               )}
             />
+
+            <div className="flex items-center space-x-2 pt-4">
+              <Checkbox
+                disabled={
+                  (!leaderId && isAdmin) || disciplesOfLeader.data?.length === 0
+                }
+                checked={withAssistant}
+                onCheckedChange={(checked) => {
+                  setWithAssistant(checked === true);
+                  if (checked !== true) {
+                    form.setValue("assistantId", "");
+                    form.setValue(
+                      "attendees",
+                      currentAttendees.filter((a) => a !== selectedAssistant),
+                    );
+                  }
+                }}
+                id="with-assistant"
+              />
+              <Label htmlFor="with-assistant">I have an assistant leader</Label>
+            </div>
+
+            {withAssistant ? (
+              <FormField
+                control={form.control}
+                name="assistantId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Assistant Leader</FormLabel>
+                    <Select
+                      defaultValue={field.value}
+                      value={field.value}
+                      disabled={
+                        !leaderId ||
+                        disciplesOfLeader.isLoading ||
+                        disciplesOfLeader.data?.length === 0
+                      }
+                      onValueChange={(value) => {
+                        if (value) {
+                          form.setValue("attendees", [
+                            ...currentAttendees,
+                            value,
+                          ]);
+                        } else {
+                          form.setValue(
+                            "attendees",
+                            currentAttendees.filter(
+                              (a) => a !== selectedAssistant,
+                            ),
+                          );
+                        }
+
+                        field.onChange(value);
+                      }}
+                    >
+                      <FormControl>
+                        <SelectTrigger
+                          id="assistantId"
+                          className="w-full normal-case"
+                        >
+                          <SelectValue placeholder="Select assistant leader" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {disciplesOfLeader.data
+                          ?.filter((dc) => dc.isMyPrimary || dc.isPrimary)
+                          ?.map((item) => (
+                            <SelectItem key={item.id} value={item.id}>
+                              {item.name}
+                            </SelectItem>
+                          ))}
+                      </SelectContent>
+                    </Select>
+                    <FormDescription>
+                      Qualified assistants are primary leaders and primary
+                      disciples.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            ) : null}
           </fieldset>
           <Separator className="my-6" />
           <fieldset
@@ -238,21 +398,33 @@ export function CellReportEditForm({
             <legend className="font-medium text-sm">Lesson Details</legend>
 
             <Tabs
-              defaultValue="pick-lesson"
+              defaultValue={
+                cellReport.lessonTitle ? "custom-lesson" : "pick-lesson"
+              }
               className="w-full"
-              onValueChange={() => {
-                setSelectedSeries(
-                  cellReport.lesson?.lessonSeries?.id ?? undefined,
-                );
-                form.setValue("lessonId", cellReport.lessonId ?? undefined);
-                form.setValue(
-                  "lessonTitle",
-                  cellReport.lessonTitle ?? undefined,
-                );
-                form.setValue(
-                  "scriptureReferences",
-                  cellReport.scriptureReferences ?? [],
-                );
+              onValueChange={(tabValue) => {
+                if (tabValue === "custom-lesson") {
+                  setSelectedSeries(undefined);
+                  form.setValue("lessonId", undefined);
+                  form.setValue(
+                    "lessonTitle",
+                    cellReport.lessonTitle ?? undefined,
+                  );
+                  form.setValue(
+                    "scriptureReferences",
+                    cellReport.scriptureReferences ?? [],
+                  );
+                } else {
+                  form.setValue("lessonTitle", undefined);
+
+                  setSelectedSeries(cellReport.lesson?.lessonSeries?.id);
+                  form.setValue("lessonId", cellReport.lessonId ?? undefined);
+
+                  form.setValue(
+                    "scriptureReferences",
+                    cellReport.lesson?.scriptureReferences ?? [],
+                  );
+                }
               }}
             >
               <TabsList className="grid w-full grid-cols-2">
@@ -411,10 +583,50 @@ export function CellReportEditForm({
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="attendees"
+              render={() => (
+                <FormItem>
+                  <FormLabel>Attendees</FormLabel>
+                  <FormMessage />
+                  <FormControl>
+                    <AttendeesPicker />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
           </fieldset>
         </div>
 
         <div className="mt-auto flex items-center justify-end gap-3 border-t p-4">
+          <div className="mb-2 hidden select-none items-center space-x-2 md:mb-0">
+            <Checkbox
+              id="create-more-flag"
+              className="rounded"
+              checked={createMore}
+              onCheckedChange={(checked) => setCreateMore(checked === true)}
+            />
+            <label
+              htmlFor="create-more-flag"
+              className="font-medium text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              Create another report
+            </label>
+          </div>
+          <Button
+            variant="outline"
+            type="reset"
+            disabled={false}
+            className="hidden bg-muted/30 md:ml-auto"
+            onClick={() => {
+              form.reset(defaultValues);
+              setSelectedSeries(undefined);
+              setWithAssistant(false);
+            }}
+          >
+            Reset
+          </Button>
           <Button type="button" variant="ghost" onClick={handleCancelClick}>
             Cancel
           </Button>

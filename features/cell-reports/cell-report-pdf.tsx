@@ -61,10 +61,10 @@ const styles = StyleSheet.create({
   },
   detailRowTitle: {
     fontWeight: "bold",
-    fontSize: 9,
+    fontSize: 8,
   },
   detailRowValue: {
-    fontSize: 9,
+    fontSize: 8,
     textTransform: "capitalize",
   },
   line: {

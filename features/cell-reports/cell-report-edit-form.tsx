@@ -25,7 +25,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { SelectNative } from "@/components/ui/select-native";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { SubmitButton } from "@/components/ui/submit-button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -162,17 +168,29 @@ export function CellReportEditForm({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Cell Type</FormLabel>
-                    <FormControl>
-                      <SelectNative
-                        className="w-min normal-case md:w-full"
-                        id="type"
-                        {...field}
-                      >
-                        <option value="OPEN">Open Cell</option>
-                        <option value="DISCIPLESHIP">Discipleship Cell</option>
-                        <option value="SOULWINNING">Soul Winning</option>
-                      </SelectNative>
-                    </FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      value={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger
+                          id="type"
+                          className="w-min normal-case md:w-full"
+                        >
+                          <SelectValue placeholder="Select cell type" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="OPEN">Open Cell</SelectItem>
+                        <SelectItem value="DISCIPLESHIP">
+                          Discipleship Cell
+                        </SelectItem>
+                        <SelectItem value="SOULWINNING">
+                          Soul Winning
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}

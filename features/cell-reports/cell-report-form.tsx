@@ -27,7 +27,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { SelectNative } from "@/components/ui/select-native";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { SubmitButton } from "@/components/ui/submit-button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -142,8 +148,6 @@ export function CellReportForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
 
       if (!hasNoError) return;
 
-      console.log(data);
-
       const result = await createAction.executeAsync(data);
 
       if (result.data?.cellReport) {
@@ -186,27 +190,28 @@ export function CellReportForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Leader</FormLabel>
-                    <FormControl>
-                      <SelectNative
-                        className="normal-case"
-                        id="leaderId"
-                        disabled={leadersQuery.isLoading}
-                        value={field.value}
-                        onChange={(e) => {
-                          field.onChange(e.currentTarget.value);
-                          form.setValue("attendees", []);
-                        }}
-                      >
-                        <option disabled value="">
-                          Select a leader
-                        </option>
+                    <Select
+                      defaultValue={field.value}
+                      disabled={leadersQuery.isLoading}
+                      value={field.value}
+                      onValueChange={(value) => {
+                        field.onChange(value);
+                        form.setValue("attendees", []);
+                      }}
+                    >
+                      <FormControl>
+                        <SelectTrigger id="leaderId" className="w-full">
+                          <SelectValue placeholder="Select a leader" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
                         {leadersQuery.data?.map((item) => (
-                          <option key={item.id} value={item.id}>
+                          <SelectItem key={item.id} value={item.id}>
                             {item.name}
-                          </option>
+                          </SelectItem>
                         ))}
-                      </SelectNative>
-                    </FormControl>
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -220,17 +225,29 @@ export function CellReportForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Cell Type</FormLabel>
-                    <FormControl>
-                      <SelectNative
-                        className="w-min normal-case md:w-full"
-                        id="type"
-                        {...field}
-                      >
-                        <option value="OPEN">Open Cell</option>
-                        <option value="DISCIPLESHIP">Discipleship Cell</option>
-                        <option value="SOULWINNING">Soul Winning</option>
-                      </SelectNative>
-                    </FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      value={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger
+                          id="type"
+                          className="w-min normal-case md:w-full"
+                        >
+                          <SelectValue placeholder="Select cell type" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="OPEN">Open Cell</SelectItem>
+                        <SelectItem value="DISCIPLESHIP">
+                          Discipleship Cell
+                        </SelectItem>
+                        <SelectItem value="SOULWINNING">
+                          Soul Winning
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -296,40 +313,50 @@ export function CellReportForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Assistant Leader</FormLabel>
-                    <FormControl>
-                      <SelectNative
-                        className="normal-case"
-                        {...field}
-                        onChange={(e) => {
-                          if (e.currentTarget.value) {
-                            form.setValue("attendees", [
-                              ...currentAttendees,
-                              e.currentTarget.value,
-                            ]);
-                          } else {
-                            form.setValue(
-                              "attendees",
-                              currentAttendees.filter(
-                                (a) => a !== selectedAssistant,
-                              ),
-                            );
-                          }
+                    <Select
+                      defaultValue={field.value}
+                      value={field.value}
+                      disabled={!leaderId}
+                      onValueChange={(value) => {
+                        if (value) {
+                          form.setValue("attendees", [
+                            ...currentAttendees,
+                            value,
+                          ]);
+                        } else {
+                          form.setValue(
+                            "attendees",
+                            currentAttendees.filter(
+                              (a) => a !== selectedAssistant,
+                            ),
+                          );
+                        }
 
-                          field.onChange(e);
-                        }}
-                      >
-                        <option disabled value="">
-                          Select assistant leader
-                        </option>
+                        field.onChange(value);
+                      }}
+                    >
+                      <FormControl>
+                        <SelectTrigger
+                          id="assistantId"
+                          className="w-full normal-case"
+                        >
+                          <SelectValue placeholder="Select assistant leader" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
                         {disciplesOfLeader.data
                           ?.filter((dc) => dc.isMyPrimary || dc.isPrimary)
                           ?.map((item) => (
-                            <option key={item.id} value={item.id}>
+                            <SelectItem key={item.id} value={item.id}>
                               {item.name}
-                            </option>
+                            </SelectItem>
                           ))}
-                      </SelectNative>
-                    </FormControl>
+                      </SelectContent>
+                    </Select>
+                    <FormDescription>
+                      Qualified assistants are primary leaders and primary
+                      disciples.
+                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}

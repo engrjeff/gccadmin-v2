@@ -91,7 +91,7 @@ export async function getCellReports(args: CellReportsQueryArgs) {
   );
 
   const dateFilterEnd = new Date(
-    format(rawDateFilter?.end as Date, "yyyy-MM-dd"),
+    `${format(rawDateFilter?.end as Date, "yyyy-MM-dd")}T23:59:59.999Z`,
   );
 
   const leaderFilter = args.leader

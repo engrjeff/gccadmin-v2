@@ -23,7 +23,7 @@ async function getCellGroupStatistics(args: {
       {
         params: {
           dateRangeStart: format(args.dateRange?.from as Date, "yyyy-MM-dd"),
-          dateRangeEnd: format(args.dateRange?.to as Date, "yyyy-MM-dd"),
+          dateRangeEnd: `${format(args.dateRange.to as Date, "yyyy-MM-dd")}T23:59:59.999Z`,
         },
       },
     );

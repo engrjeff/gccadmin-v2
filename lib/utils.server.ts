@@ -38,6 +38,21 @@ export const getNextCellStatus = (cellStatus: CellStatus): CellStatus => {
   }
 };
 
+export const getPreviousCellStatus = (cellStatus: CellStatus): CellStatus => {
+  switch (cellStatus) {
+    case "FIRST_TIMER":
+      return "FIRST_TIMER";
+    case "SECOND_TIMER":
+      return "FIRST_TIMER";
+    case "THIRD_TIMER":
+      return "SECOND_TIMER";
+    case "REGULAR":
+      return "THIRD_TIMER";
+    default:
+      return "FIRST_TIMER";
+  }
+};
+
 export function getDateRange(
   preset: DateRange,
 ): { start: Date; end: Date } | undefined {

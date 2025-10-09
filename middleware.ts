@@ -38,8 +38,13 @@ export default clerkMiddleware(async (auth, req) => {
 
   const noRole = !session.sessionClaims?.metadata?.role;
 
-  if (noRole && !isPublicRoute(req)) {
+  if (noRole && session.isAuthenticated && !isPublicRoute(req)) {
     const url = new URL("/unauthorized", req.nextUrl);
+    return NextResponse.redirect(url);
+  }
+
+  if (!session.isAuthenticated && !isPublicRoute(req)) {
+    const url = new URL("/sign-in", req.nextUrl);
     return NextResponse.redirect(url);
   }
 });

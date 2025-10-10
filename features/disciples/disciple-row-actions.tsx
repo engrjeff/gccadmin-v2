@@ -20,7 +20,6 @@ import {
   DrawerDescription,
   DrawerHeader,
   DrawerTitle,
-  DrawerTrigger,
 } from "@/components/ui/drawer";
 import {
   DropdownMenu,
@@ -37,6 +36,8 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { useDiscipleAction } from "./disciple-action-provider";
 import { DiscipleChangeStatusDialog } from "./disciple-change-status-dialog";
 import { DiscipleDeleteDialog } from "./disciple-delete-dialog";
 import { DiscipleEditForm } from "./disciple-edit-form";
@@ -149,22 +150,52 @@ export function DiscipleRowActions({ disciple }: { disciple: Disciple }) {
   );
 }
 
-export function DiscipleRowMobileActions({ disciple }: { disciple: Disciple }) {
-  const [action, setAction] = useState<RowAction>();
-  const [open, setOpen] = useState(false);
+export function DiscipleActionButton({ disciple }: { disciple: Disciple }) {
+  const { setOpen, setSelectedDisciple } = useDiscipleAction();
 
-  function reset() {
-    setAction(undefined);
-  }
+  return (
+    <Button
+      size="iconSm"
+      variant="ghost"
+      aria-label="Disciple actions"
+      onClick={() => {
+        setOpen(true);
+        setSelectedDisciple(disciple);
+      }}
+    >
+      <MoreHorizontalIcon />
+    </Button>
+  );
+}
+
+export function DiscipleRowMobileActions() {
+  const {
+    action,
+    open,
+    handleAction,
+    selectedDisciple: disciple,
+    setSelectedDisciple,
+    setOpen,
+    resetState,
+  } = useDiscipleAction();
+
+  const isMobile = useIsMobile();
+
+  if (!isMobile) return null;
+
+  if (!disciple) return null;
 
   return (
     <>
-      <Drawer open={open} onOpenChange={setOpen}>
-        <DrawerTrigger asChild>
-          <Button size="iconSm" variant="ghost" aria-label="Disciple actions">
-            <MoreHorizontalIcon />
-          </Button>
-        </DrawerTrigger>
+      <Drawer
+        open={open}
+        onOpenChange={(isOpen) => {
+          if (!isOpen) {
+            setSelectedDisciple(null);
+          }
+          setOpen(isOpen);
+        }}
+      >
         <DrawerContent>
           <DrawerHeader className="!text-left border-b">
             <DrawerTitle className="text-sm">{disciple.name}</DrawerTitle>
@@ -220,7 +251,7 @@ export function DiscipleRowMobileActions({ disciple }: { disciple: Disciple }) {
               size="lg"
               variant="ghost"
               className="w-full justify-start"
-              onClick={() => setAction("edit")}
+              onClick={() => handleAction("edit")}
             >
               <PencilIcon />
               Update
@@ -231,7 +262,7 @@ export function DiscipleRowMobileActions({ disciple }: { disciple: Disciple }) {
                   size="lg"
                   variant="ghost"
                   className="w-full justify-start"
-                  onClick={() => setAction("change-status")}
+                  onClick={() => handleAction("change-status")}
                 >
                   <RotateCcwIcon />
                   {disciple.isActive ? "Make Inactive" : "Make Active"}
@@ -240,7 +271,7 @@ export function DiscipleRowMobileActions({ disciple }: { disciple: Disciple }) {
                   size="lg"
                   className="w-full justify-start text-destructive hover:text-destructive"
                   variant="ghost"
-                  onClick={() => setAction("delete")}
+                  onClick={() => handleAction("delete")}
                 >
                   <TrashIcon />
                   Delete
@@ -257,7 +288,7 @@ export function DiscipleRowMobileActions({ disciple }: { disciple: Disciple }) {
         open={action === "delete"}
         onOpenChange={(isOpen) => {
           if (!isOpen) {
-            reset();
+            resetState();
           }
         }}
       />
@@ -269,7 +300,7 @@ export function DiscipleRowMobileActions({ disciple }: { disciple: Disciple }) {
         open={action === "change-status"}
         onOpenChange={(isOpen) => {
           if (!isOpen) {
-            reset();
+            resetState();
           }
         }}
       />
@@ -278,7 +309,7 @@ export function DiscipleRowMobileActions({ disciple }: { disciple: Disciple }) {
         open={action === "edit"}
         onOpenChange={(isOpen) => {
           if (!isOpen) {
-            reset();
+            resetState();
           }
         }}
       >
@@ -292,7 +323,7 @@ export function DiscipleRowMobileActions({ disciple }: { disciple: Disciple }) {
           </SheetHeader>
           <DiscipleEditForm
             disciple={disciple}
-            onAfterSave={() => setAction(undefined)}
+            onAfterSave={() => resetState()}
           />
         </SheetContent>
       </Sheet>

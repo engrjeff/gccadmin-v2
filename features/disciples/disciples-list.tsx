@@ -11,7 +11,10 @@ import {
 } from "@/components/ui/list";
 import { removeUnderscores } from "@/lib/utils";
 import type { DiscipleRecord } from "@/types/globals";
-import { DiscipleRowMobileActions } from "./disciple-row-actions";
+import {
+  DiscipleActionButton,
+  DiscipleRowMobileActions,
+} from "./disciple-row-actions";
 
 export function DisciplesList({
   isAdmin,
@@ -40,6 +43,7 @@ export function DisciplesList({
           ))}
         </List>
       )}
+      <DiscipleRowMobileActions />
     </div>
   );
 }
@@ -77,7 +81,7 @@ function DiscipleListItem({
         ) : null}
       </ListItemLinkContent>
       <ListItemTrailing onClick={() => {}}>
-        <DiscipleRowMobileActions disciple={disciple} />
+        <DiscipleActionButton disciple={disciple} />
       </ListItemTrailing>
     </ListItem>
   );

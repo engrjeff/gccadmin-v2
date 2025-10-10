@@ -325,7 +325,6 @@ export function CellReportForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
                       defaultValue={field.value}
                       value={field.value}
                       disabled={
-                        !leaderId ||
                         disciplesOfLeader.isLoading ||
                         disciplesOfLeader.data?.length === 0
                       }

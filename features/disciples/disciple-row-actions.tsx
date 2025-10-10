@@ -36,7 +36,6 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { useDiscipleAction } from "./disciple-action-provider";
 import { DiscipleChangeStatusDialog } from "./disciple-change-status-dialog";
 import { DiscipleDeleteDialog } from "./disciple-delete-dialog";
@@ -178,10 +177,6 @@ export function DiscipleRowMobileActions() {
     setOpen,
     resetState,
   } = useDiscipleAction();
-
-  const isMobile = useIsMobile();
-
-  if (!isMobile) return null;
 
   if (!disciple) return null;
 

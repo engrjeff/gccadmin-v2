@@ -89,90 +89,94 @@ export function DiscipleActionProvider({
           }
         }}
       >
-        <DrawerContent>
-          <DrawerHeader className="!text-left border-b">
-            <DrawerTitle className="text-sm">{disciple?.name}</DrawerTitle>
-            <DrawerDescription>Pick an action to do.</DrawerDescription>
-          </DrawerHeader>
-          <div className="flex flex-col gap-1 p-2 py-2">
-            <Button
-              size="lg"
-              variant="ghost"
-              className="w-full justify-start"
-              asChild
-            >
-              <Link href={`/disciples/${disciple?.id}`}>
-                <ListIcon /> View Details
-              </Link>
-            </Button>
-            <Button
-              size="lg"
-              variant="ghost"
-              className="w-full justify-start"
-              asChild
-            >
-              <Link href={`/disciples/${disciple?.id}?tab=lessons-taken`}>
-                <BookIcon /> Lessons Taken
-              </Link>
-            </Button>
-            <Button
-              size="lg"
-              variant="ghost"
-              className="w-full justify-start"
-              asChild
-            >
-              <Link href={`/disciples/${disciple?.id}?tab=attended-cellgroups`}>
-                <HomeIcon /> Attended Cell Groups
-              </Link>
-            </Button>
-            <Button
-              size="lg"
-              variant="ghost"
-              className="w-full justify-start"
-              asChild
-            >
-              <Link href={`/disciples/${disciple?.id}?tab=handled-disciples`}>
-                <UsersIcon /> Handled Disciples
-              </Link>
-            </Button>
-          </div>
-
-          <Separator />
-
-          <div className="flex flex-col gap-1 px-2 py-2">
-            <Button
-              size="lg"
-              variant="ghost"
-              className="w-full justify-start"
-              onClick={() => handleAction("edit")}
-            >
-              <PencilIcon />
-              Update
-            </Button>
-            {disciple?.isPrimary ? null : (
-              <>
-                <Button
-                  size="lg"
-                  variant="ghost"
-                  className="w-full justify-start"
-                  onClick={() => handleAction("change-status")}
+        {disciple ? (
+          <DrawerContent>
+            <DrawerHeader className="!text-left border-b">
+              <DrawerTitle className="text-sm">{disciple?.name}</DrawerTitle>
+              <DrawerDescription>Pick an action to do.</DrawerDescription>
+            </DrawerHeader>
+            <div className="flex flex-col gap-1 p-2 py-2">
+              <Button
+                size="lg"
+                variant="ghost"
+                className="w-full justify-start"
+                asChild
+              >
+                <Link href={`/disciples/${disciple?.id}`}>
+                  <ListIcon /> View Details
+                </Link>
+              </Button>
+              <Button
+                size="lg"
+                variant="ghost"
+                className="w-full justify-start"
+                asChild
+              >
+                <Link href={`/disciples/${disciple?.id}?tab=lessons-taken`}>
+                  <BookIcon /> Lessons Taken
+                </Link>
+              </Button>
+              <Button
+                size="lg"
+                variant="ghost"
+                className="w-full justify-start"
+                asChild
+              >
+                <Link
+                  href={`/disciples/${disciple?.id}?tab=attended-cellgroups`}
                 >
-                  <RotateCcwIcon />
-                  {disciple?.isActive ? "Make Inactive" : "Make Active"}
-                </Button>
-                <Button
-                  size="lg"
-                  className="w-full justify-start text-destructive hover:text-destructive"
-                  variant="ghost"
-                  onClick={() => handleAction("delete")}
-                >
-                  <TrashIcon />
-                  Delete
-                </Button>
-              </>
-            )}
-          </div>
-        </DrawerContent>
+                  <HomeIcon /> Attended Cell Groups
+                </Link>
+              </Button>
+              <Button
+                size="lg"
+                variant="ghost"
+                className="w-full justify-start"
+                asChild
+              >
+                <Link href={`/disciples/${disciple?.id}?tab=handled-disciples`}>
+                  <UsersIcon /> Handled Disciples
+                </Link>
+              </Button>
+            </div>
+
+            <Separator />
+
+            <div className="flex flex-col gap-1 px-2 py-2">
+              <Button
+                size="lg"
+                variant="ghost"
+                className="w-full justify-start"
+                onClick={() => handleAction("edit")}
+              >
+                <PencilIcon />
+                Update
+              </Button>
+              {disciple?.isPrimary ? null : (
+                <>
+                  <Button
+                    size="lg"
+                    variant="ghost"
+                    className="w-full justify-start"
+                    onClick={() => handleAction("change-status")}
+                  >
+                    <RotateCcwIcon />
+                    {disciple?.isActive ? "Make Inactive" : "Make Active"}
+                  </Button>
+                  <Button
+                    size="lg"
+                    className="w-full justify-start text-destructive hover:text-destructive"
+                    variant="ghost"
+                    onClick={() => handleAction("delete")}
+                  >
+                    <TrashIcon />
+                    Delete
+                  </Button>
+                </>
+              )}
+            </div>
+          </DrawerContent>
+        ) : null}
       </Drawer>
 
       {disciple ? (

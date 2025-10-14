@@ -4,10 +4,9 @@ import { BadgeCheckIcon, PackageIcon, ShieldCheckIcon } from "lucide-react";
 import {
   List,
   ListItem,
-  ListItemLinkContent,
+  ListItemContent,
   ListItemPrimary,
   ListItemSecondary,
-  ListItemTrailing,
 } from "@/components/ui/list";
 import { removeUnderscores } from "@/lib/utils";
 import type { DiscipleRecord } from "@/types/globals";
@@ -53,7 +52,7 @@ function DiscipleListItem({
 }) {
   return (
     <ListItem className="bg-card/40">
-      <ListItemLinkContent href={`/disciples/${disciple.id}`}>
+      <ListItemContent>
         <ListItemPrimary className="flex items-center gap-2 hover:underline">
           {disciple.name}
           {disciple.isMyPrimary && !disciple.isPrimary ? (
@@ -75,10 +74,8 @@ function DiscipleListItem({
             Handled by: {disciple.handledBy.name}
           </ListItemSecondary>
         ) : null}
-      </ListItemLinkContent>
-      <ListItemTrailing onClick={() => {}}>
-        <DiscipleActionButton disciple={disciple} />
-      </ListItemTrailing>
+      </ListItemContent>
+      <DiscipleActionButton disciple={disciple} />
     </ListItem>
   );
 }

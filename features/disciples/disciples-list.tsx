@@ -11,10 +11,7 @@ import {
 } from "@/components/ui/list";
 import { removeUnderscores } from "@/lib/utils";
 import type { DiscipleRecord } from "@/types/globals";
-import {
-  DiscipleActionButton,
-  DiscipleRowMobileActions,
-} from "./disciple-row-actions";
+import { DiscipleActionButton } from "./disciple-row-actions";
 
 export function DisciplesList({
   isAdmin,
@@ -43,7 +40,6 @@ export function DisciplesList({
           ))}
         </List>
       )}
-      <DiscipleRowMobileActions />
     </div>
   );
 }

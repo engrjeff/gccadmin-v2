@@ -24,7 +24,6 @@ export const ListItem = React.forwardRef<HTMLLIElement, ListItemProps>(
         className={cn(
           "p0-3 relative flex w-full cursor-pointer select-none items-center rounded-md border px-4 transition",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-          "active:bg-accent/80",
           disabled && "pointer-events-none opacity-50",
           className,
         )}

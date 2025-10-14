@@ -178,22 +178,20 @@ export function DiscipleRowMobileActions() {
     resetState,
   } = useDiscipleAction();
 
-  if (!disciple) return null;
-
   return (
     <>
       <Drawer
         open={open}
         onOpenChange={(isOpen) => {
+          setOpen(isOpen);
           if (!isOpen) {
             setSelectedDisciple(null);
           }
-          setOpen(isOpen);
         }}
       >
         <DrawerContent>
           <DrawerHeader className="!text-left border-b">
-            <DrawerTitle className="text-sm">{disciple.name}</DrawerTitle>
+            <DrawerTitle className="text-sm">{disciple?.name}</DrawerTitle>
             <DrawerDescription>Pick an action to do.</DrawerDescription>
           </DrawerHeader>
           <div className="flex flex-col gap-1 p-2 py-2">
@@ -203,7 +201,7 @@ export function DiscipleRowMobileActions() {
               className="w-full justify-start"
               asChild
             >
-              <Link href={`/disciples/${disciple.id}`}>
+              <Link href={`/disciples/${disciple?.id}`}>
                 <ListIcon /> View Details
               </Link>
             </Button>
@@ -213,7 +211,7 @@ export function DiscipleRowMobileActions() {
               className="w-full justify-start"
               asChild
             >
-              <Link href={`/disciples/${disciple.id}?tab=lessons-taken`}>
+              <Link href={`/disciples/${disciple?.id}?tab=lessons-taken`}>
                 <BookIcon /> Lessons Taken
               </Link>
             </Button>
@@ -223,7 +221,7 @@ export function DiscipleRowMobileActions() {
               className="w-full justify-start"
               asChild
             >
-              <Link href={`/disciples/${disciple.id}?tab=attended-cellgroups`}>
+              <Link href={`/disciples/${disciple?.id}?tab=attended-cellgroups`}>
                 <HomeIcon /> Attended Cell Groups
               </Link>
             </Button>
@@ -233,7 +231,7 @@ export function DiscipleRowMobileActions() {
               className="w-full justify-start"
               asChild
             >
-              <Link href={`/disciples/${disciple.id}?tab=handled-disciples`}>
+              <Link href={`/disciples/${disciple?.id}?tab=handled-disciples`}>
                 <UsersIcon /> Handled Disciples
               </Link>
             </Button>
@@ -251,7 +249,7 @@ export function DiscipleRowMobileActions() {
               <PencilIcon />
               Update
             </Button>
-            {disciple.isPrimary ? null : (
+            {disciple?.isPrimary ? null : (
               <>
                 <Button
                   size="lg"
@@ -260,7 +258,7 @@ export function DiscipleRowMobileActions() {
                   onClick={() => handleAction("change-status")}
                 >
                   <RotateCcwIcon />
-                  {disciple.isActive ? "Make Inactive" : "Make Active"}
+                  {disciple?.isActive ? "Make Inactive" : "Make Active"}
                 </Button>
                 <Button
                   size="lg"
@@ -277,51 +275,57 @@ export function DiscipleRowMobileActions() {
         </DrawerContent>
       </Drawer>
 
-      <DiscipleDeleteDialog
-        discipleId={disciple.id}
-        discipleName={disciple.name}
-        open={action === "delete"}
-        onOpenChange={(isOpen) => {
-          if (!isOpen) {
-            resetState();
-          }
-        }}
-      />
-
-      <DiscipleChangeStatusDialog
-        discipleId={disciple.id}
-        discipleName={disciple.name}
-        isActive={disciple.isActive}
-        open={action === "change-status"}
-        onOpenChange={(isOpen) => {
-          if (!isOpen) {
-            resetState();
-          }
-        }}
-      />
-
-      <Sheet
-        open={action === "edit"}
-        onOpenChange={(isOpen) => {
-          if (!isOpen) {
-            resetState();
-          }
-        }}
-      >
-        <SheetContent
-          side="right"
-          className="inset-y-2 right-2 flex h-auto w-[95%] flex-col gap-0 overflow-y-hidden rounded-lg border bg-background p-0 focus-visible:outline-none sm:max-w-lg"
-        >
-          <SheetHeader className="space-y-1 border-b p-4 text-left">
-            <SheetTitle>Update Disciple</SheetTitle>
-            <SheetDescription>Make sure to save your changes.</SheetDescription>
-          </SheetHeader>
-          <DiscipleEditForm
-            disciple={disciple}
-            onAfterSave={() => resetState()}
+      {disciple ? (
+        <>
+          <DiscipleDeleteDialog
+            discipleId={disciple.id}
+            discipleName={disciple.name}
+            open={action === "delete"}
+            onOpenChange={(isOpen) => {
+              if (!isOpen) {
+                resetState();
+              }
+            }}
           />
-        </SheetContent>
-      </Sheet>
+
+          <DiscipleChangeStatusDialog
+            discipleId={disciple.id}
+            discipleName={disciple.name}
+            isActive={disciple.isActive}
+            open={action === "change-status"}
+            onOpenChange={(isOpen) => {
+              if (!isOpen) {
+                resetState();
+              }
+            }}
+          />
+
+          <Sheet
+            open={action === "edit"}
+            onOpenChange={(isOpen) => {
+              if (!isOpen) {
+                resetState();
+              }
+            }}
+          >
+            <SheetContent
+              side="right"
+              className="inset-y-2 right-2 flex h-auto w-[95%] flex-col gap-0 overflow-y-hidden rounded-lg border bg-background p-0 focus-visible:outline-none sm:max-w-lg"
+            >
+              <SheetHeader className="space-y-1 border-b p-4 text-left">
+                <SheetTitle>Update Disciple</SheetTitle>
+                <SheetDescription>
+                  Make sure to save your changes.
+                </SheetDescription>
+              </SheetHeader>
+              <DiscipleEditForm
+                disciple={disciple}
+                onAfterSave={() => resetState()}
+              />
+            </SheetContent>
+          </Sheet>
+        </>
+      ) : null}
     </>
   );
 }

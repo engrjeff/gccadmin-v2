@@ -16,7 +16,7 @@ import {
   ListItemSecondary,
 } from "@/components/ui/list";
 import type { CellReportRecord } from "@/types/globals";
-import { CellReportMobileActions } from "./cell-report-row-actions";
+import { CellReportActionButton } from "./cell-report-action-provider";
 
 export function CellReportList({
   cellReports,
@@ -90,7 +90,7 @@ function CellReportItem({ cellReport }: { cellReport: CellReportRecord }) {
           {cellReport.date}
         </ListItemSecondary>
       </ListItemContent>
-      <CellReportMobileActions cellReport={cellReport} />
+      <CellReportActionButton cellReport={cellReport} />
     </ListItem>
   );
 }

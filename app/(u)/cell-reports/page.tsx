@@ -1,6 +1,7 @@
 import { CalendarIcon } from "lucide-react";
 import type { Metadata } from "next";
 import { DataPagination } from "@/components/data-pagination";
+import { CellReportActionProvider } from "@/features/cell-reports/cell-report-action-provider";
 import { CellReportCreateFormModal } from "@/features/cell-reports/cell-report-create-form-modal";
 import { CellReportList } from "@/features/cell-reports/cell-report-list";
 import { CellReportTable } from "@/features/cell-reports/cell-report-table";
@@ -60,7 +61,9 @@ async function CellReportsPage({ searchParams }: PageProps) {
       <CellReportsFilters />
 
       {/* list */}
-      <CellReportList cellReports={cellReports} />
+      <CellReportActionProvider>
+        <CellReportList cellReports={cellReports} />
+      </CellReportActionProvider>
 
       {/* table */}
       <CellReportTable

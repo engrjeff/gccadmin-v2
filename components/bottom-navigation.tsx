@@ -4,6 +4,7 @@ import {
   BookIcon,
   HomeIcon,
   InfoIcon,
+  LockIcon,
   PlusIcon,
   UserPlusIcon,
   UsersIcon,
@@ -20,6 +21,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import { isLocked } from "@/lib/utils";
 import { Dock, DockIcon, DockItem, DockLabel } from "./dock";
 import { AddDiscipleForm, CreateCellReportForm } from "./quick-actions";
 import { Button } from "./ui/button";
@@ -67,6 +69,8 @@ type QuickActionType = "add-disciple" | "create-cell-report";
 function MobileCreateDockItem() {
   const [action, setAction] = useState<QuickActionType>();
 
+  const locked = isLocked();
+
   function reset() {
     setAction(undefined);
   }
@@ -100,9 +104,10 @@ function MobileCreateDockItem() {
               size="lg"
               variant="ghost"
               className="w-full justify-start"
+              disabled={locked}
               onClick={() => setAction("create-cell-report")}
             >
-              <PlusIcon /> Create Cell Report
+              {locked ? <LockIcon /> : <PlusIcon />} Create Cell Report
             </Button>
           </div>
           <DrawerFooter className="flex-row items-center gap-2 border-t text-muted-foreground text-xs">

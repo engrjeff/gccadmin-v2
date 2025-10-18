@@ -1,6 +1,11 @@
 "use client";
 
-import { ChevronDownIcon, PlusIcon, UserPlusIcon } from "lucide-react";
+import {
+  ChevronDownIcon,
+  LockIcon,
+  PlusIcon,
+  UserPlusIcon,
+} from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,6 +23,7 @@ import {
 } from "@/components/ui/sheet";
 import { CellReportForm } from "@/features/cell-reports/cell-report-form";
 import { DiscipleForm } from "@/features/disciples/disciple-form";
+import { isLocked } from "@/lib/utils";
 
 type QuickActionType = "add-disciple" | "create-cell-report";
 
@@ -25,6 +31,8 @@ export function QuickActions() {
   const [open, setOpen] = useState(false);
 
   const [action, setAction] = useState<QuickActionType>();
+
+  const locked = isLocked();
 
   function reset() {
     setAction(undefined);
@@ -43,8 +51,11 @@ export function QuickActions() {
           <DropdownMenuItem onClick={() => setAction("add-disciple")}>
             <UserPlusIcon /> Add Disciple
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setAction("create-cell-report")}>
-            <PlusIcon /> Create Cell Report
+          <DropdownMenuItem
+            disabled={locked}
+            onClick={() => setAction("create-cell-report")}
+          >
+            {locked ? <LockIcon /> : <PlusIcon />} Create Cell Report
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

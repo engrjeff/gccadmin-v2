@@ -5,6 +5,7 @@ import {
   endOfWeek,
   format,
   intlFormatDistance,
+  isSunday,
   startOfMonth,
   startOfWeek,
   startOfYear,
@@ -111,4 +112,8 @@ export function getClientDateRange(
       end: endOfToday(),
     };
   }
+}
+
+export function isLocked() {
+  return isSunday(new Date());
 }

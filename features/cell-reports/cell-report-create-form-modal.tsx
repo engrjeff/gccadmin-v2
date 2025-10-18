@@ -1,6 +1,6 @@
 "use client";
 
-import { PlusIcon } from "lucide-react";
+import { LockIcon, PlusIcon } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,16 +11,19 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { isLocked } from "@/lib/utils";
 import { CellReportForm } from "./cell-report-form";
 
 export function CellReportCreateFormModal() {
   const [open, setOpen] = useState(false);
 
+  const locked = isLocked();
+
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button size="sm">
-          <PlusIcon /> Create Report
+        <Button size="sm" disabled={locked}>
+          {locked ? <LockIcon /> : <PlusIcon />} Create Report
         </Button>
       </SheetTrigger>
       <SheetContent

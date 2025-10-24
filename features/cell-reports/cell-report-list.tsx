@@ -70,7 +70,7 @@ function CellReportItem({ cellReport }: { cellReport: CellReportRecord }) {
         <CellTypeIndicator cellType={cellReport.type} />
       </ListItemLeading>
       <ListItemContent>
-        <ListItemPrimary className="flex items-center gap-2 hover:underline">
+        <ListItemPrimary className="flex items-center gap-2">
           Led By:{" "}
           {cellReport.assistant
             ? cellReport.assistant.name

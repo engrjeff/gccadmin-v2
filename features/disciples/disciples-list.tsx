@@ -53,7 +53,7 @@ function DiscipleListItem({
   return (
     <ListItem className="bg-card/40">
       <ListItemContent>
-        <ListItemPrimary className="flex items-center gap-2 hover:underline">
+        <ListItemPrimary className="flex items-center gap-2">
           {disciple.name}
           {disciple.isMyPrimary && !disciple.isPrimary ? (
             <BadgeCheckIcon className="size-3 text-blue-500" />

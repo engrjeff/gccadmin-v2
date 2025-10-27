@@ -116,6 +116,7 @@ export function CellGroupStatistics() {
         dateRangeLabel={periodDateLabel}
         cellReports={cgStatsQuery.data?.cellReports ?? []}
         isLoading={cgStatsQuery.isLoading}
+        key={preset}
       />
     </>
   );

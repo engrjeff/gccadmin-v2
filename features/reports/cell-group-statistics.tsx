@@ -71,10 +71,7 @@ export function CellGroupStatistics() {
           ) : (
             <CardDescription className="flex items-center gap-1.5 text-xs">
               <CalendarIcon className="size-3 shrink-0" />
-              <span className="block">
-                {formatDate(periodDate?.start as string)} -{" "}
-                {formatDate(periodDate?.end as string)}
-              </span>
+              <span className="block">{periodDateLabel}</span>
             </CardDescription>
           )}
           <CardAction>

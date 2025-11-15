@@ -94,11 +94,7 @@ export async function getCellReports(args: CellReportsQueryArgs) {
     `${format(rawDateFilter?.end as Date, "yyyy-MM-dd")}T23:59:59.999Z`,
   );
 
-  const leaderFilter = args.leader
-    ? args.leader
-    : isPastor
-      ? undefined
-      : leader?.id;
+  const leaderFilter = args.leader ? args.leader : undefined;
 
   const totalFilteredQuery = prisma.cellReport.count({
     where: {

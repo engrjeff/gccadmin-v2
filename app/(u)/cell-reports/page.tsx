@@ -45,9 +45,11 @@ async function CellReportsPage({ searchParams }: PageProps) {
         </div>
 
         <div className="ml-auto flex items-center gap-3">
-          <div className="hidden md:block">
-            <MineSwitch />
-          </div>
+          {isAdmin ? null : (
+            <div className="hidden md:block">
+              <MineSwitch />
+            </div>
+          )}
           <ViewPDFButton period={dateFilter} cellReports={cellReports} />
           <CellReportCreateFormModal />
         </div>

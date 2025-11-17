@@ -55,9 +55,11 @@ async function CellReportsPage({ searchParams }: PageProps) {
         </div>
       </div>
 
-      <div className="md:hidden">
-        <MineSwitch />
-      </div>
+      {isAdmin ? null : (
+        <div className="md:hidden">
+          <MineSwitch />
+        </div>
+      )}
 
       {/* filters */}
       <CellReportsFilters />

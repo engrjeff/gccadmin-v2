@@ -22,6 +22,7 @@ export type DisciplesQueryArgs = {
   processLevel?: string;
   processLevelStatus?: string;
   leader?: string;
+  handledby?: string;
   q?: string;
   status?: "active" | "inactive" | "primary";
 };
@@ -162,6 +163,7 @@ export async function getDisciples(args: DisciplesQueryArgs) {
   const disciplesQuery = prisma.disciple.findMany({
     where: {
       leaderId: args.leader ? args.leader : leader?.id,
+      handledById: args.handledby ? args.handledby : undefined,
       isDeleted: false,
       ...getStatusFilter(args.status),
       name: args.q

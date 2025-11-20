@@ -7,6 +7,7 @@ export const apiClient = axios.create({
 export const API_ENDPOINTS = {
   GET_CLERK_USERS: "/clerk-user-accounts",
   GET_LEADERS: "/leaders",
+  GET_ASSISTANT_LEADERS: "/assistant-leaders",
   GET_DISCIPLES: "/disciples",
   GET_LESSON_SERIES: "/lesson-series",
   GET_LESSONS: "/lessons",

@@ -1,6 +1,7 @@
 "use client";
 
 import { CircleDotIcon, FlameIcon, TrendingUpIcon } from "lucide-react";
+import { AssistantLeadersFilter } from "@/components/assistant-leaders-filter";
 import { FilterField } from "@/components/filter-field";
 import { LeadersFilter } from "@/components/leaders-filter";
 import { ResetFiltersButton } from "@/components/reset-filters-button";
@@ -52,6 +53,8 @@ export function DisciplesFilters() {
         />
 
         <LeadersFilter />
+
+        <AssistantLeadersFilter label="Handled By" queryName="handledby" />
 
         <ResetFiltersButton
           validFilters={[

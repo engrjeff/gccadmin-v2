@@ -44,9 +44,35 @@ export function CellReportsByLeaders({
 
   const leadersMap = new Map(
     leadersQuery.data?.map((leader) => {
-      const cgCount = cellReports.filter(
+      const reportsByLeader = cellReports.filter(
         (c) => c.leaderId === leader.id,
-      )?.length;
+      );
+
+      const cgCount = reportsByLeader?.length ?? 0;
+
+      const cgBreakdownMap = new Map<
+        string,
+        { assistantId: string; assistantName: string; cgCount: number }
+      >();
+
+      reportsByLeader.forEach((report) => {
+        if (!report.assistant) return;
+
+        const assistantRecord = cgBreakdownMap.get(report.assistant.id);
+
+        if (assistantRecord) {
+          cgBreakdownMap.set(report.assistant.id, {
+            ...assistantRecord,
+            cgCount: assistantRecord.cgCount + 1,
+          });
+        } else {
+          cgBreakdownMap.set(report.assistant.id, {
+            assistantId: report.assistant.id,
+            assistantName: report.assistant.name,
+            cgCount: 1,
+          });
+        }
+      });
 
       return [
         leader.name,
@@ -55,6 +81,7 @@ export function CellReportsByLeaders({
           gender: leader.gender,
           name: leader.name,
           cgCount,
+          breakdown: Array.from(cgBreakdownMap.values()),
         },
       ];
     }),
@@ -124,6 +151,30 @@ export function CellReportsByLeaders({
                         </div>
                       </div>
                     </Link>
+
+                    {leader.breakdown.length > 0 ? (
+                      <ul className="mt-2 space-y-2">
+                        {leader.breakdown.map((bd) => (
+                          <li
+                            key={bd.assistantId}
+                            className="mt-1 ml-6 text-xs"
+                          >
+                            <div className="relative flex h-7 items-center overflow-hidden rounded bg-blue-600/10">
+                              <div
+                                style={{
+                                  width: `${(bd.cgCount / leader.cgCount) * 100}%`,
+                                }}
+                                className="absolute top-0 left-0 h-full bg-blue-600/40 transition-all"
+                              ></div>
+                              <div className="z-10 flex h-full w-full items-center justify-between px-3 text-xs">
+                                <span>{bd.assistantName}</span>
+                                <span>{bd.cgCount}</span>
+                              </div>
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : null}
                   </li>
                 ))}
               </ul>
@@ -155,6 +206,30 @@ export function CellReportsByLeaders({
                         </div>
                       </div>
                     </Link>
+
+                    {leader.breakdown.length > 0 ? (
+                      <ul className="mt-2 space-y-2">
+                        {leader.breakdown.map((bd) => (
+                          <li
+                            key={bd.assistantId}
+                            className="mt-1 ml-6 text-xs"
+                          >
+                            <div className="relative flex h-7 items-center overflow-hidden rounded bg-rose-600/10">
+                              <div
+                                style={{
+                                  width: `${(bd.cgCount / leader.cgCount) * 100}%`,
+                                }}
+                                className="absolute top-0 left-0 h-full bg-rose-500/40 transition-all"
+                              ></div>
+                              <div className="z-10 flex h-full w-full items-center justify-between px-3 text-xs">
+                                <span>{bd.assistantName}</span>
+                                <span>{bd.cgCount}</span>
+                              </div>
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : null}
                   </li>
                 ))}
               </ul>

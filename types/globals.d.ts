@@ -78,6 +78,6 @@ export interface CellReportRecord extends CellReport {
   }[];
 }
 
-export interface SimpleCellReport extends CellReport {
+export interface SimpleCellReport extends CellReportRecord {
   date: string;
 }

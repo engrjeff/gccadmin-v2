@@ -128,6 +128,8 @@ export async function getCellReports(args: CellReportsQueryArgs) {
         select: {
           id: true,
           name: true,
+          isMyPrimary: true,
+          isPrimary: true,
         },
       },
       cellReportAttendeeSnapshots: true,

@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
 import { format } from "date-fns";
+import { RotateCcwIcon } from "lucide-react";
 import { useAction } from "next-safe-action/hooks";
 import { useEffect, useState } from "react";
 import {
@@ -332,6 +333,17 @@ export function CellReportEditForm({
                 id="with-assistant"
               />
               <Label htmlFor="with-assistant">I have an assistant leader</Label>
+              <Button
+                type="button"
+                size="iconSm"
+                variant="ghost"
+                aria-label="refresh"
+                className="ml-auto"
+                disabled={!leaderId || disciplesOfLeader.isLoading}
+                onClick={() => disciplesOfLeader.refetch()}
+              >
+                <RotateCcwIcon />
+              </Button>
             </div>
 
             {withAssistant ? (

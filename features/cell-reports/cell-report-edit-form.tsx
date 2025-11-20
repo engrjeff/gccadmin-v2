@@ -604,7 +604,20 @@ export function CellReportEditForm({
               name="attendees"
               render={() => (
                 <FormItem>
-                  <FormLabel>Attendees</FormLabel>
+                  <div className="flex items-center justify-between gap-3">
+                    <FormLabel>Attendees</FormLabel>
+                    <Button
+                      type="button"
+                      size="iconSm"
+                      variant="ghost"
+                      aria-label="refresh"
+                      className="ml-auto"
+                      disabled={!leaderId || disciplesOfLeader.isLoading}
+                      onClick={() => disciplesOfLeader.refetch()}
+                    >
+                      <RotateCcwIcon />
+                    </Button>
+                  </div>
                   <FormMessage />
                   <FormControl>
                     <AttendeesPicker />

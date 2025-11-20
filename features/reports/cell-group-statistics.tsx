@@ -62,55 +62,54 @@ export function CellGroupStatistics() {
   const periodDateLabel = `${formatDate(periodDate?.start as string)} - ${formatDate(periodDate?.end as string)}`;
 
   return (
-    <>
-      <Card className="@container/card gap-0 bg-card/60 pt-4 pb-0">
-        <CardHeader className="border-b px-4 [.border-b]:pb-4">
-          <CardTitle>Cell Groups</CardTitle>
-          {cgStatsQuery.isLoading ? (
-            <Skeleton className="h-4 w-32" />
-          ) : (
-            <CardDescription className="flex items-center gap-1.5 text-xs">
-              <CalendarIcon className="size-3 shrink-0" />
-              <span className="block">{periodDateLabel}</span>
-            </CardDescription>
-          )}
-          <CardAction>
-            <DateRangePicker
-              dateRangeValue={date}
-              setDateRangeValue={setDate}
-              preset={preset}
-              setPreset={setPreset}
+    <Card className="@container/card gap-0 bg-card/60 pt-4 pb-0">
+      <CardHeader className="border-b px-4 [.border-b]:pb-4">
+        <CardTitle>Cell Groups</CardTitle>
+        {cgStatsQuery.isLoading ? (
+          <Skeleton className="h-4 w-32" />
+        ) : (
+          <CardDescription className="flex items-center gap-1.5 text-xs">
+            <CalendarIcon className="size-3 shrink-0" />
+            <span className="block">{periodDateLabel}</span>
+          </CardDescription>
+        )}
+        <CardAction>
+          <DateRangePicker
+            dateRangeValue={date}
+            setDateRangeValue={setDate}
+            preset={preset}
+            setPreset={setPreset}
+          />
+        </CardAction>
+      </CardHeader>
+      <CardContent className="px-0">
+        {cgStatsQuery.isLoading ? (
+          <div className="grid grid-cols-1 gap-2 p-4 lg:grid-cols-3">
+            <Skeleton className="h-[172px] lg:h-[188px]" />
+            <Skeleton className="h-[172px] lg:h-[188px]" />
+            <Skeleton className="h-[172px] lg:h-[188px]" />
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-2 lg:grid-cols-[1fr_auto_1fr_auto_1fr]">
+            <CellGroupByType
+              dateRangeLabel={dateRangeLabel}
+              cellReports={cgStatsQuery.data?.cellReports ?? []}
             />
-          </CardAction>
-        </CardHeader>
-        <CardContent className="px-0">
-          {cgStatsQuery.isLoading ? (
-            <div className="grid grid-cols-1 gap-2 p-4 lg:grid-cols-3">
-              <Skeleton className="h-[172px] lg:h-[188px]" />
-              <Skeleton className="h-[172px] lg:h-[188px]" />
-              <Skeleton className="h-[172px] lg:h-[188px]" />
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 gap-2 lg:grid-cols-[1fr_auto_1fr_auto_1fr]">
-              <CellGroupByType
-                dateRangeLabel={dateRangeLabel}
-                cellReports={cgStatsQuery.data?.cellReports ?? []}
-              />
-              <Separator orientation="vertical" className="hidden lg:block" />
-              <Separator className="lg:hidden" />
-              <CellGroupWithAssistants
-                cellReports={cgStatsQuery.data?.cellReports ?? []}
-              />
-              <Separator orientation="vertical" className="hidden lg:block" />
-              <Separator className="lg:hidden" />
-              <CellGroupTrend
-                currentCellReports={cgStatsQuery.data?.cellReports ?? []}
-                selectedDateRange={preset as Preset}
-              />
-            </div>
-          )}
-        </CardContent>
-      </Card>
+            <Separator orientation="vertical" className="hidden lg:block" />
+            <Separator className="lg:hidden" />
+            <CellGroupWithAssistants
+              cellReports={cgStatsQuery.data?.cellReports ?? []}
+            />
+            <Separator orientation="vertical" className="hidden lg:block" />
+            <Separator className="lg:hidden" />
+            <CellGroupTrend
+              currentCellReports={cgStatsQuery.data?.cellReports ?? []}
+              selectedDateRange={preset as Preset}
+            />
+          </div>
+        )}
+      </CardContent>
+
       <CellReportsByLeaders
         currentDateRange={preset}
         dateRangeLabel={periodDateLabel}
@@ -118,6 +117,6 @@ export function CellGroupStatistics() {
         isLoading={cgStatsQuery.isLoading}
         key={preset}
       />
-    </>
+    </Card>
   );
 }

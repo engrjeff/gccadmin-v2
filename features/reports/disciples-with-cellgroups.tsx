@@ -1,6 +1,6 @@
 "use client";
 
-import { CalendarIcon, PackageIcon } from "lucide-react";
+import { CalendarIcon, ChevronRight, PackageIcon } from "lucide-react";
 import Link from "next/link";
 import pluralize from "pluralize";
 import { Badge } from "@/components/ui/badge";
@@ -84,7 +84,7 @@ export function DisciplesWithCellGroups() {
           </span>
         </CardDescription>
       </CardHeader>
-      <CardContent className="flex-1 overflow-auto px-2 pt-2 [&>div]:h-full">
+      <CardContent className="flex-1 overflow-auto px-2 py-2 [&>div]:h-full">
         {data.length === 0 ? (
           <div className="flex min-h-[240px] flex-col items-center justify-center gap-3">
             <PackageIcon className="size-6 text-muted-foreground" />
@@ -93,7 +93,7 @@ export function DisciplesWithCellGroups() {
             </p>
           </div>
         ) : (
-          <ul className="space-y-1.5">
+          <ul className="space-y-2">
             {data?.map((assistant) => (
               <li key={assistant.id}>
                 <Link
@@ -111,10 +111,13 @@ export function DisciplesWithCellGroups() {
                       Assistant Leader
                     </p>
                   </div>
-                  <Badge variant="DISCIPLESHIP">
-                    {assistant.cgCount}{" "}
-                    {pluralize("cell group", assistant.cgCount)}
-                  </Badge>
+                  <div className="flex items-center gap-2">
+                    <Badge variant="DISCIPLESHIP">
+                      {assistant.cgCount}{" "}
+                      {pluralize("cell group", assistant.cgCount)}
+                    </Badge>
+                    <ChevronRight className="ml-auto size-4 text-muted-foreground" />
+                  </div>
                 </Link>
               </li>
             ))}

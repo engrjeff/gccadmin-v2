@@ -50,7 +50,6 @@ export function DisciplesMobileFilter() {
   const isAdmin = useIsAdmin();
 
   const leadersQuery = useLeaders({ enabled: isAdmin });
-  const assistantLeadersQuery = useAssistantLeaders();
 
   const [isPending, startTransition] = useTransition();
   const [isOpen, setIsOpen] = useState(false);
@@ -205,16 +204,10 @@ export function DisciplesMobileFilter() {
                   isPending={isPending}
                 />
               ) : null}
-              <FilterContent
+              <AssistantLeadersFilter
                 label="Handled By"
                 queryName="handledby"
                 useLabelDisplay
-                options={
-                  assistantLeadersQuery.data?.map((assistant) => ({
-                    value: assistant.id,
-                    label: assistant.name,
-                  })) ?? []
-                }
                 tempFilters={tempFilters}
                 updateTempFilter={updateTempFilter}
                 singleSelection
@@ -357,5 +350,38 @@ export function FilterContent({
         })}
       </AccordionContent>
     </AccordionItem>
+  );
+}
+
+function AssistantLeadersFilter(props: Omit<FilterFieldProps, "options">) {
+  const assistantLeadersQuery = useAssistantLeaders();
+
+  const searchparams = useSearchParams();
+
+  const leaderQuery = searchparams.get("leader") ?? undefined;
+
+  const validOptions = leaderQuery
+    ? assistantLeadersQuery.data?.filter(
+        (a) => a.leaderId === leaderQuery && a.isPrimary === false,
+      )
+    : assistantLeadersQuery.data?.filter((a) => a.isPrimary === false);
+
+  const options = validOptions?.map((assistant) => ({
+    value: assistant.id,
+    label: assistant.name,
+  }));
+
+  if (!options?.length) return null;
+
+  return (
+    <FilterContent
+      options={
+        assistantLeadersQuery.data?.map((assistant) => ({
+          value: assistant.id,
+          label: assistant.name,
+        })) ?? []
+      }
+      {...props}
+    />
   );
 }

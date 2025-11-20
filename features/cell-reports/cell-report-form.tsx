@@ -299,7 +299,9 @@ export function CellReportForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
               <Checkbox
                 disabled={
                   disciplesOfLeader.isLoading ||
-                  disciplesOfLeader.data?.length === 0
+                  disciplesOfLeader.data?.filter(
+                    (d) => d.isMyPrimary || d.isPrimary,
+                  )?.length === 0
                 }
                 checked={withAssistant}
                 onCheckedChange={(checked) => {

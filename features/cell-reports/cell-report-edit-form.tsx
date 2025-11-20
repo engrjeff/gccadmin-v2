@@ -218,6 +218,8 @@ export function CellReportEditForm({
                       onValueChange={(value) => {
                         field.onChange(value);
                         form.setValue("attendees", []);
+                        setWithAssistant(false);
+                        form.setValue("assistantId", "");
                       }}
                     >
                       <FormControl>
@@ -311,7 +313,10 @@ export function CellReportEditForm({
             <div className="flex items-center space-x-2 pt-4">
               <Checkbox
                 disabled={
-                  (!leaderId && isAdmin) || disciplesOfLeader.data?.length === 0
+                  disciplesOfLeader.isLoading ||
+                  disciplesOfLeader.data?.filter(
+                    (d) => d.isMyPrimary || d.isPrimary,
+                  )?.length === 0
                 }
                 checked={withAssistant}
                 onCheckedChange={(checked) => {

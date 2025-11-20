@@ -137,6 +137,7 @@ export async function getDisciples(args: DisciplesQueryArgs) {
   const totalFilteredQuery = prisma.disciple.count({
     where: {
       leaderId: args.leader ? args.leader : leader?.id,
+      handledById: args.handledby ? args.handledby : undefined,
       isDeleted: false,
       ...getStatusFilter(args.status),
       name: args.q

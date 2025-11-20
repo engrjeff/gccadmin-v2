@@ -18,17 +18,16 @@ export function AssistantLeadersFilter({
 
   const leaderQuery = searchparams.get("leader") ?? undefined;
 
-  const options = leaderQuery
-    ? assistantLeadersQuery.data
-        ?.filter((a) => a.leaderId === leaderQuery)
-        .map((assistant) => ({
-          value: assistant.id,
-          label: assistant.name,
-        }))
-    : assistantLeadersQuery.data?.map((assistant) => ({
-        value: assistant.id,
-        label: assistant.name,
-      }));
+  const validOptions = leaderQuery
+    ? assistantLeadersQuery.data?.filter(
+        (a) => a.leaderId === leaderQuery && a.isPrimary === false,
+      )
+    : assistantLeadersQuery.data?.filter((a) => a.isPrimary === false);
+
+  const options = validOptions?.map((assistant) => ({
+    value: assistant.id,
+    label: assistant.name,
+  }));
 
   if (!options?.length) return null;
 

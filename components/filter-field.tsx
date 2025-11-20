@@ -143,7 +143,7 @@ function FilterFieldComponent({
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        className="min-w-52 max-w-60 select-none p-0"
+        className="min-w-52 max-w-64 select-none p-0"
         align="start"
       >
         <div className="border-b px-3 py-2">

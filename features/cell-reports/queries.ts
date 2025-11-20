@@ -15,6 +15,7 @@ export type CellReportsQueryArgs = {
   order?: "asc" | "desc";
   // filters
   leader?: string;
+  assistant?: string;
   cellType?: CellType;
   dateRange?: DateRange;
   // showMyReportsOnly
@@ -99,6 +100,7 @@ export async function getCellReports(args: CellReportsQueryArgs) {
   const totalFilteredQuery = prisma.cellReport.count({
     where: {
       leaderId: args.showMyReportsOnly === "true" ? leader?.id : leaderFilter,
+      assistantId: args.assistant ? args.assistant : undefined,
       type: cellType,
       date: {
         gte: dateFilterStart,
@@ -110,6 +112,7 @@ export async function getCellReports(args: CellReportsQueryArgs) {
   const cellReportsQuery = prisma.cellReport.findMany({
     where: {
       leaderId: args.showMyReportsOnly === "true" ? leader?.id : leaderFilter,
+      assistantId: args.assistant ? args.assistant : undefined,
       type: cellType,
       date: {
         gte: dateFilterStart,

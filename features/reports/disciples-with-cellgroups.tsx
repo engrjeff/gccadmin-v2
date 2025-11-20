@@ -40,7 +40,7 @@ export function DisciplesWithCellGroups() {
   const periodDate = cgQuery.data?.dateRangeFilter;
 
   const cellGroupsWithAssistants = cgQuery.data?.cellReports.filter(
-    (c) => c.assistant,
+    (c) => c.assistant?.isMyPrimary,
   );
 
   const assistantCgCountMap = new Map<
@@ -84,7 +84,7 @@ export function DisciplesWithCellGroups() {
           </span>
         </CardDescription>
       </CardHeader>
-      <CardContent className="flex-1 overflow-auto px-4 pt-4 [&>div]:h-full">
+      <CardContent className="flex-1 overflow-auto px-2 pt-2 [&>div]:h-full">
         {data.length === 0 ? (
           <div className="flex min-h-[240px] flex-col items-center justify-center gap-3">
             <PackageIcon className="size-6 text-muted-foreground" />
@@ -93,25 +93,29 @@ export function DisciplesWithCellGroups() {
             </p>
           </div>
         ) : (
-          <ul className="space-y-2">
-            {data?.map((item) => (
-              <li key={item.id}>
-                <div className="flex items-center justify-between gap-4">
+          <ul className="space-y-1.5">
+            {data?.map((assistant) => (
+              <li key={assistant.id}>
+                <Link
+                  href={{
+                    pathname: "/cell-reports",
+                    query: {
+                      assistant: assistant.id,
+                    },
+                  }}
+                  className="flex items-center justify-between gap-4 rounded-md border bg-accent/30 px-2 py-2 hover:bg-accent"
+                >
                   <div>
-                    <Link
-                      href={`/disciples/${item.id}`}
-                      className="font-semibold text-sm hover:underline"
-                    >
-                      {item.name}
-                    </Link>
+                    <p className="font-semibold text-sm">{assistant.name}</p>
                     <p className="text-muted-foreground text-xs capitalize">
                       Assistant Leader
                     </p>
                   </div>
                   <Badge variant="DISCIPLESHIP">
-                    {item.cgCount} {pluralize("cell group", item.cgCount)}
+                    {assistant.cgCount}{" "}
+                    {pluralize("cell group", assistant.cgCount)}
                   </Badge>
-                </div>
+                </Link>
               </li>
             ))}
           </ul>

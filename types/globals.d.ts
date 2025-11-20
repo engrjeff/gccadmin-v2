@@ -65,6 +65,8 @@ export interface CellReportRecord extends CellReport {
   assistant: {
     name: string;
     id: string;
+    isMyPrimary: boolean;
+    isPrimary: boolean;
   } | null;
   cellReportAttendeeSnapshots: {
     name: string;

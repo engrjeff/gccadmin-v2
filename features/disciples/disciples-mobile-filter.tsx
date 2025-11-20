@@ -22,6 +22,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { SearchField } from "@/components/ui/search-field";
+import { useAssistantLeaders } from "@/hooks/use-assistant-leaders";
 import { useIsAdmin } from "@/hooks/use-is-admin";
 import { useLeaders } from "@/hooks/use-leaders";
 import {
@@ -49,6 +50,7 @@ export function DisciplesMobileFilter() {
   const isAdmin = useIsAdmin();
 
   const leadersQuery = useLeaders({ enabled: isAdmin });
+  const assistantLeadersQuery = useAssistantLeaders();
 
   const [isPending, startTransition] = useTransition();
   const [isOpen, setIsOpen] = useState(false);
@@ -203,6 +205,21 @@ export function DisciplesMobileFilter() {
                   isPending={isPending}
                 />
               ) : null}
+              <FilterContent
+                label="Handled By"
+                queryName="handledby"
+                useLabelDisplay
+                options={
+                  assistantLeadersQuery.data?.map((assistant) => ({
+                    value: assistant.id,
+                    label: assistant.name,
+                  })) ?? []
+                }
+                tempFilters={tempFilters}
+                updateTempFilter={updateTempFilter}
+                singleSelection
+                isPending={isPending}
+              />
             </Accordion>
           </div>
           <DrawerFooter className="flex-row items-center gap-4 border-t p-4 pb-4!">

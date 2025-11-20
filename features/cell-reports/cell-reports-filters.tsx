@@ -2,6 +2,7 @@
 
 import { CalendarIcon, CircleDotDashedIcon } from "lucide-react";
 import { CellType } from "@/app/generated/prisma";
+import { AssistantLeadersFilter } from "@/components/assistant-leaders-filter";
 import { FilterField } from "@/components/filter-field";
 import { LeadersFilter } from "@/components/leaders-filter";
 import { ResetFiltersButton } from "@/components/reset-filters-button";
@@ -36,6 +37,8 @@ export function CellReportsFilters() {
       />
 
       <LeadersFilter isForPastor={true} />
+
+      <AssistantLeadersFilter label="Assistant" queryName="assistant" />
 
       <ResetFiltersButton validFilters={["cellType", "dateRange", "leader"]} />
     </div>

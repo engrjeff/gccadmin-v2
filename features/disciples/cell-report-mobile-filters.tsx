@@ -22,6 +22,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import { useAssistantLeaders } from "@/hooks/use-assistant-leaders";
 import { useIsAdmin } from "@/hooks/use-is-admin";
 import { useLeaders } from "@/hooks/use-leaders";
 import { removeUnderscores } from "@/lib/utils";
@@ -35,6 +36,7 @@ export function CellReportsMobileFilter() {
   const isAdmin = useIsAdmin();
 
   const leadersQuery = useLeaders({ enabled: isAdmin });
+  const assistantLeadersQuery = useAssistantLeaders();
 
   const [isPending, startTransition] = useTransition();
   const [isOpen, setIsOpen] = useState(false);
@@ -174,6 +176,21 @@ export function CellReportsMobileFilter() {
                   isPending={isPending}
                 />
               ) : null}
+              <FilterContent
+                label="Handled By"
+                queryName="handledby"
+                useLabelDisplay
+                options={
+                  assistantLeadersQuery.data?.map((assistant) => ({
+                    value: assistant.id,
+                    label: assistant.name,
+                  })) ?? []
+                }
+                tempFilters={tempFilters}
+                updateTempFilter={updateTempFilter}
+                singleSelection
+                isPending={isPending}
+              />
             </Accordion>
           </div>
           <DrawerFooter className="flex-row items-center gap-4 border-t p-4 pb-4!">

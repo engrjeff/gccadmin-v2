@@ -5,13 +5,11 @@ export async function GET() {
   const assistantLeaders = await prisma.disciple.findMany({
     where: {
       isMyPrimary: true,
-      handledDisciples: {
-        some: {},
-      },
     },
     select: {
       id: true,
       name: true,
+      leaderId: true,
     },
     orderBy: [{ createdAt: "asc" }, { name: "asc" }],
   });

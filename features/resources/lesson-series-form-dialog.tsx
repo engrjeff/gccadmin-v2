@@ -63,7 +63,7 @@ export function LessonSeriesFormDialog() {
             <DrawerTitle>New Lesson Series</DrawerTitle>
             <DrawerDescription>Fill out the form below.</DrawerDescription>
           </DrawerHeader>
-          <div className="p-6">
+          <div className="overflow-y-auto p-6">
             <LessonSeriesForm onAfterSave={() => setOpen(false)} />
           </div>
         </DrawerContent>

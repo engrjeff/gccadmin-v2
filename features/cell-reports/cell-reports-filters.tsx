@@ -40,7 +40,9 @@ export function CellReportsFilters() {
 
       <AssistantLeadersFilter label="Assistant" queryName="assistant" />
 
-      <ResetFiltersButton validFilters={["cellType", "dateRange", "leader"]} />
+      <ResetFiltersButton
+        validFilters={["cellType", "dateRange", "leader", "assistant"]}
+      />
     </div>
   );
 }

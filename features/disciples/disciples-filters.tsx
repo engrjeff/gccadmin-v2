@@ -64,6 +64,7 @@ export function DisciplesFilters() {
             "processLevel",
             "leader",
             "status",
+            "handledby",
           ]}
         />
       </div>

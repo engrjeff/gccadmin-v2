@@ -6,5 +6,6 @@
     "source.organizeImports": "never",
     "source.removeUnusedImports": "explicit"
   },
-  "typescript.preferences.includePackageJsonAutoImports": "off"
+  "typescript.preferences.includePackageJsonAutoImports": "off",
+  "prisma.pinToPrisma6": true
 }

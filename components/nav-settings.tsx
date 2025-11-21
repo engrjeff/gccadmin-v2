@@ -19,7 +19,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 
-export function NavProcess({
+export function NavSettings({
   menuItems,
 }: {
   menuItems: {
@@ -35,7 +35,7 @@ export function NavProcess({
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarGroupLabel>Church & Process</SidebarGroupLabel>
+      <SidebarGroupLabel>Settings</SidebarGroupLabel>
       <SidebarMenu>
         {menuItems.map((item) => (
           <SidebarMenuItem key={item.name}>

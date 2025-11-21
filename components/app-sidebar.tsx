@@ -29,6 +29,7 @@ import {
 import { app } from "@/lib/config";
 import { NavAdmin } from "./nav-admin";
 import { NavProcess } from "./nav-process";
+import { NavSettings } from "./nav-settings";
 
 // This is sample data.
 const data = {
@@ -84,11 +85,6 @@ const data = {
       //   },
       // ],
     },
-    {
-      name: "My Profile",
-      url: "/profile",
-      icon: UserCogIcon,
-    },
   ],
   navProcess: [
     {
@@ -105,6 +101,13 @@ const data = {
       name: "GCC Resources",
       url: "/gcc-resources",
       icon: LibraryIcon,
+    },
+  ],
+  navSettings: [
+    {
+      name: "My Profile",
+      url: "/profile",
+      icon: UserCogIcon,
     },
   ],
 };
@@ -140,6 +143,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavCellGroup menuItems={data.navCellGroup} />
         <NavAdmin menuItems={data.navAdmin} />
         <NavProcess menuItems={data.navProcess} />
+        <NavSettings menuItems={data.navSettings} />
       </SidebarContent>
       <SidebarFooter className="border-t p-4">
         <p className="text-muted-foreground text-xs">

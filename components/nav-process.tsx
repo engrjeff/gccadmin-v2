@@ -35,7 +35,7 @@ export function NavProcess({
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarGroupLabel>Process</SidebarGroupLabel>
+      <SidebarGroupLabel>Church & Process</SidebarGroupLabel>
       <SidebarMenu>
         {menuItems.map((item) => (
           <SidebarMenuItem key={item.name}>

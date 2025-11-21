@@ -41,6 +41,7 @@ const validFilters = [
   "processLevel",
   "leader",
   "status",
+  "handledby",
 ];
 
 export function DisciplesMobileFilter() {

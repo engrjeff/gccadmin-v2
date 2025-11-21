@@ -373,15 +373,5 @@ function AssistantLeadersFilter(props: Omit<FilterFieldProps, "options">) {
 
   if (!options?.length) return null;
 
-  return (
-    <FilterContent
-      options={
-        assistantLeadersQuery.data?.map((assistant) => ({
-          value: assistant.id,
-          label: assistant.name,
-        })) ?? []
-      }
-      {...props}
-    />
-  );
+  return <FilterContent options={options ?? []} {...props} />;
 }

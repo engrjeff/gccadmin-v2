@@ -74,7 +74,7 @@ export function LessonFormDialog({
               Fill out the form below.
             </DrawerDescription>
           </DrawerHeader>
-          <div className="p-6">
+          <div className="overflow-y-auto p-6">
             <LessonForm
               lessonSeries={lessonSeries}
               onAfterSave={() => setOpen(false)}

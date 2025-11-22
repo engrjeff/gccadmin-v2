@@ -117,6 +117,9 @@ model Disciple {
   assistedCellGroups CellReport[] @relation("assistedCellGroups") // as assistant
   attendedCellGroups CellReport[] @relation("attendedCellGroups") // as attendee
 
+  attendances   Attendance[]
+  churchInvites NewComer[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -239,4 +242,49 @@ model ProcessLesson {
   updatedAt DateTime @updatedAt
 
   @@index([processLessonSeriesId])
+}
+
+enum AttendanceType {
+  SUNDAY_SERVICE
+  EVENT
+}
+
+model Attendance {
+  id    String         @id @default(cuid())
+  title String
+  date  DateTime
+  type  AttendanceType @default(SUNDAY_SERVICE)
+  tags  String[]
+
+  attendees Disciple[]
+  newComers NewComer[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model NewComer {
+  id String @id @default(cuid())
+
+  name       String
+  gender     Gender
+  memberType MemberType @default(UNCATEGORIZED)
+
+  contactNo String?
+  email     String?
+  address   String?
+
+  attendanceId String
+  attendance   Attendance @relation(fields: [attendanceId], references: [id], onDelete: Cascade)
+
+  invitedById String?
+  invitedBy   Disciple? @relation(fields: [invitedById], references: [id])
+
+  attendedAt DateTime @default(now())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([attendanceId])
+  @@index([invitedById])
 }

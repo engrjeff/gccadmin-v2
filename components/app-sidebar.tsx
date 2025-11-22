@@ -7,6 +7,7 @@ import {
   GalleryVerticalEnd,
   Grid2X2Icon,
   LibraryIcon,
+  ListIcon,
   ShieldCheckIcon,
   ShieldIcon,
   UserCogIcon,
@@ -96,6 +97,11 @@ const data = {
       name: "Growth Process System",
       url: "/gps",
       icon: ShieldCheckIcon,
+    },
+    {
+      name: "Attendance",
+      url: "/attendance",
+      icon: ListIcon,
     },
     {
       name: "GCC Resources",

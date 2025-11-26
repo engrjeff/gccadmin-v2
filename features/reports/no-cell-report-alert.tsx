@@ -127,7 +127,7 @@ export function NoCellReportAlert() {
                   No Cell Reports This Month
                 </p>
                 <ul className="max-h-[180px] list-disc space-y-2 overflow-y-auto pl-6">
-                  {noReportsLastWeek.map((leader) => (
+                  {noReportsThisMonth.map((leader) => (
                     <li key={leader.id}>
                       <p className="text-sm">{leader.name}</p>
                     </li>

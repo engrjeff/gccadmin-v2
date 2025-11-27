@@ -50,21 +50,38 @@ export const addAttendees = leaderActionClient
   .metadata({ actionName: "addAttendees" })
   .inputSchema(addAttendeesSchema)
   .action(async ({ parsedInput }) => {
-    const { attendanceId, attendees } = parsedInput;
+    const { attendanceId, attendees, newComers } = parsedInput;
 
-    const attendance = await prisma.attendance.update({
-      where: { id: attendanceId },
-      data: {
-        attendees: {
-          connect: attendees.map((attendee) => ({ id: attendee.id })),
+    const attendance = await prisma.$transaction(async (tx) => {
+      // delete first the new comers for this attendance
+      await tx.newComer.deleteMany({ where: { attendanceId } });
+
+      const result = await tx.attendance.update({
+        where: { id: attendanceId },
+        data: {
+          attendees: {
+            set: attendees.map((attendee) => ({ id: attendee.id })),
+          },
+          newComers: {
+            createMany: {
+              data: newComers.map((nc) => ({
+                name: nc.name,
+                gender: nc.gender,
+                memberType: nc.memberType,
+                invitedById: nc.invitedById,
+                email: nc.email,
+                contactNo: nc.contactNo,
+                address: nc.address,
+              })),
+            },
+          },
         },
-      },
+      });
+
+      return result;
     });
 
-    revalidatePath("/attendance");
-    revalidatePath(`/attendance/${attendanceId}`);
-
-    return attendance;
+    return { attendance };
   });
 
 export const removeAttendees = leaderActionClient

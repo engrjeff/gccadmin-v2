@@ -18,11 +18,20 @@ export async function getAttendanceRecords(
   const attendanceRecords = await prisma.attendance.findMany({
     where: {
       type: args.type,
+      title: args.q
+        ? {
+            contains: args.q,
+            mode: "insensitive",
+          }
+        : undefined,
     },
     include: {
       _count: {
-        select: { attendees: true },
+        select: { attendees: true, newComers: true },
       },
+    },
+    orderBy: {
+      date: "desc",
     },
   });
 
@@ -33,6 +42,14 @@ export async function getAttendanceRecordById(id: string) {
   const attendanceRecord = await prisma.attendance.findUnique({
     where: {
       id,
+    },
+    include: {
+      attendees: {
+        select: {
+          id: true,
+        },
+      },
+      newComers: true,
     },
   });
 

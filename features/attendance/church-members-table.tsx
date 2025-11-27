@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { Fragment } from "react";
 import { useFormContext } from "react-hook-form";
 import type { Gender, MemberType } from "@/app/generated/prisma";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
   TableBody,
@@ -44,7 +45,13 @@ export function ChurchMembersTable({ gender }: { gender: Gender }) {
 
   const form = useFormContext<AddAttendeesInputs>();
 
-  if (churchMembersQuery.isLoading) return <p>Loading...</p>;
+  if (churchMembersQuery.isLoading)
+    return (
+      <div className="max-h-full space-y-4 overflow-hidden">
+        <Skeleton className="h-[60vh] rounded-md border bg-card" />
+        <Skeleton className="h-[60vh] rounded-md border bg-card" />
+      </div>
+    );
 
   const churchMembersData = churchMembersQuery.data?.churchMembers;
 

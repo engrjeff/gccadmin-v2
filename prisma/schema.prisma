@@ -117,11 +117,13 @@ model Disciple {
   assistedCellGroups CellReport[] @relation("assistedCellGroups") // as assistant
   attendedCellGroups CellReport[] @relation("attendedCellGroups") // as attendee
 
-  attendances   Attendance[]
-  churchInvites NewComer[]
+  attendances       Attendance[]
+  churchInvites     NewComer[]   @relation("invitedby")
+  asNewComerProfile NewComer?    @relation("discipleProfile") // his/her profile when he/she was a new comer
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  newComers NewComer[]
 
   @@index([id, leaderId])
   @@index([leaderId])
@@ -278,12 +280,17 @@ model NewComer {
   attendance   Attendance @relation(fields: [attendanceId], references: [id], onDelete: Cascade)
 
   invitedById String?
-  invitedBy   Disciple? @relation(fields: [invitedById], references: [id])
+  invitedBy   Disciple? @relation(fields: [invitedById], references: [id], name: "invitedby")
+
+  discipleProfileId String?   @unique
+  discipleProfile   Disciple? @relation(fields: [discipleProfileId], references: [id], name: "discipleProfile")
 
   attendedAt DateTime @default(now())
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  disciple   Disciple? @relation(fields: [discipleId], references: [id])
+  discipleId String?
 
   @@index([attendanceId])
   @@index([invitedById])

@@ -1,6 +1,8 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import { useAction } from "next-safe-action/hooks";
 import { type PropsWithChildren, useEffect, useState } from "react";
 import {
   type SubmitErrorHandler,
@@ -8,32 +10,58 @@ import {
   useForm,
 } from "react-hook-form";
 import { toast } from "sonner";
-import { Gender, MemberType } from "@/app/generated/prisma";
+import type { NewComer } from "@/app/generated/prisma";
 import { Form } from "@/components/ui/form";
+import { useAttendanceRecord } from "@/hooks/use-attendance-record";
+import { addAttendees } from "./actions";
 import { type AddAttendeesInputs, addAttendeesSchema } from "./schema";
 
 const STORAGE_KEY = "GCC_ATTENDANCE";
 
 export function AttendanceChecklistForm({
   attendanceId,
+  defaultAttendees,
+  defaultNewComers,
   children,
-}: PropsWithChildren<{ attendanceId: string }>) {
+}: PropsWithChildren<{
+  attendanceId: string;
+  defaultNewComers: Array<NewComer>;
+  defaultAttendees: Array<{ id: string }>;
+}>) {
+  const router = useRouter();
+  const attendanceQuery = useAttendanceRecord(attendanceId);
   const [hasSet, setHasSet] = useState(false);
   const form = useForm<AddAttendeesInputs>({
     resolver: zodResolver(addAttendeesSchema),
     defaultValues: {
       attendanceId,
-      attendees: [],
-      newComers: [1, 2, 3].map((_n) => ({
-        name: "",
-        gender: Gender.MALE,
-        memberType: MemberType.UNCATEGORIZED,
-      })),
+      attendees: defaultAttendees ?? [],
+      newComers:
+        defaultNewComers.map((nc) => ({
+          name: nc.name,
+          gender: nc.gender,
+          memberType: nc.memberType,
+          invitedById: nc.invitedById ?? undefined,
+          email: nc.email ?? undefined,
+          contactNo: nc.contactNo ?? undefined,
+          address: nc.address ?? undefined,
+        })) ?? [],
     },
   });
 
+  const createAction = useAction(addAttendees, {
+    onError: ({ error }) => {
+      console.error(error);
+      toast.error(error.serverError ?? `Error adding attendees`);
+    },
+  });
+
+  const isBusy = createAction.isPending;
+
   const attendees = form.watch("attendees");
   const newComers = form.watch("newComers");
+
+  const { isDirty } = form.formState;
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <nah>
   useEffect(() => {
@@ -66,6 +94,8 @@ export function AttendanceChecklistForm({
 
     if (!hasSet) return;
 
+    if (!isDirty) return;
+
     const ATTENDANCE_STORAGE_KEY = `${STORAGE_KEY}_${attendanceId}`;
 
     try {
@@ -80,7 +110,7 @@ export function AttendanceChecklistForm({
     } catch (error) {
       console.log(`Cannot save to local storage: `, error);
     }
-  }, [attendanceId, attendees, newComers, hasSet]);
+  }, [attendanceId, attendees, newComers, hasSet, isDirty]);
 
   const onFormError: SubmitErrorHandler<AddAttendeesInputs> = (errors) => {
     console.log(`Attendance Form Errors: `, errors);
@@ -88,7 +118,18 @@ export function AttendanceChecklistForm({
 
   const onSubmit: SubmitHandler<AddAttendeesInputs> = async (data) => {
     try {
-      console.log(data);
+      const result = await createAction.executeAsync(data);
+
+      if (result.data?.attendance?.id) {
+        toast.success(`Attendance saved!`);
+
+        const ATTENDANCE_STORAGE_KEY = `${STORAGE_KEY}_${attendanceId}`;
+        localStorage.removeItem(ATTENDANCE_STORAGE_KEY);
+
+        router.refresh();
+
+        await attendanceQuery.refetch();
+      }
     } catch (error) {
       if (error instanceof Error) {
         toast.error(error.message);
@@ -99,7 +140,9 @@ export function AttendanceChecklistForm({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit, onFormError)}>
-        <fieldset className="space-y-4">{children}</fieldset>
+        <fieldset disabled={isBusy} className="space-y-4 disabled:opacity-90">
+          {children}
+        </fieldset>
       </form>
     </Form>
   );

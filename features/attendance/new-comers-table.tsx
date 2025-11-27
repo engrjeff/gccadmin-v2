@@ -43,8 +43,8 @@ export function NewComersTable() {
 
   return (
     <div className="overflow-hidden rounded-md border">
-      <Table className="table-auto">
-        <TableHeader className="bg-card">
+      <Table>
+        <TableHeader className="sticky top-0 z-10 bg-card backdrop-blur-sm">
           <TableRow className="hover:bg-transparent">
             <TableHead className="w-6 text-center">#</TableHead>
             <TableHead>Name</TableHead>
@@ -89,8 +89,37 @@ export function NewComersTable() {
                       <FormLabel className="sr-only">Gender</FormLabel>
                       <FormControl>
                         <SelectNative
-                          {...field}
                           className="rounded-none border-transparent bg-background capitalize focus-visible:ring-0 dark:bg-transparent"
+                          {...field}
+                          onChange={(e) => {
+                            const value = e.currentTarget.value as Gender;
+
+                            field.onChange(e);
+
+                            if (
+                              form.watch(
+                                `newComers.${fieldIndex}.memberType`,
+                              ) === MemberType.MEN &&
+                              value === Gender.FEMALE
+                            ) {
+                              form.setValue(
+                                `newComers.${fieldIndex}.memberType`,
+                                MemberType.WOMEN,
+                              );
+                            }
+
+                            if (
+                              form.watch(
+                                `newComers.${fieldIndex}.memberType`,
+                              ) === MemberType.WOMEN &&
+                              value === Gender.MALE
+                            ) {
+                              form.setValue(
+                                `newComers.${fieldIndex}.memberType`,
+                                MemberType.MEN,
+                              );
+                            }
+                          }}
                         >
                           <option value={Gender.MALE}>Male</option>
                           <option value={Gender.FEMALE}>Female</option>
@@ -113,8 +142,25 @@ export function NewComersTable() {
                           className="rounded-none border-transparent bg-background capitalize focus-visible:ring-0 dark:bg-transparent"
                         >
                           <option value={MemberType.UNCATEGORIZED}>--</option>
-                          <option value={MemberType.MEN}>Men</option>
-                          <option value={MemberType.WOMEN}>Women</option>
+
+                          <option
+                            disabled={
+                              form.watch(`newComers.${fieldIndex}.gender`) ===
+                              Gender.FEMALE
+                            }
+                            value={MemberType.MEN}
+                          >
+                            Men
+                          </option>
+                          <option
+                            disabled={
+                              form.watch(`newComers.${fieldIndex}.gender`) ===
+                              Gender.MALE
+                            }
+                            value={MemberType.WOMEN}
+                          >
+                            Women
+                          </option>
                           <option value={MemberType.YOUNGPRO}>Young Pro</option>
                           <option value={MemberType.YOUTH}>Youth</option>
                           <option value={MemberType.KIDS}>Kids</option>

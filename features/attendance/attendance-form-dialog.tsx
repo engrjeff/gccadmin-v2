@@ -3,7 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
 import { PlusIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useAction } from "next-safe-action/hooks";
 import { useState } from "react";
 import {
@@ -98,8 +97,6 @@ export function AttendanceFormDialog() {
 }
 
 function AttendanceForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
-  const router = useRouter();
-
   const form = useForm<AttendanceCreateInputs>({
     resolver: zodResolver(attendanceCreateSchema),
     defaultValues: {
@@ -113,9 +110,7 @@ function AttendanceForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
   const createAction = useAction(createAttendance, {
     onError: ({ error }) => {
       console.error(error);
-      toast.error(
-        error.serverError ?? `Error creating attendance record series`,
-      );
+      toast.error(error.serverError ?? `Error creating attendance record`);
     },
   });
 
@@ -137,7 +132,9 @@ function AttendanceForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
 
         onAfterSave();
 
-        router.push(`/attendance/${attendance.id}`);
+        form.reset();
+
+        window.location.reload();
       }
     } catch (error) {
       if (error instanceof Error) {

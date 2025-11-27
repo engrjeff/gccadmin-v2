@@ -1,0 +1,68 @@
+import Link from "next/link";
+import type { Attendance } from "@/app/generated/prisma";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { formatDate, removeUnderscores } from "@/lib/utils";
+
+export function AttendanceCard({
+  attendanceRecord,
+}: {
+  attendanceRecord: Attendance & {
+    _count: {
+      attendees: number;
+      newComers: number;
+    };
+  };
+}) {
+  return (
+    <Card className="relative h-full gap-3 py-4">
+      <CardHeader className="px-4">
+        <Badge
+          variant={attendanceRecord.type}
+          className="bg-transparent p-0 text-[10px] dark:bg-transparent"
+        >
+          {removeUnderscores(attendanceRecord.type)}
+        </Badge>
+        <CardTitle>{attendanceRecord.title}</CardTitle>
+        <CardDescription className="text-xs">
+          {formatDate(new Date(attendanceRecord.date)?.toString())}
+        </CardDescription>
+      </CardHeader>
+      <CardAction className="absolute top-1 right-1"></CardAction>
+      <CardContent className="px-4">
+        <div className="flex gap-2">
+          {attendanceRecord._count.attendees +
+            attendanceRecord._count.newComers ===
+          0 ? (
+            <Badge variant="NONE">No attendees yet</Badge>
+          ) : (
+            <>
+              <Badge variant="ACTIVE">
+                {attendanceRecord._count.attendees} attendees
+              </Badge>
+              {attendanceRecord._count.newComers === 0 ? null : (
+                <Badge variant="DISCIPLESHIP">
+                  {attendanceRecord._count.newComers} new comers
+                </Badge>
+              )}
+            </>
+          )}
+        </div>
+      </CardContent>
+      <CardFooter className="justify-end px-4">
+        <Button size="sm" asChild>
+          <Link href={`/attendance/${attendanceRecord.id}`}>View</Link>
+        </Button>
+      </CardFooter>
+    </Card>
+  );
+}

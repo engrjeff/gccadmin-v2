@@ -1,14 +1,15 @@
 import { format } from "date-fns";
-import { CheckIcon, SettingsIcon } from "lucide-react";
+import { SettingsIcon } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { Gender } from "@/app/generated/prisma";
 import { Button } from "@/components/ui/button";
-import { SubmitButton } from "@/components/ui/submit-button";
 import { AttendanceChecklist } from "@/features/attendance/attendance-checklist";
 import { AttendanceChecklistForm } from "@/features/attendance/attendance-checklist-form";
+import { AttendanceChecklistSubmitButton } from "@/features/attendance/attendance-checklist-submit-button";
+import { AttendanceRecordStatistics } from "@/features/attendance/attendance-record-statistics";
 import { ChurchMembersFilters } from "@/features/attendance/church-members-filters";
 import { ChurchMembersTable } from "@/features/attendance/church-members-table";
 import { NewComersTable } from "@/features/attendance/new-comers-table";
@@ -42,11 +43,16 @@ async function AttendanceItemPage(props: PageProps) {
   const currentView = searchParams.view ?? Gender.MALE;
 
   return (
-    <div className="flex flex-1 flex-col gap-4 p-4">
+    <div className="flex max-w-full flex-1 flex-col gap-4 p-4">
       <Link href="/attendance" className="inline-block text-sm hover:underline">
         &larr; Back to List
       </Link>
-      <AttendanceChecklistForm attendanceId={attendanceRecord.id}>
+      <AttendanceRecordStatistics id={attendanceRecord.id} />
+      <AttendanceChecklistForm
+        attendanceId={attendanceRecord.id}
+        defaultAttendees={attendanceRecord.attendees}
+        defaultNewComers={attendanceRecord.newComers}
+      >
         <div className="flex items-center gap-4">
           <div>
             <h2 className="font-bold">{attendanceRecord.title}</h2>
@@ -55,9 +61,7 @@ async function AttendanceItemPage(props: PageProps) {
             </p>
           </div>
           <div className="ml-auto flex items-center gap-3">
-            <SubmitButton size="sm">
-              <CheckIcon /> Save
-            </SubmitButton>
+            <AttendanceChecklistSubmitButton />
             <Button
               type="button"
               variant="outline"

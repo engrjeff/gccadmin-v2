@@ -22,11 +22,13 @@ export function AttendanceChecklistForm({
   attendanceId,
   defaultAttendees,
   defaultNewComers,
+  defaultReturnees,
   children,
 }: PropsWithChildren<{
   attendanceId: string;
   defaultNewComers: Array<NewComer>;
   defaultAttendees: Array<{ id: string }>;
+  defaultReturnees: Array<{ id: string }>;
 }>) {
   const router = useRouter();
 
@@ -37,6 +39,7 @@ export function AttendanceChecklistForm({
     defaultValues: {
       attendanceId,
       attendees: defaultAttendees ?? [],
+      returnees: defaultReturnees ?? [],
       newComers:
         defaultNewComers.map((nc) => ({
           name: nc.name,

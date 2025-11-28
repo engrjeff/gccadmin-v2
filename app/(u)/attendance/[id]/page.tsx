@@ -4,19 +4,26 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { Gender } from "@/app/generated/prisma";
+import { Badge } from "@/components/ui/badge";
 import { AttendanceChecklistForm } from "@/features/attendance/attendance-checklist-form";
 import { AttendanceChecklistSubmitButton } from "@/features/attendance/attendance-checklist-submit-button";
 import { AttendanceChecklistTabs } from "@/features/attendance/attendance-checklist-tabs";
 import { AttendanceRecordMenu } from "@/features/attendance/attendance-record-menu";
 import { AttendanceRecordStatistics } from "@/features/attendance/attendance-record-statistics";
+import { ChurchLeadersTable } from "@/features/attendance/church-leaders-table";
 import { ChurchMembersFilters } from "@/features/attendance/church-members-filters";
 import { ChurchMembersTable } from "@/features/attendance/church-members-table";
 import { NewComersTable } from "@/features/attendance/new-comers-table";
 import { getAttendanceRecordById } from "@/features/attendance/queries";
+import { ReturneesTable } from "@/features/attendance/returnees-table";
+import { removeUnderscores } from "@/lib/utils";
 
+type View = Gender | "NewComers" | "Leaders" | "Returnees";
 interface PageProps {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ view?: Gender | "NewComers" }>;
+  searchParams: Promise<{
+    view?: View;
+  }>;
 }
 
 export const generateMetadata = async (props: PageProps): Promise<Metadata> => {
@@ -29,6 +36,29 @@ export const generateMetadata = async (props: PageProps): Promise<Metadata> => {
   };
 };
 
+function SwitchTable({
+  currentView,
+  attendanceId,
+}: {
+  currentView: View;
+  attendanceId: string;
+}) {
+  if (currentView === "Leaders") return <ChurchLeadersTable />;
+
+  if (currentView === "NewComers") return <NewComersTable />;
+
+  if (currentView === Gender.MALE)
+    return <ChurchMembersTable gender={Gender.MALE} />;
+
+  if (currentView === Gender.FEMALE)
+    return <ChurchMembersTable gender={Gender.FEMALE} />;
+
+  if (currentView === "Returnees")
+    return <ReturneesTable currentAttendanceId={attendanceId} />;
+
+  return null;
+}
+
 async function AttendanceItemPage(props: PageProps) {
   const params = await props.params;
   const searchParams = await props.searchParams;
@@ -39,7 +69,15 @@ async function AttendanceItemPage(props: PageProps) {
     return notFound();
   }
 
-  const currentView = searchParams.view ?? Gender.MALE;
+  const currentView = searchParams.view ?? "Leaders";
+
+  const newComers = attendanceRecord.newComers?.filter(
+    (nc) => nc.attendances.length <= 1,
+  );
+
+  const returnees = attendanceRecord.newComers?.filter(
+    (nc) => nc.attendances.length > 1,
+  );
 
   return (
     <div className="flex max-w-6xl flex-1 flex-col gap-4 p-4">
@@ -52,6 +90,14 @@ async function AttendanceItemPage(props: PageProps) {
           <p className="text-muted-foreground text-xs">
             {format(attendanceRecord.date, "MMMM dd, yyyy")}
           </p>
+          <Badge variant={attendanceRecord.type} className="text-[10px]">
+            {removeUnderscores(attendanceRecord.type)}
+          </Badge>
+          {attendanceRecord.tags?.at(0) ? (
+            <Badge variant={attendanceRecord.type} className="ml-1 text-[10px]">
+              {attendanceRecord.tags?.at(0)}
+            </Badge>
+          ) : null}
         </div>
         <div className="ml-auto flex items-center gap-3">
           <AttendanceRecordMenu
@@ -64,20 +110,20 @@ async function AttendanceItemPage(props: PageProps) {
       <AttendanceChecklistForm
         attendanceId={attendanceRecord.id}
         defaultAttendees={attendanceRecord.attendees}
-        defaultNewComers={attendanceRecord.newComers}
+        defaultNewComers={newComers}
+        defaultReturnees={returnees}
       >
-        <div className="flex items-center justify-between gap-4">
-          <Suspense>
+        <Suspense>
+          <div className="flex items-center justify-between gap-4">
             <AttendanceChecklistTabs />
-          </Suspense>
-          <AttendanceChecklistSubmitButton />
-        </div>
-        <ChurchMembersFilters />
-        {currentView === "NewComers" ? (
-          <NewComersTable />
-        ) : (
-          <ChurchMembersTable gender={currentView} />
-        )}
+            <AttendanceChecklistSubmitButton />
+          </div>
+          <ChurchMembersFilters key={JSON.stringify(searchParams)} />
+          <SwitchTable
+            attendanceId={attendanceRecord.id}
+            currentView={currentView}
+          />
+        </Suspense>
       </AttendanceChecklistForm>
     </div>
   );

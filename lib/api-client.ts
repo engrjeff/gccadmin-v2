@@ -15,6 +15,7 @@ export const API_ENDPOINTS = {
   GET_CELLGROUP_STATISTICS: "/reports/cell-group-statistics",
   GET_CELLREPORT_TREND: "/reports/cell-report-trend",
   GET_CHURCH_MEMBERS: "/attendance/church-members",
+  GET_RETURNEES: "/attendance/returnees",
   GET_ATTENDANCE: "/attendance",
 
   // GCC Resources

@@ -49,7 +49,13 @@ export async function getAttendanceRecordById(id: string) {
           id: true,
         },
       },
-      newComers: true,
+      newComers: {
+        include: {
+          attendances: {
+            select: { id: true },
+          },
+        },
+      },
     },
   });
 

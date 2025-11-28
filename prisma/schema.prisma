@@ -276,8 +276,7 @@ model NewComer {
   email     String?
   address   String?
 
-  attendanceId String
-  attendance   Attendance @relation(fields: [attendanceId], references: [id], onDelete: Cascade)
+  attendances Attendance[]
 
   invitedById String?
   invitedBy   Disciple? @relation(fields: [invitedById], references: [id], name: "invitedby")
@@ -292,6 +291,5 @@ model NewComer {
   disciple   Disciple? @relation(fields: [discipleId], references: [id])
   discipleId String?
 
-  @@index([attendanceId])
   @@index([invitedById])
 }

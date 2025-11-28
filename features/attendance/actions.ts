@@ -64,11 +64,57 @@ export const addAttendees = leaderActionClient
   .metadata({ actionName: "addAttendees" })
   .inputSchema(addAttendeesSchema)
   .action(async ({ parsedInput }) => {
-    const { attendanceId, attendees, newComers } = parsedInput;
+    const { attendanceId, attendees, newComers, returnees } = parsedInput;
 
     const attendance = await prisma.$transaction(async (tx) => {
       // delete first the new comers for this attendance
-      await tx.newComer.deleteMany({ where: { attendanceId } });
+      await tx.newComer.deleteMany({
+        where: {
+          attendances: {
+            every: {
+              id: attendanceId,
+            },
+          },
+        },
+      });
+
+      // create new comers for this attendance
+      const newComerRecords = await tx.newComer.createManyAndReturn({
+        data: newComers.map((nc) => ({
+          name: nc.name,
+          gender: nc.gender,
+          memberType: nc.memberType,
+          invitedById: nc.invitedById,
+          email: nc.email,
+          contactNo: nc.contactNo,
+        })),
+        select: {
+          id: true,
+        },
+      });
+
+      const foundReturnees = await tx.newComer.findMany({
+        where: {
+          attendances: {
+            some: {
+              id: attendanceId,
+            },
+          },
+        },
+      });
+
+      const inputReturnees = returnees.map((r) => r.id);
+
+      const returneesToDisconnect = foundReturnees.filter(
+        (r) => !inputReturnees.includes(r.id),
+      );
+
+      const returneesToConnect =
+        foundReturnees.length === 0
+          ? returnees
+          : returnees.filter(
+              (r) => !foundReturnees.map((f) => f.id).includes(r.id),
+            );
 
       const result = await tx.attendance.update({
         where: { id: attendanceId },
@@ -77,17 +123,12 @@ export const addAttendees = leaderActionClient
             set: attendees.map((attendee) => ({ id: attendee.id })),
           },
           newComers: {
-            createMany: {
-              data: newComers.map((nc) => ({
-                name: nc.name,
-                gender: nc.gender,
-                memberType: nc.memberType,
-                invitedById: nc.invitedById,
-                email: nc.email,
-                contactNo: nc.contactNo,
-                address: nc.address,
-              })),
-            },
+            connect: [...returneesToConnect, ...newComerRecords].map(
+              (item) => ({
+                id: item.id,
+              }),
+            ),
+            disconnect: returneesToDisconnect.map((r) => ({ id: r.id })),
           },
         },
       });

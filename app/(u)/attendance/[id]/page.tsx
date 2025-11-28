@@ -81,7 +81,10 @@ async function AttendanceItemPage(props: PageProps) {
 
   return (
     <div className="flex max-w-6xl flex-1 flex-col gap-4 p-4">
-      <Link href="/attendance" className="inline-block text-sm hover:underline">
+      <Link
+        href="/attendance"
+        className="inline-block w-max text-sm hover:underline"
+      >
         &larr; Back to List
       </Link>
       <div className="flex items-center gap-4">

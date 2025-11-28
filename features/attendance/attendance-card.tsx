@@ -12,6 +12,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { formatDate, removeUnderscores } from "@/lib/utils";
+import { AttendanceRecordMenu } from "./attendance-record-menu";
 
 export function AttendanceCard({
   attendanceRecord,
@@ -32,12 +33,25 @@ export function AttendanceCard({
         >
           {removeUnderscores(attendanceRecord.type)}
         </Badge>
-        <CardTitle>{attendanceRecord.title}</CardTitle>
+        <CardTitle>
+          <Link
+            href={`/attendance/${attendanceRecord.id}`}
+            className="hover:underline"
+          >
+            {attendanceRecord.title}
+          </Link>
+        </CardTitle>
         <CardDescription className="text-xs">
           {formatDate(new Date(attendanceRecord.date)?.toString())}
         </CardDescription>
       </CardHeader>
-      <CardAction className="absolute top-1 right-1"></CardAction>
+      <CardAction className="absolute top-1 right-1">
+        <AttendanceRecordMenu
+          forCard
+          attendanceId={attendanceRecord.id}
+          attendanceTitle={attendanceRecord.title}
+        />
+      </CardAction>
       <CardContent className="px-4">
         <div className="flex gap-2">
           {attendanceRecord._count.attendees +

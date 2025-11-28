@@ -9,11 +9,7 @@ export function AttendanceChecklistSubmitButton() {
   const { formState } = useFormContext<AddAttendeesInputs>();
 
   return (
-    <SubmitButton
-      size="sm"
-      disabled={!formState.isDirty}
-      loading={formState.isSubmitting}
-    >
+    <SubmitButton size="sm" loading={formState.isSubmitting}>
       <CheckIcon /> Save
     </SubmitButton>
   );

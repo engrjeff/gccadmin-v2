@@ -6,6 +6,7 @@ import { leaderActionClient } from "@/lib/safe-action";
 import {
   addAttendeesSchema,
   attendanceCreateSchema,
+  attendanceDeleteSchema,
   attendanceEditSchema,
   removeAttendeesSchema,
 } from "./schema";
@@ -44,6 +45,19 @@ export const editAttendance = leaderActionClient
     revalidatePath(`/attendance/${id}`);
 
     return { attendance };
+  });
+
+export const deleteAttendance = leaderActionClient
+  .metadata({ actionName: "deleteAttendance" })
+  .inputSchema(attendanceDeleteSchema)
+  .action(async ({ parsedInput }) => {
+    await prisma.attendance.delete({
+      where: { id: parsedInput.id },
+    });
+
+    revalidatePath("/attendance");
+
+    return { success: true };
   });
 
 export const addAttendees = leaderActionClient

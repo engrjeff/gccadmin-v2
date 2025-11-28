@@ -58,6 +58,9 @@ export function ChurchMembersTable({ gender }: { gender: Gender }) {
   const subheaders = churchMembersData?.map((c) => c.label);
 
   const attendeesValues = form.watch("attendees").map((a) => a.id);
+  const newComersValues = form.watch("newComers");
+
+  const totalSoFar = attendeesValues.length + newComersValues.length;
 
   return (
     <div className="overflow-hidden rounded-md border">
@@ -66,7 +69,12 @@ export function ChurchMembersTable({ gender }: { gender: Gender }) {
           <TableRow className="hover:bg-transparent">
             <TableHead className="w-6 text-center">#</TableHead>
             <TableHead>Name</TableHead>
-            <TableHead className="w-24 text-center">Present?</TableHead>
+            <TableHead className="w-24 text-center">
+              Present{" "}
+              <span className="font-semibold text-green-500">
+                ({totalSoFar})
+              </span>
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

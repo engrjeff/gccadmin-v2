@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
 import { PlusIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useAction } from "next-safe-action/hooks";
 import { useState } from "react";
 import {
@@ -97,6 +98,8 @@ export function AttendanceFormDialog() {
 }
 
 function AttendanceForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
+  const router = useRouter();
+
   const form = useForm<AttendanceCreateInputs>({
     resolver: zodResolver(attendanceCreateSchema),
     defaultValues: {
@@ -130,11 +133,9 @@ function AttendanceForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
           `${attendance.type.replaceAll("_", " ")} Attendance: ${attendance.title} saved!`,
         );
 
-        onAfterSave();
-
         form.reset();
 
-        window.location.reload();
+        router.push(`/attendance/${attendance.id}`);
       }
     } catch (error) {
       if (error instanceof Error) {

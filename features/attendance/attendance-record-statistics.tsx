@@ -8,12 +8,20 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useAttendanceRecord } from "@/hooks/use-attendance-record";
 
 export function AttendanceRecordStatistics({ id }: { id: string }) {
   const attendanceQuery = useAttendanceRecord(id);
 
-  if (attendanceQuery.isLoading) return <p>Loading...</p>;
+  if (attendanceQuery.isLoading)
+    return (
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-6">
+        <Skeleton className="h-[158px]" />
+        <Skeleton className="h-[158px]" />
+        <Skeleton className="h-[158px]" />
+      </div>
+    );
 
   if (!attendanceQuery.data?.attendance) return null;
 
@@ -78,7 +86,7 @@ export function AttendanceRecordStatistics({ id }: { id: string }) {
   }
 
   return (
-    <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+    <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-6">
       {/* by total */}
       <Card className="gap-4 py-4">
         <CardHeader className="gap-0 px-4">

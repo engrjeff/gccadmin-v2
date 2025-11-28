@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useAction } from "next-safe-action/hooks";
-import { type PropsWithChildren, useEffect, useState } from "react";
+import { type PropsWithChildren, useEffect } from "react";
 import {
   type SubmitErrorHandler,
   type SubmitHandler,
@@ -29,8 +29,9 @@ export function AttendanceChecklistForm({
   defaultAttendees: Array<{ id: string }>;
 }>) {
   const router = useRouter();
+
   const attendanceQuery = useAttendanceRecord(attendanceId);
-  const [hasSet, setHasSet] = useState(false);
+
   const form = useForm<AddAttendeesInputs>({
     resolver: zodResolver(addAttendeesSchema),
     defaultValues: {
@@ -58,10 +59,7 @@ export function AttendanceChecklistForm({
 
   const isBusy = createAction.isPending;
 
-  const attendees = form.watch("attendees");
-  const newComers = form.watch("newComers");
-
-  const { isDirty } = form.formState;
+  const { subscribe } = form;
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <nah>
   useEffect(() => {
@@ -77,11 +75,8 @@ export function AttendanceChecklistForm({
       if (storedData) {
         const formData = JSON.parse(storedData) as AddAttendeesInputs;
 
-        form.setValue("attendees", formData.attendees);
-        form.setValue("newComers", formData.newComers);
+        form.reset(formData);
       }
-
-      setHasSet(true);
     } catch (error) {
       console.log(`Cannot save to local storage: `, error);
     }
@@ -92,25 +87,27 @@ export function AttendanceChecklistForm({
 
     if (!window?.localStorage) return;
 
-    if (!hasSet) return;
-
-    if (!isDirty) return;
-
     const ATTENDANCE_STORAGE_KEY = `${STORAGE_KEY}_${attendanceId}`;
 
-    try {
-      localStorage.setItem(
-        ATTENDANCE_STORAGE_KEY,
-        JSON.stringify({
-          attendanceId,
-          attendees,
-          newComers,
-        }),
-      );
-    } catch (error) {
-      console.log(`Cannot save to local storage: `, error);
-    }
-  }, [attendanceId, attendees, newComers, hasSet, isDirty]);
+    const subscription = subscribe({
+      formState: { values: true, isDirty: true },
+      callback({ values, isDirty }) {
+        try {
+          if (!isDirty) {
+            localStorage.removeItem(ATTENDANCE_STORAGE_KEY);
+            return;
+          }
+          localStorage.setItem(ATTENDANCE_STORAGE_KEY, JSON.stringify(values));
+        } catch (error) {
+          console.log(`Cannot save to local storage: `, error);
+        }
+      },
+    });
+
+    return () => {
+      subscription();
+    };
+  }, [attendanceId, subscribe]);
 
   const onFormError: SubmitErrorHandler<AddAttendeesInputs> = (errors) => {
     console.log(`Attendance Form Errors: `, errors);
@@ -139,8 +136,14 @@ export function AttendanceChecklistForm({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit, onFormError)}>
-        <fieldset disabled={isBusy} className="space-y-4 disabled:opacity-90">
+      <form
+        onSubmit={form.handleSubmit(onSubmit, onFormError)}
+        className="max-w-full overflow-x-hidden"
+      >
+        <fieldset
+          disabled={isBusy}
+          className="block min-w-0 max-w-full space-y-4 overflow-x-hidden disabled:opacity-90"
+        >
           {children}
         </fieldset>
       </form>

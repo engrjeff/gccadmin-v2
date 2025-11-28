@@ -4,7 +4,7 @@ import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { Gender } from "@/app/generated/prisma";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-export function AttendanceChecklist() {
+export function AttendanceChecklistTabs() {
   const params = useParams<{ id: string }>();
   const router = useRouter();
   const searchParams = useSearchParams();

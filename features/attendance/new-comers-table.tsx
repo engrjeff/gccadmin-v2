@@ -42,12 +42,12 @@ export function NewComersTable() {
     ) ?? [];
 
   return (
-    <div className="overflow-hidden rounded-md border">
-      <Table>
+    <div className="overflow-hidden rounded-md border bg-background">
+      <Table className="table-fixed lg:table-auto">
         <TableHeader className="sticky top-0 z-10 bg-card backdrop-blur-sm">
           <TableRow className="hover:bg-transparent">
             <TableHead className="w-6 text-center">#</TableHead>
-            <TableHead>Name</TableHead>
+            <TableHead className="w-56 lg:w-auto">Name</TableHead>
             <TableHead className="w-24">Gender</TableHead>
             <TableHead className="w-32">Member Type</TableHead>
             <TableHead className="w-56">Invited By</TableHead>

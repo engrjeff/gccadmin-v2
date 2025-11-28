@@ -22,6 +22,10 @@ export const attendanceEditSchema = attendanceCreateSchema.extend({
 
 export type AttendanceEditInputs = z.infer<typeof attendanceEditSchema>;
 
+export const attendanceDeleteSchema = z.object({
+  id: z.string({ error: "Attendance ID is required." }),
+});
+
 export const newComerSchema = z.object({
   name: z.string({ error: "Required" }).nonempty({ error: "Required" }),
   gender: z.enum(Gender, { error: "Required" }),

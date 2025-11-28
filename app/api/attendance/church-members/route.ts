@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
         isPrimary: true,
         memberType: memberType ?? undefined,
         name:
-          q && !gender
+          q && gender === "all"
             ? {
                 contains: q,
                 mode: "insensitive",

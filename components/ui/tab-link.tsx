@@ -21,7 +21,7 @@ export function TabLink({ href, className, children, ...props }: TabLinkProps) {
         buttonVariants({ size: "sm", variant: "ghost" }),
         "relative mb-0.5",
         isActive &&
-          "after:absolute after:left-0 after:w-full after:h-1 after:bg-primary after:-bottom-1",
+          "after:-bottom-1 after:absolute after:left-0 after:h-1 after:w-full after:bg-primary",
         className,
       )}
       {...props}

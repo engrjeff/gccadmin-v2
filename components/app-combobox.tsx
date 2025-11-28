@@ -58,7 +58,7 @@ export function AppCombobox({
           role="combobox"
           aria-expanded={open}
           className={cn(
-            "h-9 w-full flex-1 justify-between bg-transparent font-normal focus-visible::border-primary focus-visible:ring-primary active:border-primary active:ring-primary",
+            "h-9 w-full flex-1 justify-between bg-transparent font-normal focus-visible:border-primary focus-visible:ring-primary active:border-primary active:ring-primary",
             className,
           )}
           disabled={disabled}

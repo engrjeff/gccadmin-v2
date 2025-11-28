@@ -1,6 +1,11 @@
 "use client";
 
-import { LockIcon, MoreVerticalIcon, TrashIcon } from "lucide-react";
+import {
+  LockIcon,
+  MoreVerticalIcon,
+  PencilIcon,
+  TrashIcon,
+} from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,7 +16,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { AttendanceRecordDeleteDialog } from "./attendance-record-delete-dialog";
 
-type Action = "lock" | "delete";
+type Action = "lock" | "delete" | "edit";
 
 export function AttendanceRecordMenu({
   attendanceId,
@@ -38,6 +43,9 @@ export function AttendanceRecordMenu({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
+          <DropdownMenuItem onClick={() => setAction("edit")}>
+            <PencilIcon /> Edit
+          </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setAction("lock")}>
             <LockIcon /> Lock Attendance
           </DropdownMenuItem>

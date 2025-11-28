@@ -42,9 +42,13 @@ export const addAttendeesSchema = z.object({
     .object({
       id: z.string(),
     })
-    .array()
-    .min(1, { message: "Must have at least 1 attendee to add" }),
+    .array(),
   newComers: newComerSchema.array(),
+  returnees: z
+    .object({
+      id: z.string(),
+    })
+    .array(),
 });
 
 export type AddAttendeesInputs = z.infer<typeof addAttendeesSchema>;

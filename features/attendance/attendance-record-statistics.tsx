@@ -94,7 +94,7 @@ export function AttendanceRecordStatistics({ id }: { id: string }) {
             Total Attendees ({totalAttendees})
           </CardTitle>
           <CardDescription className="text-xs">
-            Usual attendees + New Comers
+            Usual attendees + New & Returnees
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4 px-4">
@@ -137,7 +137,7 @@ export function AttendanceRecordStatistics({ id }: { id: string }) {
                   aria-hidden="true"
                 ></span>
                 <span className="text-gray-900 dark:text-gray-50">
-                  New ({countByTotal.newComers})
+                  New + Returnees ({countByTotal.newComers})
                 </span>
               </div>
             </li>

@@ -16,6 +16,7 @@ import {
 import { useChurchMembers } from "@/hooks/use-church-members";
 import { AttendanceCheckField } from "./attendance-check-field";
 import type { AddAttendeesInputs } from "./schema";
+import { TotalAttendeesDisplay } from "./total-attendees-display";
 
 const COL_COUNT = 3;
 
@@ -58,9 +59,6 @@ export function ChurchMembersTable({ gender }: { gender: Gender }) {
   const subheaders = churchMembersData?.map((c) => c.label);
 
   const attendeesValues = form.watch("attendees").map((a) => a.id);
-  const newComersValues = form.watch("newComers");
-
-  const totalSoFar = attendeesValues.length + newComersValues.length;
 
   return (
     <div className="overflow-hidden rounded-md border">
@@ -69,11 +67,8 @@ export function ChurchMembersTable({ gender }: { gender: Gender }) {
           <TableRow className="hover:bg-transparent">
             <TableHead className="w-6 text-center">#</TableHead>
             <TableHead>Name</TableHead>
-            <TableHead className="w-24 text-center">
-              Present{" "}
-              <span className="font-semibold text-green-500">
-                ({totalSoFar})
-              </span>
+            <TableHead className="w-24 text-center font-semibold">
+              <TotalAttendeesDisplay />
             </TableHead>
           </TableRow>
         </TableHeader>
@@ -81,17 +76,29 @@ export function ChurchMembersTable({ gender }: { gender: Gender }) {
           {subheaders?.map((subheader, subheaderIndex) => (
             <Fragment key={subheader}>
               <TableRow className="pointer-events-none bg-card">
-                <TableCell
-                  colSpan={COL_COUNT}
-                  className="font-semibold text-blue-500 text-xs uppercase"
-                >
-                  {subheader}
+                <TableCell colSpan={COL_COUNT - 1}>
+                  <div className="flex items-center justify-between">
+                    <span className="font-semibold text-blue-500 text-xs uppercase">
+                      {subheader}
+                    </span>
+                    <span className="font-semibold text-green-500 text-xs">
+                      Subtotal
+                    </span>
+                  </div>
+                </TableCell>
+                <TableCell className="text-center font-semibold text-green-500">
+                  {getSubTotal(
+                    attendeesValues,
+                    churchMembersData
+                      ?.at(subheaderIndex)
+                      ?.members?.map((m) => m.id) ?? [],
+                  )}
                 </TableCell>
               </TableRow>
-              {churchMembersData?.at(subheaderIndex)?.members.length === 0 ? (
+              {churchMembersData?.at(subheaderIndex)?.members?.length === 0 ? (
                 <TableRow className="hover:bg-transparent">
                   <TableCell colSpan={COL_COUNT}>
-                    No members under this Network
+                    No members found under this Network
                   </TableCell>
                 </TableRow>
               ) : (
@@ -114,22 +121,6 @@ export function ChurchMembersTable({ gender }: { gender: Gender }) {
                     </TableRow>
                   ))
               )}
-              <TableRow className="pointer-events-none bg-card">
-                <TableCell
-                  colSpan={COL_COUNT - 1}
-                  className="border-r text-right font-semibold text-xs"
-                >
-                  Subtotal
-                </TableCell>
-                <TableCell className="text-center font-semibold text-green-500">
-                  {getSubTotal(
-                    attendeesValues,
-                    churchMembersData
-                      ?.at(subheaderIndex)
-                      ?.members?.map((m) => m.id) ?? [],
-                  )}
-                </TableCell>
-              </TableRow>
             </Fragment>
           ))}
         </TableBody>

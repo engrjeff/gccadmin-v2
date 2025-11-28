@@ -33,6 +33,7 @@ export function AttendanceCard({
         >
           {removeUnderscores(attendanceRecord.type)}
         </Badge>
+
         <CardTitle>
           <Link
             href={`/attendance/${attendanceRecord.id}`}
@@ -43,6 +44,14 @@ export function AttendanceCard({
         </CardTitle>
         <CardDescription className="text-xs">
           {formatDate(new Date(attendanceRecord.date)?.toString())}
+          {attendanceRecord.tags?.at(0) ? (
+            <Badge
+              variant={attendanceRecord.type}
+              className="ml-2 rounded text-[10px]"
+            >
+              {attendanceRecord.tags?.at(0)}
+            </Badge>
+          ) : null}
         </CardDescription>
       </CardHeader>
       <CardAction className="absolute top-1 right-1">
@@ -52,19 +61,24 @@ export function AttendanceCard({
           attendanceTitle={attendanceRecord.title}
         />
       </CardAction>
-      <CardContent className="px-4">
+      <CardContent className="space-y-3 px-4">
         <div className="flex gap-2">
           {attendanceRecord._count.attendees +
             attendanceRecord._count.newComers ===
           0 ? (
-            <Badge variant="NONE">No attendees yet</Badge>
+            <Badge variant="NONE" className="rounded border text-[10px]">
+              No attendees yet
+            </Badge>
           ) : (
             <>
-              <Badge variant="ACTIVE">
+              <Badge variant="ACTIVE" className="rounded border text-[10px]">
                 {attendanceRecord._count.attendees} attendees
               </Badge>
               {attendanceRecord._count.newComers === 0 ? null : (
-                <Badge variant="DISCIPLESHIP">
+                <Badge
+                  variant="DISCIPLESHIP"
+                  className="rounded border text-[10px]"
+                >
                   {attendanceRecord._count.newComers} new comers
                 </Badge>
               )}

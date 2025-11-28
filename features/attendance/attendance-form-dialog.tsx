@@ -34,6 +34,7 @@ import {
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -188,6 +189,7 @@ function AttendanceForm({ onAfterSave }: { onAfterSave: VoidFunction }) {
                 <FormControl>
                   <Input placeholder="Attendance Title" {...field} />
                 </FormControl>
+                <FormDescription>You can rename this</FormDescription>
                 <FormMessage />
               </FormItem>
             )}

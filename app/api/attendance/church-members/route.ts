@@ -10,7 +10,33 @@ export async function GET(request: NextRequest) {
     const memberType = searchParams.get("memberType") as MemberType;
     const q = searchParams.get("q");
 
-    const churchMembers = await prisma.disciple.findMany({
+    const leadersQuery = prisma.disciple.findMany({
+      where: {
+        isActive: true,
+        isDeleted: false,
+        isPrimary: true,
+        memberType: memberType ?? undefined,
+        name:
+          q && !gender
+            ? {
+                contains: q,
+                mode: "insensitive",
+                not: {
+                  equals: "GCC Admin",
+                },
+              }
+            : {
+                not: {
+                  equals: "GCC Admin",
+                },
+              },
+      },
+      orderBy: {
+        createdAt: "asc",
+      },
+    });
+
+    const churchMembersQuery = prisma.disciple.findMany({
       where: {
         isActive: true,
         isDeleted: false,
@@ -24,26 +50,26 @@ export async function GET(request: NextRequest) {
           : undefined,
       },
       orderBy: {
-        createdAt: "asc",
+        name: "asc",
       },
     });
 
-    const leaders = churchMembers.filter((member) => member.isPrimary === true);
+    const [leaders, churchMembers] = await Promise.all([
+      leadersQuery,
+      churchMembersQuery,
+    ]);
 
     const churchMembersToLeadersMap = new Map<
       string,
       { label: string; members: Disciple[] }
     >();
 
-    churchMembersToLeadersMap.set("Primary Leaders", {
-      label: "Primary Leaders",
-      members: leaders,
-    });
-
     leaders.forEach((leader) => {
       const disciplesOfLeader = churchMembers.filter(
         (member) => member.leaderId === leader.id && member.isPrimary === false,
       );
+
+      if (disciplesOfLeader.length === 0) return;
 
       churchMembersToLeadersMap.set(leader.id, {
         label: leader.name,
@@ -53,9 +79,15 @@ export async function GET(request: NextRequest) {
 
     const data = Array.from(churchMembersToLeadersMap.values());
 
-    return NextResponse.json({ churchMembers: data });
+    return NextResponse.json({
+      leaders: { label: "Primary Leaders", members: leaders },
+      churchMembers: data,
+    });
   } catch (error) {
     console.log("Error at GET /api/attendance/church-members", error);
-    return NextResponse.json({ churchMembers: [] });
+    return NextResponse.json({
+      leaders: { label: "Primary Leaders", members: [] },
+      churchMembers: [],
+    });
   }
 }

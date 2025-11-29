@@ -22,6 +22,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useChurchMembers } from "@/hooks/use-church-members";
+import { cn } from "@/lib/utils";
 import type { AddAttendeesInputs } from "./schema";
 
 const COL_COUNT = 8;
@@ -42,7 +43,12 @@ export function NewComersTable() {
     ) ?? [];
 
   return (
-    <div className="overflow-hidden rounded-md border bg-background">
+    <div
+      className={cn(
+        "overflow-hidden rounded-md border",
+        form.formState.disabled ? "pointer-events-none cursor-not-allowed" : "",
+      )}
+    >
       <Table className="table-fixed lg:table-auto">
         <TableHeader className="sticky top-0 z-10 bg-card backdrop-blur-sm">
           <TableRow className="hover:bg-transparent">
@@ -232,6 +238,7 @@ export function NewComersTable() {
                   type="button"
                   className="inline-block h-9 rounded-none text-red-500 dark:hover:bg-red-500/10 dark:hover:text-red-500"
                   variant="ghost"
+                  disabled={form.formState.disabled}
                   aria-label="remove this row"
                   onClick={() => {
                     newComerFields.remove(fieldIndex);
@@ -247,6 +254,7 @@ export function NewComersTable() {
               <Button
                 type="button"
                 size="sm"
+                disabled={form.formState.disabled}
                 className="bg-white text-black hover:bg-white/80"
                 onClick={() => {
                   newComerFields.append({

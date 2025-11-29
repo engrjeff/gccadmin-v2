@@ -8,6 +8,7 @@ import {
   attendanceCreateSchema,
   attendanceDeleteSchema,
   attendanceEditSchema,
+  attendanceLockUnlockSchema,
   removeAttendeesSchema,
 } from "./schema";
 
@@ -158,4 +159,23 @@ export const removeAttendees = leaderActionClient
     revalidatePath(`/attendance/${attendanceId}`);
 
     return attendance;
+  });
+
+export const updateAttendanceLockUnlockStatus = leaderActionClient
+  .metadata({ actionName: "updateAttendanceLockUnlockStatus" })
+  .inputSchema(attendanceLockUnlockSchema)
+  .action(async ({ parsedInput }) => {
+    const { id, isLocked } = parsedInput;
+
+    const attendance = await prisma.attendance.update({
+      where: { id },
+      data: {
+        isLocked,
+      },
+    });
+
+    revalidatePath("/attendance");
+    revalidatePath(`/attendance/${id}`);
+
+    return { attendance };
   });

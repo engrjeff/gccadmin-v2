@@ -58,7 +58,7 @@ async function AttendancePage({ searchParams }: PageProps) {
           <div className="flex items-center gap-3">
             <SearchField paramName="q" />
           </div>
-          <ul className="grid flex-1 grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+          <ul className="grid flex-1 grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {attendanceRecords.map((attendance) => (
               <li key={`attendance-${attendance.id}`}>
                 <AttendanceCard attendanceRecord={attendance} />

@@ -13,6 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useChurchMembers } from "@/hooks/use-church-members";
+import { cn } from "@/lib/utils";
 import { AttendanceCheckField } from "./attendance-check-field";
 import type { AddAttendeesInputs } from "./schema";
 import { TotalAttendeesDisplay } from "./total-attendees-display";
@@ -65,7 +66,12 @@ export function ChurchLeadersTable() {
   );
 
   return (
-    <div className="overflow-hidden rounded-md border">
+    <div
+      className={cn(
+        "overflow-hidden rounded-md border",
+        form.formState.disabled ? "pointer-events-none cursor-not-allowed" : "",
+      )}
+    >
       <Table>
         <TableHeader className="bg-card">
           <TableRow className="hover:bg-transparent">

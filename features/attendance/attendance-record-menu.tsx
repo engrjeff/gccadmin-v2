@@ -13,9 +13,11 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { AttendanceFormEditDialog } from "./attendance-form-edit-dialog";
+import { AttendanceLockUnlockDialog } from "./attendance-lock-unlock-dialog";
 import { AttendanceRecordDeleteDialog } from "./attendance-record-delete-dialog";
 
 type Action = "lock" | "delete" | "edit";
@@ -37,18 +39,28 @@ export function AttendanceRecordMenu({
             size="iconSm"
             variant={forCard ? "ghost" : "outline"}
             aria-label="Attendance record actions"
-            className="size-8"
+            className="size-8 disabled:opacity-100"
+            disabled={attendance.isLocked ?? false}
           >
-            <MoreVerticalIcon />
+            {attendance.isLocked ? (
+              <LockIcon className="size-4 text-amber-500" />
+            ) : (
+              <MoreVerticalIcon />
+            )}
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem onClick={() => setAction("edit")}>
             <PencilIcon /> Edit
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setAction("lock")}>
-            <LockIcon /> Lock Attendance
+          <DropdownMenuItem
+            disabled={attendance.isLocked ?? false}
+            onClick={() => setAction("lock")}
+          >
+            <LockIcon />
+            {attendance.isLocked ? "Locked" : "Lock Attendance"}
           </DropdownMenuItem>
+          <DropdownMenuSeparator />
           <DropdownMenuItem
             variant="destructive"
             onClick={() => setAction("delete")}
@@ -75,6 +87,19 @@ export function AttendanceRecordMenu({
         attendance={attendance}
         open={action === "edit"}
         setOpen={(isOpen) => {
+          if (!isOpen) {
+            setAction(undefined);
+          }
+        }}
+      />
+
+      {/* lock dialog */}
+      <AttendanceLockUnlockDialog
+        attendanceId={attendance.id}
+        attendanceTitle={attendance.title}
+        isLocked={attendance.isLocked ?? false}
+        open={action === "lock"}
+        onOpenChange={(isOpen) => {
           if (!isOpen) {
             setAction(undefined);
           }

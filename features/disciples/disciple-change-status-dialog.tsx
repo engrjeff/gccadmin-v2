@@ -66,7 +66,7 @@ export function DiscipleChangeStatusDialog({
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action will chnage the status of {discipleName} <br />
+            This action will change the status of {discipleName} <br />
             <span className="font-semibold text-blue-500">
               from {isActive ? "ACTIVE" : "INACTIVE"} to{" "}
               {isActive ? "INACTIVE" : "ACTIVE"}

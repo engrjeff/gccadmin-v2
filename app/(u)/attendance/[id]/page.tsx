@@ -103,10 +103,7 @@ async function AttendanceItemPage(props: PageProps) {
           ) : null}
         </div>
         <div className="ml-auto flex items-center gap-3">
-          <AttendanceRecordMenu
-            attendanceId={attendanceRecord.id}
-            attendanceTitle={attendanceRecord.title}
-          />
+          <AttendanceRecordMenu attendance={attendanceRecord} />
         </div>
       </div>
       <AttendanceRecordStatistics id={attendanceRecord.id} />

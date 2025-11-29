@@ -6,7 +6,12 @@ import { API_ENDPOINTS, apiClient } from "@/lib/api-client";
 
 type ReturnData = {
   label: string;
-  members: NewComer[];
+  members: Array<
+    NewComer & {
+      firstAttendance: string;
+      invitedBy: { id: string; name: string } | null;
+    }
+  >;
 };
 
 type GetReturneesArgs = {

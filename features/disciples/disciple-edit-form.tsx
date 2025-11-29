@@ -68,6 +68,7 @@ export function DiscipleEditForm({
       processLevel: disciple.processLevel,
       processLevelStatus: disciple.processLevelStatus,
       isMyPrimary: disciple.isPrimary ? true : disciple.isMyPrimary,
+      handledById: disciple.handledById ?? undefined,
     },
     resolver: zodResolver(discipleCreateSchema),
   });

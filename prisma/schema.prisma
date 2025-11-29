@@ -252,11 +252,12 @@ enum AttendanceType {
 }
 
 model Attendance {
-  id    String         @id @default(cuid())
-  title String
-  date  DateTime
-  type  AttendanceType @default(SUNDAY_SERVICE)
-  tags  String[]
+  id       String         @id @default(cuid())
+  title    String
+  date     DateTime
+  type     AttendanceType @default(SUNDAY_SERVICE)
+  tags     String[]
+  isLocked Boolean?       @default(false)
 
   attendees Disciple[]
   newComers NewComer[]

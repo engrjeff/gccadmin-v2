@@ -13,12 +13,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useReturnees } from "@/hooks/use-returnees";
+import { removeUnderscores } from "@/lib/utils";
 import { AttendanceCheckField } from "./attendance-check-field";
 import { ReturneeCheckField } from "./returnee-check-field";
 import type { AddAttendeesInputs } from "./schema";
 import { TotalAttendeesDisplay } from "./total-attendees-display";
 
-const COL_COUNT = 3;
+const COL_COUNT = 4;
 
 function getSubTotal(actualValues: string[], toCountValues: string[]) {
   return toCountValues.reduce((count, a) => {
@@ -76,6 +77,7 @@ export function ReturneesTable({
           <TableRow className="hover:bg-transparent">
             <TableHead className="w-6 text-center">#</TableHead>
             <TableHead>Name</TableHead>
+            <TableHead>First Attendance</TableHead>
             <TableHead className="w-24 text-center">
               <TotalAttendeesDisplay />
             </TableHead>
@@ -84,11 +86,21 @@ export function ReturneesTable({
         <TableBody>
           {/* male primary leaders */}
           <TableRow className="pointer-events-none bg-card">
-            <TableCell
-              colSpan={COL_COUNT}
-              className="font-semibold text-blue-500 text-xs uppercase"
-            >
-              Male {returneesData?.label}
+            <TableCell colSpan={COL_COUNT - 1}>
+              <div className="flex items-center justify-between">
+                <span className="font-semibold text-blue-500 text-xs uppercase">
+                  Male {returneesData?.label}
+                </span>
+                <span className="font-semibold text-green-500 text-xs">
+                  Subtotal
+                </span>
+              </div>
+            </TableCell>
+            <TableCell className="text-center font-semibold text-green-500">
+              {getSubTotal(
+                returneesValues,
+                maleReturnees?.map((m) => m.id) ?? [],
+              )}
             </TableCell>
           </TableRow>
           {maleReturnees?.length === 0 ? (
@@ -105,7 +117,18 @@ export function ReturneesTable({
                   {memberIndex + 1}
                 </TableCell>
                 <TableCell className="border-r py-1 text-xs">
-                  {member.name}
+                  <p>{member.name}</p>
+                  <span className="text-[10px] text-muted-foreground capitalize">
+                    {removeUnderscores(member.memberType)}
+                  </span>
+                </TableCell>
+                <TableCell className="border-r py-1 text-xs">
+                  <p>{member.firstAttendance}</p>
+                  <span className="text-[10px] text-muted-foreground capitalize">
+                    {member.invitedBy?.name
+                      ? `Invited by: ${member.invitedBy.name}`
+                      : "Walk-in"}
+                  </span>
                 </TableCell>
                 <TableCell className="p-0 text-center">
                   <ReturneeCheckField memberId={member.id} />
@@ -113,27 +136,24 @@ export function ReturneesTable({
               </TableRow>
             ))
           )}
+
+          {/* female primary leaders */}
           <TableRow className="pointer-events-none bg-card">
-            <TableCell
-              colSpan={COL_COUNT - 1}
-              className="border-r text-right font-semibold text-xs"
-            >
-              Subtotal
+            <TableCell colSpan={COL_COUNT - 1}>
+              <div className="flex items-center justify-between">
+                <span className="font-semibold text-rose-500 text-xs uppercase">
+                  Female {returneesData?.label}
+                </span>
+                <span className="font-semibold text-green-500 text-xs">
+                  Subtotal
+                </span>
+              </div>
             </TableCell>
             <TableCell className="text-center font-semibold text-green-500">
               {getSubTotal(
                 returneesValues,
-                maleReturnees?.map((m) => m.id) ?? [],
+                femaleReturnees?.map((m) => m.id) ?? [],
               )}
-            </TableCell>
-          </TableRow>
-          {/* female primary leaders */}
-          <TableRow className="pointer-events-none bg-card">
-            <TableCell
-              colSpan={COL_COUNT}
-              className="font-semibold text-rose-400 text-xs uppercase"
-            >
-              Female {returneesData?.label}
             </TableCell>
           </TableRow>
           {femaleReturnees?.length === 0 ? (
@@ -150,7 +170,18 @@ export function ReturneesTable({
                   {memberIndex + 1}
                 </TableCell>
                 <TableCell className="border-r py-1 text-xs">
-                  {member.name}
+                  <p>{member.name}</p>
+                  <span className="text-[10px] text-muted-foreground capitalize">
+                    {removeUnderscores(member.memberType)}
+                  </span>
+                </TableCell>
+                <TableCell className="border-r py-1 text-xs">
+                  <p>{member.firstAttendance}</p>
+                  <span className="text-[10px] text-muted-foreground capitalize">
+                    {member.invitedBy?.name
+                      ? `Invited by: ${member.invitedBy.name}`
+                      : "Walk-in"}
+                  </span>
                 </TableCell>
                 <TableCell className="p-0 text-center">
                   <AttendanceCheckField memberId={member.id} />
@@ -158,20 +189,6 @@ export function ReturneesTable({
               </TableRow>
             ))
           )}
-          <TableRow className="pointer-events-none bg-card">
-            <TableCell
-              colSpan={COL_COUNT - 1}
-              className="border-r text-right font-semibold text-xs"
-            >
-              Subtotal
-            </TableCell>
-            <TableCell className="text-center font-semibold text-green-500">
-              {getSubTotal(
-                returneesValues,
-                femaleReturnees?.map((m) => m.id) ?? [],
-              )}
-            </TableCell>
-          </TableRow>
         </TableBody>
       </Table>
     </div>

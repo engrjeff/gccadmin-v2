@@ -14,6 +14,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useChurchMembers } from "@/hooks/use-church-members";
+import { removeUnderscores } from "@/lib/utils";
 import { AttendanceCheckField } from "./attendance-check-field";
 import type { AddAttendeesInputs } from "./schema";
 import { TotalAttendeesDisplay } from "./total-attendees-display";
@@ -113,7 +114,10 @@ export function ChurchMembersTable({ gender }: { gender: Gender }) {
                         {memberIndex + 1}
                       </TableCell>
                       <TableCell className="border-r py-1 text-xs">
-                        {member.name}
+                        <p>{member.name}</p>
+                        <span className="text-[10px] text-muted-foreground capitalize">
+                          {removeUnderscores(member.memberType)}
+                        </span>
                       </TableCell>
                       <TableCell className="p-0 text-center">
                         <AttendanceCheckField memberId={member.id} />

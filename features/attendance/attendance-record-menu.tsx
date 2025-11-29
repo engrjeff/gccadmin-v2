@@ -7,6 +7,7 @@ import {
   TrashIcon,
 } from "lucide-react";
 import { useState } from "react";
+import type { Attendance } from "@/app/generated/prisma";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -14,17 +15,16 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { AttendanceFormEditDialog } from "./attendance-form-edit-dialog";
 import { AttendanceRecordDeleteDialog } from "./attendance-record-delete-dialog";
 
 type Action = "lock" | "delete" | "edit";
 
 export function AttendanceRecordMenu({
-  attendanceId,
-  attendanceTitle,
+  attendance,
   forCard,
 }: {
-  attendanceId: string;
-  attendanceTitle: string;
+  attendance: Attendance;
   forCard?: boolean;
 }) {
   const [action, setAction] = useState<Action>();
@@ -60,10 +60,21 @@ export function AttendanceRecordMenu({
 
       {/* delete dialog */}
       <AttendanceRecordDeleteDialog
-        attendanceId={attendanceId}
-        attendanceTitle={attendanceTitle}
+        attendanceId={attendance.id}
+        attendanceTitle={attendance.title}
         open={action === "delete"}
         onOpenChange={(isOpen) => {
+          if (!isOpen) {
+            setAction(undefined);
+          }
+        }}
+      />
+
+      {/* edit form dialog */}
+      <AttendanceFormEditDialog
+        attendance={attendance}
+        open={action === "edit"}
+        setOpen={(isOpen) => {
           if (!isOpen) {
             setAction(undefined);
           }

@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { type NextRequest, NextResponse } from "next/server";
 import type { MemberType } from "@/app/generated/prisma";
 import prisma from "@/lib/prisma";
@@ -19,30 +20,31 @@ export async function GET(request: NextRequest) {
     // and attendedAt < attendance.date
     const currentAttendance = await prisma.attendance.findUnique({
       where: { id: currentAttendanceId },
-    });
-
-    const returnees = await prisma.newComer.findMany({
-      where: {
-        OR: [
-          {
-            attendances: {
-              some: {
-                id: {
-                  not: currentAttendanceId,
-                },
-              },
-            },
-          },
-          {
+      include: {
+        newComers: {
+          where: {
             attendances: {
               every: {
                 id: currentAttendanceId,
               },
             },
           },
-        ],
+        },
+      },
+    });
+
+    // find orginal new comers for this attendance
+    const originalNewComersIds = currentAttendance?.newComers.map(
+      (nc) => nc.id,
+    );
+
+    const returnees = await prisma.newComer.findMany({
+      where: {
+        id: {
+          notIn: originalNewComersIds,
+        },
         attendedAt: {
-          lte: currentAttendance?.date,
+          lt: currentAttendance?.date,
         },
         memberType: memberType ?? undefined,
         name: q
@@ -52,15 +54,21 @@ export async function GET(request: NextRequest) {
             }
           : undefined,
       },
-      include: { attendances: { select: { id: true } } },
+      include: {
+        invitedBy: { select: { id: true, name: true } },
+        attendances: { select: { id: true } },
+      },
       orderBy: {
-        name: "asc",
+        createdAt: "asc",
       },
     });
 
     return NextResponse.json({
       label: "Returnees",
-      members: returnees,
+      members: returnees.map((r) => ({
+        ...r,
+        firstAttendance: format(r.attendedAt, "PP"),
+      })),
     });
   } catch (error) {
     console.log("Error at GET /api/attendance/returnees", error);

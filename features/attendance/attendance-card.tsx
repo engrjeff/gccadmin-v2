@@ -55,11 +55,7 @@ export function AttendanceCard({
         </CardDescription>
       </CardHeader>
       <CardAction className="absolute top-1 right-1">
-        <AttendanceRecordMenu
-          forCard
-          attendanceId={attendanceRecord.id}
-          attendanceTitle={attendanceRecord.title}
-        />
+        <AttendanceRecordMenu forCard attendance={attendanceRecord} />
       </CardAction>
       <CardContent className="space-y-3 px-4">
         <div className="flex gap-2">

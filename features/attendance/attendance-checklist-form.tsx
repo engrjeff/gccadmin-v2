@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import type { NewComer } from "@/app/generated/prisma";
 import { Form } from "@/components/ui/form";
 import { useAttendanceRecord } from "@/hooks/use-attendance-record";
+import { useReturnees } from "@/hooks/use-returnees";
 import { addAttendees } from "./actions";
 import { type AddAttendeesInputs, addAttendeesSchema } from "./schema";
 
@@ -33,6 +34,7 @@ export function AttendanceChecklistForm({
   const router = useRouter();
 
   const attendanceQuery = useAttendanceRecord(attendanceId);
+  const returneesQuery = useReturnees({ currentAttendanceId: attendanceId });
 
   const form = useForm<AddAttendeesInputs>({
     resolver: zodResolver(addAttendeesSchema),
@@ -129,6 +131,7 @@ export function AttendanceChecklistForm({
         router.refresh();
 
         await attendanceQuery.refetch();
+        await returneesQuery.refetch();
       }
     } catch (error) {
       if (error instanceof Error) {

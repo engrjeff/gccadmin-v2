@@ -112,6 +112,7 @@ async function AttendanceItemPage(props: PageProps) {
         defaultAttendees={attendanceRecord.attendees}
         defaultNewComers={newComers}
         defaultReturnees={returnees}
+        isLocked={attendanceRecord.isLocked ?? false}
       >
         <Suspense>
           <div className="flex items-center justify-between gap-4">

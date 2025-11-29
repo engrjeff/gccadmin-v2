@@ -20,6 +20,7 @@ export function ReturneeCheckField({ memberId }: { memberId: string }) {
             className="inline-flex size-full h-9 cursor-pointer items-center justify-center text-center hover:bg-card"
           >
             <Checkbox
+              disabled={form.formState.disabled}
               name={`returnee-${memberId}`}
               id={`returnee-${memberId}`}
               checked={returneesValues.includes(memberId)}

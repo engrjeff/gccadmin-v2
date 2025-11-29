@@ -62,3 +62,8 @@ export const removeAttendeesSchema = z.object({
 });
 
 export type RemoveAttendeesInputs = z.infer<typeof removeAttendeesSchema>;
+
+export const attendanceLockUnlockSchema = z.object({
+  id: z.string({ error: "Attendance ID is required." }),
+  isLocked: z.boolean(),
+});

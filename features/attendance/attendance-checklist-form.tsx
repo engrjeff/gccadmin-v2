@@ -21,11 +21,13 @@ const STORAGE_KEY = "GCC_ATTENDANCE";
 
 export function AttendanceChecklistForm({
   attendanceId,
+  isLocked,
   defaultAttendees,
   defaultNewComers,
   defaultReturnees,
   children,
 }: PropsWithChildren<{
+  isLocked: boolean;
   attendanceId: string;
   defaultNewComers: Array<NewComer>;
   defaultAttendees: Array<{ id: string }>;
@@ -38,6 +40,7 @@ export function AttendanceChecklistForm({
 
   const form = useForm<AddAttendeesInputs>({
     resolver: zodResolver(addAttendeesSchema),
+    disabled: isLocked,
     defaultValues: {
       attendanceId,
       attendees: defaultAttendees ?? [],
@@ -120,6 +123,8 @@ export function AttendanceChecklistForm({
 
   const onSubmit: SubmitHandler<AddAttendeesInputs> = async (data) => {
     try {
+      if (isLocked) return;
+
       const result = await createAction.executeAsync(data);
 
       if (result.data?.attendance?.id) {

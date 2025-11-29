@@ -13,7 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useReturnees } from "@/hooks/use-returnees";
-import { removeUnderscores } from "@/lib/utils";
+import { cn, removeUnderscores } from "@/lib/utils";
 import { AttendanceCheckField } from "./attendance-check-field";
 import { ReturneeCheckField } from "./returnee-check-field";
 import type { AddAttendeesInputs } from "./schema";
@@ -71,7 +71,12 @@ export function ReturneesTable({
   );
 
   return (
-    <div className="overflow-hidden rounded-md border">
+    <div
+      className={cn(
+        "overflow-hidden rounded-md border",
+        form.formState.disabled ? "pointer-events-none cursor-not-allowed" : "",
+      )}
+    >
       <Table>
         <TableHeader className="bg-card">
           <TableRow className="hover:bg-transparent">

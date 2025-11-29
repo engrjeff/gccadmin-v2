@@ -15,24 +15,14 @@ export async function GET(request: NextRequest) {
         isActive: true,
         isDeleted: false,
         isPrimary: true,
-        memberType: memberType ?? undefined,
-        name:
-          q && gender === "all"
-            ? {
-                contains: q,
-                mode: "insensitive",
-                not: {
-                  equals: "GCC Admin",
-                },
-              }
-            : {
-                not: {
-                  equals: "GCC Admin",
-                },
-              },
+        name: {
+          not: {
+            equals: "GCC Admin",
+          },
+        },
       },
       orderBy: {
-        createdAt: "asc",
+        name: "asc",
       },
     });
 
@@ -58,6 +48,13 @@ export async function GET(request: NextRequest) {
       leadersQuery,
       churchMembersQuery,
     ]);
+
+    leaders.sort((a, _b) => {
+      if (a.name.startsWith("Pastor") || a.name.startsWith("John De Guzman"))
+        return -1;
+
+      return 1;
+    });
 
     const churchMembersToLeadersMap = new Map<
       string,

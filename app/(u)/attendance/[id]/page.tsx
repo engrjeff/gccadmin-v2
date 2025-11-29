@@ -76,7 +76,7 @@ async function AttendanceItemPage(props: PageProps) {
   );
 
   const returnees = attendanceRecord.newComers?.filter(
-    (nc) => nc.attendances.length > 1,
+    (r) => r.attendances.length > 1,
   );
 
   return (
@@ -121,7 +121,10 @@ async function AttendanceItemPage(props: PageProps) {
             <AttendanceChecklistTabs />
             <AttendanceChecklistSubmitButton />
           </div>
-          <ChurchMembersFilters key={JSON.stringify(searchParams)} />
+          <ChurchMembersFilters
+            key={JSON.stringify(searchParams)}
+            view={currentView}
+          />
           <SwitchTable
             attendanceId={attendanceRecord.id}
             currentView={currentView}

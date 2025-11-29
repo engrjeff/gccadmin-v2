@@ -98,7 +98,9 @@ export function ChurchLeadersTable() {
           </TableRow>
           {maleLeaders?.length === 0 ? (
             <TableRow className="hover:bg-transparent">
-              <TableCell colSpan={COL_COUNT}>No male Primary Leaders</TableCell>
+              <TableCell colSpan={COL_COUNT}>
+                No male Primary Leaders found
+              </TableCell>
             </TableRow>
           ) : (
             maleLeaders?.map((member, memberIndex) => (
@@ -141,7 +143,7 @@ export function ChurchLeadersTable() {
           {femaleLeaders?.length === 0 ? (
             <TableRow className="hover:bg-transparent">
               <TableCell colSpan={COL_COUNT}>
-                No female Primary Leaders
+                No female Primary Leaders found
               </TableCell>
             </TableRow>
           ) : (

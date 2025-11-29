@@ -1,5 +1,7 @@
-import { PackageIcon } from "lucide-react";
+import { ExternalLinkIcon, PackageIcon } from "lucide-react";
 import type { Metadata } from "next";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { SearchField } from "@/components/ui/search-field";
 import { AttendanceCard } from "@/features/attendance/attendance-card";
 import { AttendanceFormDialog } from "@/features/attendance/attendance-form-dialog";
@@ -23,7 +25,7 @@ async function AttendancePage({ searchParams }: PageProps) {
 
   return (
     <div className="flex flex-1 flex-col gap-4 p-4">
-      <div className="flex items-center gap-4">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-center">
         <div>
           <h2 className="font-bold">Attendance</h2>
           <p className="text-muted-foreground text-sm">
@@ -31,8 +33,13 @@ async function AttendancePage({ searchParams }: PageProps) {
           </p>
         </div>
         {attendanceRecords.length === 0 ? null : (
-          <div className="ml-auto flex items-center gap-3">
+          <div className="flex items-center gap-3 lg:ml-auto">
             <AttendanceFormDialog />
+            <Button type="button" size="sm" variant="secondaryOutline" asChild>
+              <Link href="/attendance/new-attendees">
+                <ExternalLinkIcon /> View New Attendees
+              </Link>
+            </Button>
           </div>
         )}
       </div>

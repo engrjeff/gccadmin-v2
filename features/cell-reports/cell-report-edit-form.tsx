@@ -266,9 +266,6 @@ export function CellReportEditForm({
                         <SelectItem value="DISCIPLESHIP">
                           Discipleship Cell
                         </SelectItem>
-                        <SelectItem value="SOULWINNING">
-                          Soul Winning
-                        </SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />

@@ -54,8 +54,8 @@ function DateRangeContent({
   preset,
   setPreset,
 }: Props) {
-  const today = new Date();
-
+  const now = new Date();
+  const today = getClientDateRange("today");
   const thisWeek = getClientDateRange("this_week");
   const lastWeek = getClientDateRange("last_week");
   const thisMonth = getClientDateRange("this_month");
@@ -72,7 +72,7 @@ function DateRangeContent({
   );
 
   const [month, setMonth] = useState(
-    dateRangeValue ? dateRangeValue.from : today,
+    dateRangeValue ? dateRangeValue.from : today?.start,
   );
 
   function handleDateRangeChange(value: DateRange | undefined) {
@@ -97,7 +97,7 @@ function DateRangeContent({
               size="sm"
               className="w-full justify-start"
               onClick={() => {
-                handleDateRangeChange({ from: today, to: today });
+                handleDateRangeChange({ from: today?.start, to: today?.end });
                 setPreset("today");
               }}
             >
@@ -189,7 +189,7 @@ function DateRangeContent({
         onMonthChange={setMonth}
         className="hidden px-2 py-0 md:block"
         disabled={[
-          { after: today }, // Dates before today
+          { after: now }, // Dates before today
         ]}
       />
     </div>

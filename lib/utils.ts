@@ -1,11 +1,13 @@
 import { type ClassValue, clsx } from "clsx";
 import {
+  endOfDay,
   endOfMonth,
   endOfToday,
   endOfWeek,
   format,
   intlFormatDistance,
   isSunday,
+  startOfDay,
   startOfMonth,
   startOfWeek,
   startOfYear,
@@ -70,6 +72,13 @@ export function getClientDateRange(
   const timeZone = "Asia/Manila";
   const dateToday = new Date();
   const now = toZonedTime(dateToday, timeZone);
+
+  if (preset === "today") {
+    return {
+      start: startOfDay(now),
+      end: endOfDay(now),
+    };
+  }
 
   if (preset === "this_week") {
     return {

@@ -4,6 +4,7 @@ import { AppHeader } from "@/components/app-header";
 import { AppSidebar } from "@/components/app-sidebar";
 import { BottomNavigation } from "@/components/bottom-navigation";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { CriticalAlertDialog } from "@/features/reports/critical-alert-dialog";
 
 function UserPagesLayout({ children }: { children: ReactNode }) {
   return (
@@ -18,6 +19,7 @@ function UserPagesLayout({ children }: { children: ReactNode }) {
       <AppSidebar variant="sidebar" />
       <SidebarInset className="max-h-screen overflow-hidden pb-16 sm:pb-0">
         <Announcement />
+        <CriticalAlertDialog />
         <AppHeader />
         <div className="max-h-[100%-48px] flex-1 overflow-y-auto">
           <div className="container mx-auto h-full max-w-6xl">{children}</div>

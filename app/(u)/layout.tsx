@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Announcement } from "@/components/announcement";
+import { AnnouncementInfo } from "@/components/announcement-info";
 import { AppHeader } from "@/components/app-header";
 import { AppSidebar } from "@/components/app-sidebar";
 import { BottomNavigation } from "@/components/bottom-navigation";
@@ -17,7 +17,7 @@ function UserPagesLayout({ children }: { children: ReactNode }) {
     >
       <AppSidebar variant="sidebar" />
       <SidebarInset className="max-h-screen overflow-hidden pb-16 sm:pb-0">
-        <Announcement />
+        <AnnouncementInfo />
         <AppHeader />
         <div className="max-h-[100%-48px] flex-1 overflow-y-auto">
           <div className="container mx-auto h-full max-w-6xl">{children}</div>

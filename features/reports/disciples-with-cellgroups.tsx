@@ -73,7 +73,7 @@ export function DisciplesWithCellGroups() {
   const data = Array.from(assistantCgCountMap.values());
 
   return (
-    <Card className="h-full gap-0 bg-card/60 py-4">
+    <Card className="h-full gap-0 bg-card/60 pt-4 pb-0">
       <CardHeader className="border-b px-4 [.border-b]:pb-4">
         <CardTitle>Disciples with Cell Groups</CardTitle>
         <CardDescription className="flex items-center gap-2 text-xs">

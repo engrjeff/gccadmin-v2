@@ -14,6 +14,9 @@ export const API_ENDPOINTS = {
   GET_MEMBER_STATISTICS: "/reports/member-statistics",
   GET_CELLGROUP_STATISTICS: "/reports/cell-group-statistics",
   GET_CELLREPORT_TREND: "/reports/cell-report-trend",
+  GET_CHURCH_MEMBERS: "/attendance/church-members",
+  GET_RETURNEES: "/attendance/returnees",
+  GET_ATTENDANCE: "/attendance",
 
   // GCC Resources
   GET_PREACHING_FOLDERS: "/gcc-resources/preaching-folders",

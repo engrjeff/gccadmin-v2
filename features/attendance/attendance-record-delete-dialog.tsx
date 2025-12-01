@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useAction } from "next-safe-action/hooks";
 import type { ComponentProps } from "react";
 import { toast } from "sonner";
@@ -13,45 +14,39 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { SubmitButton } from "@/components/ui/submit-button";
-import { updateDiscipleStatus } from "./actions";
+import { deleteAttendance } from "./actions";
 
-interface DiscipleChangeStatusDialogProps
-  extends ComponentProps<typeof AlertDialog> {
-  discipleName: string;
-  discipleId: string;
-  isActive: boolean;
+interface DiscipleDeleteDialogProps extends ComponentProps<typeof AlertDialog> {
+  attendanceId: string;
+  attendanceTitle: string;
 }
 
-export function DiscipleChangeStatusDialog({
-  discipleName,
-  discipleId,
-  isActive,
+export function AttendanceRecordDeleteDialog({
+  attendanceTitle,
+  attendanceId,
   ...props
-}: DiscipleChangeStatusDialogProps) {
-  const changeAction = useAction(updateDiscipleStatus, {
+}: DiscipleDeleteDialogProps) {
+  const router = useRouter();
+
+  const deleteAction = useAction(deleteAttendance, {
     onError: ({ error }) => {
       console.error(error);
-      toast.error(error.serverError ?? `Error updating the disciple's status`);
+      toast.error(error.serverError ?? `Error deleting attendance record`);
     },
   });
 
-  const isBusy = changeAction.isPending;
+  const isBusy = deleteAction.isPending;
 
   async function handleDelete() {
     try {
-      const result = await changeAction.executeAsync({
-        id: discipleId,
-        isActive: !isActive,
-      });
+      const result = await deleteAction.executeAsync({ id: attendanceId });
 
       if (result.data?.success) {
-        toast.success(
-          isActive
-            ? "The disciple was marked as inactive."
-            : "The disciple was marked as active",
-        );
+        toast.success("The attendance record was deleted successfully.");
 
         props.onOpenChange?.(false);
+
+        router.replace("/attendance");
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -66,17 +61,20 @@ export function DiscipleChangeStatusDialog({
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action will change the status of {discipleName} <br />
-            <span className="font-semibold text-blue-500">
-              from {isActive ? "ACTIVE" : "INACTIVE"} to{" "}
-              {isActive ? "INACTIVE" : "ACTIVE"}
+            This action will delete the record{" "}
+            <span className="font-semibold text-destructive">
+              {attendanceTitle}
             </span>
             .
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel disabled={isBusy}>Cancel</AlertDialogCancel>
-          <SubmitButton loading={isBusy} onClick={handleDelete}>
+          <SubmitButton
+            variant="destructive"
+            loading={isBusy}
+            onClick={handleDelete}
+          >
             Continue
           </SubmitButton>
         </AlertDialogFooter>

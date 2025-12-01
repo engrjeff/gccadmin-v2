@@ -117,8 +117,13 @@ model Disciple {
   assistedCellGroups CellReport[] @relation("assistedCellGroups") // as assistant
   attendedCellGroups CellReport[] @relation("attendedCellGroups") // as attendee
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  attendances       Attendance[]
+  churchInvites     NewComer[]   @relation("invitedby")
+  asNewComerProfile NewComer?    @relation("discipleProfile") // his/her profile when he/she was a new comer
+
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  newComers NewComer[]
 
   @@index([id, leaderId])
   @@index([leaderId])
@@ -239,4 +244,53 @@ model ProcessLesson {
   updatedAt DateTime @updatedAt
 
   @@index([processLessonSeriesId])
+}
+
+enum AttendanceType {
+  SUNDAY_SERVICE
+  EVENT
+}
+
+model Attendance {
+  id       String         @id @default(cuid())
+  title    String
+  date     DateTime
+  type     AttendanceType @default(SUNDAY_SERVICE)
+  tags     String[]
+  isLocked Boolean?       @default(false)
+
+  attendees Disciple[]
+  newComers NewComer[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model NewComer {
+  id String @id @default(cuid())
+
+  name       String
+  gender     Gender
+  memberType MemberType @default(UNCATEGORIZED)
+
+  contactNo String?
+  email     String?
+  address   String?
+
+  attendances Attendance[]
+
+  invitedById String?
+  invitedBy   Disciple? @relation(fields: [invitedById], references: [id], name: "invitedby")
+
+  discipleProfileId String?   @unique
+  discipleProfile   Disciple? @relation(fields: [discipleProfileId], references: [id], name: "discipleProfile")
+
+  attendedAt DateTime @default(now())
+
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  disciple   Disciple? @relation(fields: [discipleId], references: [id])
+  discipleId String?
+
+  @@index([invitedById])
 }

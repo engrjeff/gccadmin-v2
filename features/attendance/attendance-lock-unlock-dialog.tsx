@@ -1,5 +1,6 @@
 "use client";
 
+import { LockIcon } from "lucide-react";
 import { useAction } from "next-safe-action/hooks";
 import type { ComponentProps } from "react";
 import { toast } from "sonner";
@@ -13,25 +14,24 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { SubmitButton } from "@/components/ui/submit-button";
-import { updateDiscipleStatus } from "./actions";
+import { updateAttendanceLockUnlockStatus } from "./actions";
 
-interface DiscipleChangeStatusDialogProps
-  extends ComponentProps<typeof AlertDialog> {
-  discipleName: string;
-  discipleId: string;
-  isActive: boolean;
+interface Props extends ComponentProps<typeof AlertDialog> {
+  attendanceTitle: string;
+  attendanceId: string;
+  isLocked: boolean;
 }
 
-export function DiscipleChangeStatusDialog({
-  discipleName,
-  discipleId,
-  isActive,
+export function AttendanceLockUnlockDialog({
+  attendanceTitle,
+  attendanceId,
+  isLocked,
   ...props
-}: DiscipleChangeStatusDialogProps) {
-  const changeAction = useAction(updateDiscipleStatus, {
+}: Props) {
+  const changeAction = useAction(updateAttendanceLockUnlockStatus, {
     onError: ({ error }) => {
       console.error(error);
-      toast.error(error.serverError ?? `Error updating the disciple's status`);
+      toast.error(error.serverError ?? `Error updating the attendance status`);
     },
   });
 
@@ -40,15 +40,15 @@ export function DiscipleChangeStatusDialog({
   async function handleDelete() {
     try {
       const result = await changeAction.executeAsync({
-        id: discipleId,
-        isActive: !isActive,
+        id: attendanceId,
+        isLocked: !isLocked,
       });
 
-      if (result.data?.success) {
+      if (result.data?.attendance?.id) {
         toast.success(
-          isActive
-            ? "The disciple was marked as inactive."
-            : "The disciple was marked as active",
+          isLocked
+            ? "The attendance was locked."
+            : "The attendance was unlocked",
         );
 
         props.onOpenChange?.(false);
@@ -64,14 +64,18 @@ export function DiscipleChangeStatusDialog({
     <AlertDialog {...props}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <div className="flex items-center gap-3">
+            <LockIcon className="size-4 text-amber-500" />
+            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          </div>
           <AlertDialogDescription>
-            This action will change the status of {discipleName} <br />
-            <span className="font-semibold text-blue-500">
-              from {isActive ? "ACTIVE" : "INACTIVE"} to{" "}
-              {isActive ? "INACTIVE" : "ACTIVE"}
+            This action will{" "}
+            <span className="font-semibold text-amber-500">LOCK</span> the
+            following attendance: <br />
+            <br />
+            <span className="font-semibold text-foreground">
+              {attendanceTitle}
             </span>
-            .
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

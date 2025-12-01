@@ -16,7 +16,7 @@ import { getClientDateRange } from "@/lib/utils";
 
 export function NoCellReportAlert() {
   const lastWeek = getClientDateRange("last_week");
-  const thisMonth = getClientDateRange("this_month");
+  const lastMonth = getClientDateRange("last_month");
 
   const leadersQuery = useLeaders({ enabled: true });
 
@@ -27,16 +27,16 @@ export function NoCellReportAlert() {
     },
   });
 
-  const thisMonthCGStatsQuery = useCellGroupStatistics({
+  const lastMonthCGStatsQuery = useCellGroupStatistics({
     dateRange: {
-      from: thisMonth?.start,
-      to: thisMonth?.end,
+      from: lastMonth?.start,
+      to: lastMonth?.end,
     },
   });
 
   if (
     lastWeekCGStatsQuery.isLoading ||
-    thisMonthCGStatsQuery.isLoading ||
+    lastMonthCGStatsQuery.isLoading ||
     leadersQuery.isLoading
   ) {
     return null;
@@ -68,7 +68,7 @@ export function NoCellReportAlert() {
 
   const leadersMap2 = new Map(
     leadersQuery.data?.map((leader) => {
-      const reportsByLeader = thisMonthCGStatsQuery.data?.cellReports.filter(
+      const reportsByLeader = lastMonthCGStatsQuery.data?.cellReports.filter(
         (c) => c.leaderId === leader.id,
       );
 
@@ -104,7 +104,7 @@ export function NoCellReportAlert() {
           </AlertDialogTitle>
           <AlertDialogDescription>
             The following leaders have not submitted their cell reports for last
-            week and/or for this month:
+            week and/or for last month:
           </AlertDialogDescription>
           <div className="space-y-4">
             {noReportsLastWeek.length > 0 ? (

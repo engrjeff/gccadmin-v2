@@ -6,6 +6,7 @@ import {
   CircleUserIcon,
   GalleryVerticalEnd,
   Grid2X2Icon,
+  LeafIcon,
   LibraryIcon,
   ListIcon,
   ShieldCheckIcon,
@@ -73,6 +74,11 @@ const data = {
       //     icon: PlusIcon,
       //   },
       // ],
+    },
+    {
+      name: "Soul Winning",
+      url: "/soul-winning",
+      icon: LeafIcon,
     },
     {
       name: "Cell Reports",

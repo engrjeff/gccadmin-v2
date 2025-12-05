@@ -3,6 +3,7 @@ import type {
   CellStatus,
   ChurchStatus,
   Disciple,
+  SoulWinningReport,
 } from "@/app/generated/prisma";
 
 // Create a type for the roles
@@ -82,4 +83,33 @@ export interface CellReportRecord extends CellReport {
 
 export interface SimpleCellReport extends CellReportRecord {
   date: string;
+}
+
+export interface SoulWinningReportRecord extends SoulWinningReport {
+  date: string;
+  rawDate: Date;
+  networkLeader: {
+    name: string;
+    id: string;
+    userAccountId: string | null;
+  };
+  lesson: {
+    id: string;
+    scriptureReferences: string[];
+    lessonSeries: {
+      id: string;
+      title: string;
+    };
+    title: string;
+  };
+  assistantLeader: {
+    name: string;
+    id: string;
+    isMyPrimary: boolean;
+    isPrimary: boolean;
+  } | null;
+  newBelievers: {
+    name: string;
+    id: string;
+  }[];
 }

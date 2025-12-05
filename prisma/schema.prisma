@@ -327,11 +327,18 @@ model NewBeliever {
   updatedAt DateTime @updatedAt
 }
 
+enum SoulWinningReportType {
+  SOUL_WINNING
+  CONSOLIDATION
+}
+
 model SoulWinningReport {
   id String @id @default(cuid())
 
   venue String
   date  DateTime
+
+  type SoulWinningReportType @default(SOUL_WINNING)
 
   lessonId String
   lesson   Lesson @relation(fields: [lessonId], references: [id])

@@ -6,6 +6,7 @@ import {
   PlusIcon,
   UserPlusIcon,
 } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -50,6 +51,11 @@ export function QuickActions() {
         <DropdownMenuContent align="end">
           <DropdownMenuItem onClick={() => setAction("add-disciple")}>
             <UserPlusIcon /> Add Disciple
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href="/soul-winning/new" onClick={reset}>
+              <PlusIcon /> Create Soul-winning Report
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem
             disabled={locked}

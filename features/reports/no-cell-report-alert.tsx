@@ -86,12 +86,12 @@ export function NoCellReportAlert() {
     }),
   );
 
-  const noReportsThisMonth = Array.from(leadersMap2.values()).filter(
+  const noReportsLastMonth = Array.from(leadersMap2.values()).filter(
     (leader) => leader.cgCount === 0,
   );
 
   const shouldShowAlert =
-    noReportsLastWeek?.length || noReportsThisMonth?.length;
+    noReportsLastWeek?.length || noReportsLastMonth?.length;
 
   if (!shouldShowAlert) return null;
 
@@ -121,13 +121,13 @@ export function NoCellReportAlert() {
                 </ul>
               </div>
             ) : null}
-            {noReportsThisMonth.length > 0 ? (
+            {noReportsLastMonth.length > 0 ? (
               <div className="space-y-2 rounded border bg-card p-3">
                 <p className="text-muted-foreground text-xs">
-                  No Cell Reports This Month
+                  No Cell Reports Last Month
                 </p>
                 <ul className="max-h-[180px] list-disc space-y-2 overflow-y-auto pl-6">
-                  {noReportsThisMonth.map((leader) => (
+                  {noReportsLastMonth.map((leader) => (
                     <li key={leader.id}>
                       <p className="text-sm">{leader.name}</p>
                     </li>

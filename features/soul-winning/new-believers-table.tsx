@@ -41,6 +41,7 @@ export function NewBelieversTable({
       <Table>
         <TableHeader className="sticky top-0 z-10 bg-card backdrop-blur-sm">
           <TableRow className="hover:bg-transparent">
+            <TableHead className="size-4 text-center">#</TableHead>
             <TableHead>Name</TableHead>
             <TableHead>Handled By</TableHead>
             {lessons.map((lesson) => (
@@ -55,8 +56,11 @@ export function NewBelieversTable({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {newBelievers.map((nb) => (
+          {newBelievers.map((nb, nbIndex) => (
             <TableRow key={nb.id} className="hover:bg-transparent">
+              <TableCell className="size-4 border-r bg-card text-center">
+                {nbIndex + 1}
+              </TableCell>
               <TableCell className="border-r">
                 <p className="font-semibold">{nb.name}</p>
                 <p className="text-muted-foreground text-xs capitalize">

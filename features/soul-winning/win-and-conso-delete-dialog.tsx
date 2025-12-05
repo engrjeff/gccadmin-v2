@@ -14,7 +14,6 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { SubmitButton } from "@/components/ui/submit-button";
-import { removeUnderscores } from "@/lib/utils";
 import { deleteSoulWinningOrConsoReport } from "./actions";
 
 interface WinAndConsoDeleteDialogProps
@@ -39,9 +38,10 @@ export function WinAndConsoDeleteDialog({
     },
   });
 
-  const reportType = SoulWinningReportType.SOUL_WINNING
-    ? "Soul-winning"
-    : "Consolidation";
+  const reportType =
+    type === SoulWinningReportType.SOUL_WINNING
+      ? "Soul-winning"
+      : "Consolidation";
 
   const isBusy = deleteAction.isPending;
 
@@ -69,7 +69,7 @@ export function WinAndConsoDeleteDialog({
           <AlertDialogDescription>
             This action will delete the{" "}
             <span className="font-semibold text-foreground capitalize">
-              {removeUnderscores(type)}
+              {reportType}
             </span>{" "}
             report.
           </AlertDialogDescription>

@@ -24,7 +24,7 @@ const dockVariants = cva(
 );
 
 const dockItemVariants = cva(
-  "flex min-w-0 flex-1 flex-col items-center justify-center gap-1 rounded-lg p-1.5 font-medium text-xs transition-all duration-200",
+  "flex min-w-0 flex-1 flex-col items-center justify-center gap-1 rounded-lg p-1 font-medium text-xs transition-all duration-200",
   {
     variants: {
       variant: {
@@ -97,7 +97,7 @@ function DockItem({
 function DockIcon({ className, children, ...props }: DockIconProps) {
   return (
     <div className={cn("relative", className)} {...props}>
-      <div className="flex items-center justify-center [&_svg]:size-5">
+      <div className="flex items-center justify-center [&_svg]:size-4">
         {children}
       </div>
     </div>
@@ -106,12 +106,15 @@ function DockIcon({ className, children, ...props }: DockIconProps) {
 
 function DockLabel({ className, children, ...props }: DockLabelProps) {
   return (
-    <span
-      className={cn("max-w-full truncate text-center leading-tight", className)}
+    <p
+      className={cn(
+        "max-w-full truncate text-center text-xs leading-tight",
+        className,
+      )}
       {...props}
     >
       {children}
-    </span>
+    </p>
   );
 }
 

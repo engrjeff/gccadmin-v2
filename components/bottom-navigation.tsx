@@ -39,12 +39,12 @@ const menuItems = [
     icon: UsersIcon,
   },
   {
-    name: "Win & Conso",
+    name: "Soul Win",
     url: "/soul-winning",
     icon: LeafIcon,
   },
   {
-    name: "Cell Groups",
+    name: "Cell",
     url: "/cell-reports",
     icon: BookIcon,
   },

@@ -4,6 +4,7 @@ import {
   BookIcon,
   HomeIcon,
   InfoIcon,
+  LeafIcon,
   LockIcon,
   PlusIcon,
   UserPlusIcon,
@@ -38,7 +39,12 @@ const menuItems = [
     icon: UsersIcon,
   },
   {
-    name: "Reports",
+    name: "Win & Conso",
+    url: "/soul-winning",
+    icon: LeafIcon,
+  },
+  {
+    name: "Cell Groups",
     url: "/cell-reports",
     icon: BookIcon,
   },
@@ -103,6 +109,16 @@ function MobileCreateDockItem() {
             <Button
               size="lg"
               variant="ghost"
+              asChild
+              className="w-full justify-start"
+            >
+              <Link href="/soul-winning/new" onClick={reset}>
+                <PlusIcon /> Create Soul-winning Report
+              </Link>
+            </Button>
+            <Button
+              size="lg"
+              variant="ghost"
               className="w-full justify-start"
               disabled={locked}
               onClick={() => setAction("create-cell-report")}
@@ -111,7 +127,7 @@ function MobileCreateDockItem() {
             </Button>
           </div>
           <DrawerFooter className="flex-row items-center gap-2 border-t text-muted-foreground text-xs">
-            <InfoIcon className="size-3" />
+            <InfoIcon className="size-3 shrink-0 text-blue-500" />
             <p>
               You can also add Disciple and create Cell Report in their
               respective pages.

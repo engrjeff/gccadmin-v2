@@ -10,6 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { removeUnderscores } from "@/lib/utils";
+import { NewBelieverRowActions } from "./new-believer-row-actions";
 
 interface ExtendedNewBeliever extends NewBeliever {
   networkLeader: { id: string; name: string } | null;
@@ -50,6 +51,7 @@ export function NewBelieversTable({
                 </div>
               </TableHead>
             ))}
+            <TableHead className="text-center">Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -89,6 +91,9 @@ export function NewBelieversTable({
                   )}
                 </TableCell>
               ))}
+              <TableCell className="text-center">
+                <NewBelieverRowActions newBeliever={nb} />
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

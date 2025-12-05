@@ -67,3 +67,7 @@ export type ConsolidationCreateInputs = z.infer<
 export const reportIdSchema = z.object({
   id: z.string({ error: "Report ID is required." }),
 });
+
+export const newBelieverIdSchema = z.object({
+  id: z.string({ error: "New Believer ID is required." }),
+});

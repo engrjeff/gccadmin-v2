@@ -6,6 +6,7 @@ import prisma from "@/lib/prisma";
 import { leaderActionClient } from "@/lib/safe-action";
 import {
   consolidationReportCreateSchema,
+  newBelieverIdSchema,
   reportIdSchema,
   soulWinningReportCreateSchema,
 } from "./schema";
@@ -138,6 +139,18 @@ export const deleteSoulWinningOrConsoReport = leaderActionClient
         }
       }
     });
+
+    revalidatePath("/soul-winning");
+    revalidatePath("/soul-winning/consolidation");
+
+    return { success: true };
+  });
+
+export const deleteNewBeliever = leaderActionClient
+  .metadata({ actionName: "deleteNewBeliever" })
+  .inputSchema(newBelieverIdSchema)
+  .action(async ({ parsedInput: { id } }) => {
+    await prisma.newBeliever.delete({ where: { id } });
 
     revalidatePath("/soul-winning");
     revalidatePath("/soul-winning/consolidation");

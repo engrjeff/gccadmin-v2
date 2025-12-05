@@ -75,6 +75,7 @@ const defaultValues: SoulWinningCreateInputs = {
 
 interface NewBelieverFormProps {
   onAdd: (data: NewBelieverInputs) => void;
+  onDelete: (index: number) => void;
 }
 
 function NewBelieverForm(props: NewBelieverFormProps) {
@@ -92,10 +93,10 @@ function NewBelieverForm(props: NewBelieverFormProps) {
           </p>
         </div>
       ) : (
-        <ul>
+        <ul className="space-y-1.5">
           {newBelievers.map((nb, nbIndex) => (
             <li key={`new-believer-value-${nbIndex.toString()}`}>
-              <div className="flex items-start gap-2">
+              <div className="flex items-start gap-2 rounded border p-1">
                 <div className="mt-0.5 text-muted-foreground text-xs">
                   {nbIndex + 1}.
                 </div>
@@ -105,6 +106,18 @@ function NewBelieverForm(props: NewBelieverFormProps) {
                     <span>{removeUnderscores(nb.gender)}</span>,{" "}
                     <span>{removeUnderscores(nb.memberType)}</span>
                   </p>
+                </div>
+                <div className="ml-auto">
+                  <Button
+                    type="button"
+                    size="icon"
+                    variant="outline"
+                    aria-label="remove this entry"
+                    className="shrink-0 text-destructive hover:text-destructive"
+                    onClick={() => props.onDelete(nbIndex)}
+                  >
+                    <XIcon />
+                  </Button>
                 </div>
               </div>
             </li>
@@ -525,7 +538,10 @@ export function SoulWinningReportForm() {
             </p>
           )}
           {isMobile ? (
-            <NewBelieverForm onAdd={newBelieversFields.append} />
+            <NewBelieverForm
+              onAdd={newBelieversFields.append}
+              onDelete={newBelieversFields.remove}
+            />
           ) : (
             <NewBelieverFormFields />
           )}

@@ -38,7 +38,7 @@ export function SoulWinningCreateDropdown() {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={reset} asChild>
             <Link href="/soul-winning/new">Soul-Winning Report</Link>
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setAction("consolidation")}>

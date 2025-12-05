@@ -6,6 +6,7 @@ import prisma from "@/lib/prisma";
 import { leaderActionClient } from "@/lib/safe-action";
 import {
   consolidationReportCreateSchema,
+  newBelieverEditSchema,
   newBelieverIdSchema,
   reportIdSchema,
   soulWinningReportCreateSchema,
@@ -156,4 +157,27 @@ export const deleteNewBeliever = leaderActionClient
     revalidatePath("/soul-winning/consolidation");
 
     return { success: true };
+  });
+
+export const updateNewBeliever = leaderActionClient
+  .metadata({ actionName: "updateNewBeliever" })
+  .inputSchema(newBelieverEditSchema)
+  .action(async ({ parsedInput }) => {
+    const result = await prisma.newBeliever.update({
+      where: { id: parsedInput.id },
+      data: {
+        name: parsedInput.name,
+        gender: parsedInput.gender,
+        memberType: parsedInput.memberType,
+        contactNo: parsedInput.contactNo,
+        email: parsedInput.email,
+        address: parsedInput.address,
+        handledById: parsedInput.handledById,
+      },
+    });
+
+    revalidatePath("/soul-winning");
+    revalidatePath("/soul-winning/consolidation");
+
+    return result;
   });

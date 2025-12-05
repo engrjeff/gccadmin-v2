@@ -15,6 +15,14 @@ export const newBelieverSchema = z.object({
 
 export type NewBelieverInputs = z.infer<typeof newBelieverSchema>;
 
+export const newBelieverEditSchema = newBelieverSchema.extend({
+  id: z
+    .string({ error: "ID is required." })
+    .nonempty({ error: "ID is required." }),
+});
+
+export type NewBelieverEditInputs = z.infer<typeof newBelieverEditSchema>;
+
 export const soulWinningReportCreateSchema = z.object({
   venue: z
     .string({ error: "Venue is required" })

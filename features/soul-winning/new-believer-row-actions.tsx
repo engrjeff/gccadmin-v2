@@ -17,7 +17,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import { NewBelieverDeleteDialog } from "./new-believer-delete-dialog";
+import { NewBelieverEditForm } from "./new-believer-edit-form";
 
 type RowAction = "edit" | "delete" | "make-disciple";
 
@@ -55,7 +63,7 @@ export function NewBelieverRowActions({
           </DropdownMenuItem>
           <DropdownMenuItem disabled onClick={() => setAction("make-disciple")}>
             <ArrowUpRightIcon />
-            Make Disciple
+            Promote as Disciple
           </DropdownMenuItem>
           <DropdownMenuItem
             variant="destructive"
@@ -77,6 +85,30 @@ export function NewBelieverRowActions({
           }
         }}
       />
+
+      <Sheet
+        open={action === "edit"}
+        onOpenChange={(isOpen) => {
+          if (!isOpen) {
+            setAction(undefined);
+          }
+        }}
+      >
+        <SheetContent
+          side="right"
+          className="inset-y-2 right-2 flex h-auto w-[95%] flex-col gap-0 overflow-y-hidden rounded-lg border bg-background p-0 focus-visible:outline-none sm:max-w-lg"
+          onInteractOutside={(e) => e.preventDefault()}
+        >
+          <SheetHeader className="space-y-1 border-b p-4 text-left">
+            <SheetTitle>Update New Believer</SheetTitle>
+            <SheetDescription>Make sure to save your changes.</SheetDescription>
+          </SheetHeader>
+          <NewBelieverEditForm
+            newBeliever={newBeliever}
+            onAfterSave={() => setAction(undefined)}
+          />
+        </SheetContent>
+      </Sheet>
     </>
   );
 }

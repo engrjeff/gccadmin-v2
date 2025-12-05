@@ -1,4 +1,4 @@
-import { PackageIcon } from "lucide-react";
+import { PackageIcon, PlusIcon } from "lucide-react";
 import Link from "next/link";
 import pluralize from "pluralize";
 import { SortLink } from "@/components/sort-link";
@@ -45,9 +45,16 @@ export function SoulWinningReportsTable({
               <TableCell colSpan={withLeader ? 7 : 6}>
                 <div className="flex min-h-[300px] flex-col items-center justify-center gap-3">
                   <PackageIcon className="size-6 text-muted-foreground" />
-                  <p className="text-center text-muted-foreground text-sm">
-                    No soul-winning report records found.
+                  <p className="mb-6 text-center text-muted-foreground text-sm">
+                    No soul-winning report records found. <br />
+                    Create a report now.
                   </p>
+
+                  <Button size="sm" asChild>
+                    <Link href="/soul-winning/new">
+                      <PlusIcon /> Create Report
+                    </Link>
+                  </Button>
                 </div>
               </TableCell>
             </TableRow>

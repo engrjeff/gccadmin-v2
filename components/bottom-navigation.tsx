@@ -44,7 +44,7 @@ const menuItems = [
     icon: LeafIcon,
   },
   {
-    name: "Cell",
+    name: " Reports",
     url: "/cell-reports",
     icon: BookIcon,
   },

@@ -7,6 +7,10 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export function SoulWinningTabLinks() {
+  const pathname = usePathname();
+
+  if (pathname === "/soul-winning/new") return null;
+
   return (
     <div className="flex items-center gap-0.5 border-b pb-1">
       <SoulWinningTabLink href="/soul-winning">Soul-Winning</SoulWinningTabLink>

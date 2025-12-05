@@ -59,21 +59,25 @@ export function MemberStatisticsByStatus() {
           <StatisticsByMemberType memberType={MemberType.WOMEN} />
         </div>
       </div>
-      <CardFooter className="flex-col gap-2 pt-4 text-sm">
+      <CardFooter className="flex-col gap-2 pt-4 text-xs">
         <div className="flex flex-wrap items-center gap-4">
           <div className="flex items-center gap-2">
             <span className="size-2.5 bg-chart-2" aria-hidden="true"></span>
-            <span className="text-gray-900 dark:text-gray-50">
+            <span className="text-gray-900 text-xs dark:text-gray-50">
               Not yet attended
             </span>
           </div>
           <div className="flex items-center gap-2">
             <span className="size-2.5 bg-chart-3" aria-hidden="true"></span>
-            <span className="text-gray-900 dark:text-gray-50">Attended</span>
+            <span className="text-gray-900 text-xs dark:text-gray-50">
+              Attended
+            </span>
           </div>
           <div className="flex items-center gap-2">
             <span className="size-2.5 bg-chart-4" aria-hidden="true"></span>
-            <span className="text-gray-900 dark:text-gray-50">Regular</span>
+            <span className="text-gray-900 text-xs dark:text-gray-50">
+              Regular
+            </span>
           </div>
         </div>
       </CardFooter>

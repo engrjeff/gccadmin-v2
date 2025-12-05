@@ -120,10 +120,16 @@ model Disciple {
   attendances       Attendance[]
   churchInvites     NewComer[]   @relation("invitedby")
   asNewComerProfile NewComer?    @relation("discipleProfile") // his/her profile when he/she was a new comer
+  asNewSoulProfile  NewBeliever? @relation("newDiscipleProfile") // his/her profile when he/she was a new believer/newly-won soul
 
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  newComers NewComer[]
+  networkNewSouls NewBeliever[] @relation("networkWonSouls") // the new souls under the network leader
+  wonSouls        NewBeliever[] @relation("wonSouls") // the souls won by this disciple
+
+  soulWinningReports         SoulWinningReport[] @relation("soulWinningReports")
+  assistedSoulWinningReports SoulWinningReport[] @relation("assistedSoulWinningReports")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([id, leaderId])
   @@index([leaderId])
@@ -155,7 +161,8 @@ model Lesson {
   fileUrl             String?
   scriptureReferences String[]
 
-  cellReports CellReport[]
+  cellReports        CellReport[]
+  soulWinningReports SoulWinningReport[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -287,10 +294,67 @@ model NewComer {
 
   attendedAt DateTime @default(now())
 
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-  disciple   Disciple? @relation(fields: [discipleId], references: [id])
-  discipleId String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([invitedById])
+}
+
+// believer records won by soul-winning
+model NewBeliever {
+  id String @id @default(cuid())
+
+  name       String
+  gender     Gender
+  memberType MemberType @default(UNCATEGORIZED)
+
+  networkLeader   Disciple @relation(name: "networkWonSouls", references: [id], fields: [networkLeaderId])
+  networkLeaderId String
+
+  handledBy   Disciple? @relation(name: "wonSouls", references: [id], fields: [handledById])
+  handledById String?
+
+  contactNo String?
+  email     String?
+  address   String?
+
+  soulWinningReports SoulWinningReport[]
+
+  discipleProfileId String?   @unique
+  discipleProfile   Disciple? @relation(fields: [discipleProfileId], references: [id], name: "newDiscipleProfile")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum SoulWinningReportType {
+  SOUL_WINNING
+  CONSOLIDATION
+}
+
+model SoulWinningReport {
+  id String @id @default(cuid())
+
+  venue String
+  date  DateTime
+
+  type SoulWinningReportType @default(SOUL_WINNING)
+
+  lessonId String
+  lesson   Lesson @relation(fields: [lessonId], references: [id])
+
+  networkLeader   Disciple @relation(name: "soulWinningReports", references: [id], fields: [networkLeaderId])
+  networkLeaderId String
+
+  assistantLeader   Disciple? @relation(name: "assistedSoulWinningReports", references: [id], fields: [assistantLeaderId])
+  assistantLeaderId String?
+
+  newBelievers NewBeliever[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([lessonId])
+  @@index([networkLeaderId])
+  @@index([assistantLeaderId])
 }

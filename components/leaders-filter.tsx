@@ -17,7 +17,7 @@ export function LeadersFilter({ isForPastor }: { isForPastor?: boolean }) {
 
   return (
     <FilterField
-      label="Leader"
+      label="Network Leader"
       queryName="leader"
       singleSelection
       Icon={ShieldIcon}

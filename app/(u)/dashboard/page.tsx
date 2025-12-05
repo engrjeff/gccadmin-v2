@@ -6,6 +6,7 @@ import { DashboardRefreshButton } from "@/features/reports/dashboard-refresh-but
 import { DisciplesWithCellGroups } from "@/features/reports/disciples-with-cellgroups";
 import { MemberStatistics } from "@/features/reports/member-statistics";
 import { MemberStatisticsByStatus } from "@/features/reports/member-statistics-by-status";
+import { NoCellReportAlert } from "@/features/reports/no-cell-report-alert";
 import { RecentCellGroups } from "@/features/reports/recent-cell-groups";
 
 export const metadata: Metadata = {
@@ -30,7 +31,7 @@ export default function DashboardPage() {
           <DashboardRefreshButton />
         </div>
       </div>
-      {/* <NoCellReportAlert /> */}
+      <NoCellReportAlert />
       <CellGroupStatistics />
       <CellReportTrend />
       <MemberStatisticsByStatus />

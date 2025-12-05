@@ -51,7 +51,7 @@ export function AppCombobox({
   const [search, setSearch] = React.useState("");
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover open={open} onOpenChange={setOpen} modal>
       <PopoverTrigger asChild>
         <Button
           variant="outline"

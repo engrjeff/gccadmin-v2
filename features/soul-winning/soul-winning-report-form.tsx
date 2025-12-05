@@ -343,6 +343,7 @@ export function SoulWinningReportForm() {
   function handleCancelClick() {
     form.reset(defaultValues);
     setWithAssistant(false);
+    router.replace("/soul-winning");
   }
 
   return (

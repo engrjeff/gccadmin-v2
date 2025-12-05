@@ -208,6 +208,7 @@ export type NewBelieversQueryArgs = {
   wonBy?: string;
   q?: string;
   soulWinningReportId?: string; // for when Track is clicked
+  lessonView?: "soul-winning" | "consolidation";
 };
 
 function getNewBelieversSort(sortBy?: string, order?: "asc" | "desc") {
@@ -335,9 +336,15 @@ export async function getNewBelievers(args: NewBelieversQueryArgs) {
   });
 
   // we use the Soul Winning & Consolidation Lessons as Main Headings of the table
+  const lessonSeriesTitles = args.lessonView
+    ? args.lessonView === "soul-winning"
+      ? ["Soul-Winning", "Soul Winning"]
+      : ["Consolidation"]
+    : ["Soul-Winning", "Soul Winning", "Consolidation"];
+
   const soulwinningAndConsoLessonsQuery = prisma.lessonSeries.findMany({
     where: {
-      title: { in: ["Soul-Winning", "Soul Winning", "Consolidation"] },
+      title: { in: lessonSeriesTitles },
     },
     select: {
       lessons: {

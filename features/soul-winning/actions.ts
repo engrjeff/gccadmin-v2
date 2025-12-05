@@ -6,6 +6,9 @@ import prisma from "@/lib/prisma";
 import { leaderActionClient } from "@/lib/safe-action";
 import {
   consolidationReportCreateSchema,
+  newBelieverEditSchema,
+  newBelieverIdSchema,
+  reportIdSchema,
   soulWinningReportCreateSchema,
 } from "./schema";
 
@@ -108,4 +111,73 @@ export const createConsolidationReport = leaderActionClient
     return {
       report: result,
     };
+  });
+
+export const deleteSoulWinningOrConsoReport = leaderActionClient
+  .metadata({ actionName: "deleteSoulWinningReport" })
+  .inputSchema(reportIdSchema)
+  .action(async ({ parsedInput: { id } }) => {
+    await prisma.$transaction(async (tx) => {
+      const ok = await tx.soulWinningReport.delete({ where: { id } });
+
+      if (ok.id) {
+        // find the new believers having this report
+        // if this report is the only report they have, then delete them as well
+        const newBelieversInThisReport = await tx.newBeliever.findMany({
+          where: {
+            soulWinningReports: {
+              every: {
+                id,
+              },
+            },
+          },
+        });
+
+        if (newBelieversInThisReport.length > 0) {
+          await tx.newBeliever.deleteMany({
+            where: { id: { in: newBelieversInThisReport.map((nb) => nb.id) } },
+          });
+        }
+      }
+    });
+
+    revalidatePath("/soul-winning");
+    revalidatePath("/soul-winning/consolidation");
+
+    return { success: true };
+  });
+
+export const deleteNewBeliever = leaderActionClient
+  .metadata({ actionName: "deleteNewBeliever" })
+  .inputSchema(newBelieverIdSchema)
+  .action(async ({ parsedInput: { id } }) => {
+    await prisma.newBeliever.delete({ where: { id } });
+
+    revalidatePath("/soul-winning");
+    revalidatePath("/soul-winning/consolidation");
+
+    return { success: true };
+  });
+
+export const updateNewBeliever = leaderActionClient
+  .metadata({ actionName: "updateNewBeliever" })
+  .inputSchema(newBelieverEditSchema)
+  .action(async ({ parsedInput }) => {
+    const result = await prisma.newBeliever.update({
+      where: { id: parsedInput.id },
+      data: {
+        name: parsedInput.name,
+        gender: parsedInput.gender,
+        memberType: parsedInput.memberType,
+        contactNo: parsedInput.contactNo,
+        email: parsedInput.email,
+        address: parsedInput.address,
+        handledById: parsedInput.handledById,
+      },
+    });
+
+    revalidatePath("/soul-winning");
+    revalidatePath("/soul-winning/consolidation");
+
+    return result;
   });

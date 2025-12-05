@@ -241,7 +241,7 @@ export function DiscipleEditForm({
                       {...field}
                       className="capitalize"
                     >
-                      <option value="">Cell Status</option>
+                      <option value="">Member Type</option>
                       <option value={MemberType.KIDS}>Kids</option>
                       <option value={MemberType.YOUTH}>Youth</option>
                       <option value={MemberType.YOUNGPRO}>Young Pro</option>

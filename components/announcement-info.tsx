@@ -4,9 +4,9 @@ import { Button } from "./ui/button";
 
 export function AnnouncementInfo() {
   return (
-    <div className="gap-2 space-y-2 border-b bg-secondary px-3 py-2">
+    <div className="flex flex-col items-start gap-1.5 border-b bg-secondary px-3 py-2 md:flex-row md:items-center md:justify-between">
       <p className="text-sm">
-        <span>🌿</span> Soul Winning & Consolidation Module is live!{" "}
+        <span>✨ </span> Soul Winning & Consolidation Module is live!{" "}
       </p>
       <Button size="sm" variant="link" className="px-0 text-blue-500" asChild>
         <Link href="/soul-winning/new">

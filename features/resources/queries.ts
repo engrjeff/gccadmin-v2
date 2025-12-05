@@ -21,9 +21,13 @@ export async function getLessonSeries(args: LessonSeriesQueryArgs) {
         : undefined,
     },
     include: {
-      lessons: true,
+      lessons: {
+        orderBy: {
+          createdAt: "asc",
+        },
+      },
     },
-    orderBy: [{ createdAt: "asc" }, { title: "asc" }],
+    orderBy: [{ createdAt: "desc" }, { title: "asc" }],
   });
 
   return lessonSeriesList;

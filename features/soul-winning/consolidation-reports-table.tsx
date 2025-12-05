@@ -12,6 +12,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { SoulWinningReportRecord } from "@/types/globals";
+import { WinAndConsoRowActions } from "./win-and-conso-row-actions";
 
 export function ConsolidationReportsTable({
   consolidationReports,
@@ -127,6 +128,12 @@ export function ConsolidationReportsTable({
                     {" won "}
                     {pluralize("souls", report.newBelievers.length)}
                   </Badge>
+                </TableCell>
+                <TableCell className="text-center">
+                  <WinAndConsoRowActions
+                    reportId={report.id}
+                    type={report.type}
+                  />
                 </TableCell>
               </TableRow>
             ))

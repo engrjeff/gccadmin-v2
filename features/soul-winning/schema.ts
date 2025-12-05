@@ -63,3 +63,7 @@ export const consolidationReportCreateSchema = z.object({
 export type ConsolidationCreateInputs = z.infer<
   typeof consolidationReportCreateSchema
 >;
+
+export const reportIdSchema = z.object({
+  id: z.string({ error: "Report ID is required." }),
+});

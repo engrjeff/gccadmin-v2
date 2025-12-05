@@ -13,6 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { SoulWinningReportRecord } from "@/types/globals";
+import { WinAndConsoRowActions } from "./win-and-conso-row-actions";
 
 export function SoulWinningReportsTable({
   soulWinningReports,
@@ -137,18 +138,10 @@ export function SoulWinningReportsTable({
                   </Badge>
                 </TableCell>
                 <TableCell className="text-center">
-                  <Button
-                    type="button"
-                    size="sm"
-                    variant="link"
-                    className="text-blue-500"
-                  >
-                    <Link
-                      href={`/soul-winning/new-believers?soulWinningReportId=${report.id}`}
-                    >
-                      Track
-                    </Link>
-                  </Button>
+                  <WinAndConsoRowActions
+                    reportId={report.id}
+                    type={report.type}
+                  />
                 </TableCell>
               </TableRow>
             ))

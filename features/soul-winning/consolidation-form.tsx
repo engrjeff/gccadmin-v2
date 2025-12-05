@@ -82,9 +82,11 @@ export function ConsolidationReportForm({
 
   const disciplesOfLeader = useDisciples({ leaderId });
 
-  const lessonOptions = lessonSeriesQuery.data?.find(
-    (ls) => ls.title === "Consolidation",
-  )?.lessons;
+  const lessonOptions = lessonSeriesQuery.data
+    ?.filter((ls) =>
+      ["Soul-Winning", "Soul Winning", "Consolidation"].includes(ls.title),
+    )
+    .flatMap((l) => l.lessons);
 
   const referencesFromLessons =
     lessonOptions

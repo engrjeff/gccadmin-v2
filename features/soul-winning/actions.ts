@@ -6,6 +6,7 @@ import prisma from "@/lib/prisma";
 import { leaderActionClient } from "@/lib/safe-action";
 import {
   consolidationReportCreateSchema,
+  reportIdSchema,
   soulWinningReportCreateSchema,
 } from "./schema";
 
@@ -108,4 +109,38 @@ export const createConsolidationReport = leaderActionClient
     return {
       report: result,
     };
+  });
+
+export const deleteSoulWinningOrConsoReport = leaderActionClient
+  .metadata({ actionName: "deleteSoulWinningReport" })
+  .inputSchema(reportIdSchema)
+  .action(async ({ parsedInput: { id } }) => {
+    await prisma.$transaction(async (tx) => {
+      const ok = await tx.soulWinningReport.delete({ where: { id } });
+
+      if (ok.id) {
+        // find the new believers having this report
+        // if this report is the only report they have, then delete them as well
+        const newBelieversInThisReport = await tx.newBeliever.findMany({
+          where: {
+            soulWinningReports: {
+              every: {
+                id,
+              },
+            },
+          },
+        });
+
+        if (newBelieversInThisReport.length > 0) {
+          await tx.newBeliever.deleteMany({
+            where: { id: { in: newBelieversInThisReport.map((nb) => nb.id) } },
+          });
+        }
+      }
+    });
+
+    revalidatePath("/soul-winning");
+    revalidatePath("/soul-winning/consolidation");
+
+    return { success: true };
   });

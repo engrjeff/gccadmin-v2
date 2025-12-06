@@ -8,6 +8,10 @@ export async function GET(request: NextRequest) {
 
   if (mode === "with-won-souls") {
     const assistantLeaders = await prisma.disciple.findMany({
+      where: {
+        isActive: true,
+        isDeleted: false,
+      },
       select: {
         id: true,
         name: true,
@@ -30,6 +34,8 @@ export async function GET(request: NextRequest) {
 
   const assistantLeaders = await prisma.disciple.findMany({
     where: {
+      isActive: true,
+      isDeleted: false,
       isMyPrimary: true,
     },
     select: {

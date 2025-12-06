@@ -10,6 +10,7 @@ import {
   discipleStatusChangeSchema,
   discipleUpdateSchema,
   importDisciplesSchema,
+  promoteAsDiscipleSchema,
 } from "./schema";
 
 export const createDisciple = leaderActionClient
@@ -137,6 +138,46 @@ export const updateDiscipleProfile = authActionClient
     });
 
     revalidatePath("/profile");
+
+    return {
+      disciple,
+    };
+  });
+
+export const promoteAsDisciple = leaderActionClient
+  .metadata({ actionName: "promoteAsDisciple" })
+  .inputSchema(promoteAsDiscipleSchema)
+  .action(async ({ parsedInput, ctx: { leader } }) => {
+    const leaderId = leader === null ? parsedInput.leaderId : leader.id;
+
+    const disciple = await prisma.disciple.create({
+      data: {
+        name: parsedInput.name,
+        address: parsedInput.address,
+        birthdate: new Date(parsedInput.birthdate),
+        gender: parsedInput.gender,
+        cellStatus: parsedInput.cellStatus,
+        churchStatus: parsedInput.churchStatus,
+        memberType: parsedInput.memberType,
+        processLevel: parsedInput.processLevel,
+        processLevelStatus: parsedInput.processLevelStatus,
+        isMyPrimary: parsedInput.isMyPrimary,
+        handledById: parsedInput.handledById,
+        leaderId,
+        asNewSoulProfile: parsedInput.newBelieverId
+          ? {
+              connect: { id: parsedInput.newBelieverId },
+            }
+          : undefined,
+        asNewComerProfile: parsedInput.newComerId
+          ? {
+              connect: { id: parsedInput.newComerId },
+            }
+          : undefined,
+      },
+    });
+
+    revalidatePath("/disciples");
 
     return {
       disciple,

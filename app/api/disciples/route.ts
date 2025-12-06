@@ -11,6 +11,8 @@ export async function GET(request: NextRequest) {
     if (leaderId) {
       const disciples = await prisma.disciple.findMany({
         where: {
+          isActive: true,
+          isDeleted: false,
           leaderId,
         },
       });

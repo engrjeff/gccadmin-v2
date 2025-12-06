@@ -96,7 +96,12 @@ export function NewBelieversTable({
                 </TableCell>
               ))}
               <TableCell className="text-center">
-                <NewBelieverRowActions newBeliever={nb} />
+                <NewBelieverRowActions
+                  newBeliever={nb}
+                  canBePromoted={
+                    nb.soulWinningReports.length === lessons.length
+                  }
+                />
               </TableCell>
             </TableRow>
           ))}

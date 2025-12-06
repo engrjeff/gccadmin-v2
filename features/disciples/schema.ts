@@ -70,8 +70,15 @@ export const discipleProfileSchema = discipleCreateSchema
   })
   .extend(discipleIdSchema.shape);
 
+export const promoteAsDiscipleSchema = discipleCreateSchema.extend({
+  newBelieverId: z.string().optional(),
+  newComerId: z.string().optional(),
+});
+
 export type DiscipleCreateInputs = z.infer<typeof discipleCreateSchema>;
 
 export type DiscipleImportInputs = z.infer<typeof importDisciplesSchema>;
 
 export type DiscipleProfileInputs = z.infer<typeof discipleProfileSchema>;
+
+export type PromoteAsDiscipleInputs = z.infer<typeof promoteAsDiscipleSchema>;

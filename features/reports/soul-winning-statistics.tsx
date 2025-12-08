@@ -137,7 +137,7 @@ function SoulWinningStatCard({
         <p className="text-muted-foreground text-sm">{description}</p>
         {total === 0 ? null : (
           <span className="font-semibold text-green-500 text-xs">
-            ({calcPercent(currentValue)}%)
+            ({calcPercent(currentValue).toFixed(1)}%)
           </span>
         )}
       </div>

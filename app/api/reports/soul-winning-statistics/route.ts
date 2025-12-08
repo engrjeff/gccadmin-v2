@@ -21,7 +21,7 @@ export async function GET() {
         id: true,
         type: true,
         date: true,
-        cellReportAttendeeSnapshots: {
+        attendees: {
           select: { id: true },
         },
       },
@@ -29,7 +29,7 @@ export async function GET() {
 
     // collect the unique attendees which are 1st timers in CG
     const newlyWonSouls = cellReports.flatMap((report) =>
-      report.cellReportAttendeeSnapshots.map((a) => a.id),
+      report.attendees.map((a) => a.id),
     );
 
     // find the disciples who are now 2nd-timer and up having id in newlyWonSouls

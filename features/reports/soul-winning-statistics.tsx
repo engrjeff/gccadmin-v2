@@ -63,9 +63,9 @@ export function SoulWinningStatistics() {
       <CardContent className="px-0">
         {query.isLoading ? (
           <div className="grid grid-cols-1 gap-2 p-4 lg:grid-cols-3">
-            <Skeleton className="h-[172px] lg:h-[188px]" />
-            <Skeleton className="h-[172px] lg:h-[188px]" />
-            <Skeleton className="h-[172px] lg:h-[188px]" />
+            <Skeleton className="h-[96px]" />
+            <Skeleton className="h-[96px]" />
+            <Skeleton className="h-[96px]" />
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-2 lg:grid-cols-[1fr_auto_1fr_auto_1fr]">
@@ -74,6 +74,7 @@ export function SoulWinningStatistics() {
               currentValue={query.data?.wonSouls ?? 0}
               description="souls won as of today"
               iconNode={<LeafIcon className="size-4 text-green-500" />}
+              total={0}
             />
             <Separator orientation="vertical" className="hidden lg:block" />
             <Separator className="lg:hidden" />
@@ -82,6 +83,7 @@ export function SoulWinningStatistics() {
               currentValue={query.data?.consolidatedSouls ?? 0}
               description={`out of ${query.data?.wonSouls} won souls`}
               iconNode={<HelpingHandIcon className="size-4 text-amber-500" />}
+              total={query.data?.wonSouls ?? 0}
             />
             <Separator orientation="vertical" className="hidden lg:block" />
             <Separator className="lg:hidden" />
@@ -90,6 +92,7 @@ export function SoulWinningStatistics() {
               currentValue={query.data?.attendedChurchSouls ?? 0}
               description={`out of ${query.data?.wonSouls} won souls`}
               iconNode={<HomeIcon className="size-4 text-blue-500" />}
+              total={query.data?.wonSouls ?? 0}
             />
           </div>
         )}
@@ -110,12 +113,20 @@ function SoulWinningStatCard({
   currentValue,
   description,
   iconNode,
+  total,
 }: {
   title: string;
   currentValue: number;
   description: string;
   iconNode: ReactNode;
+  total: number;
 }) {
+  function calcPercent(input: number) {
+    if (!total) return 0;
+
+    return (input / total) * 100;
+  }
+
   return (
     <div className="relative flex flex-col gap-3 p-4">
       <p className="font-semibold text-sm">{title}</p>
@@ -124,7 +135,13 @@ function SoulWinningStatCard({
           {currentValue}
         </div>
         <p className="text-muted-foreground text-sm">{description}</p>
+        {total === 0 ? null : (
+          <span className="font-semibold text-green-500 text-xs">
+            ({calcPercent(currentValue)}%)
+          </span>
+        )}
       </div>
+
       <div className="absolute top-4 right-2">{iconNode}</div>
       {/* <div className="mt-auto">
           <Button

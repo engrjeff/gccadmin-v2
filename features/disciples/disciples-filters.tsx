@@ -49,7 +49,6 @@ export function DisciplesFilters() {
           label="Member Type"
           options={memberTypes}
           queryName="memberType"
-          singleSelection
         />
 
         <LeadersFilter />

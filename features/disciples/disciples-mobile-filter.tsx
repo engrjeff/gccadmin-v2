@@ -184,7 +184,6 @@ export function DisciplesMobileFilter() {
                 options={memberTypes}
                 queryName="memberType"
                 tempFilters={tempFilters}
-                singleSelection
                 updateTempFilter={updateTempFilter}
                 isPending={isPending}
               />

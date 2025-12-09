@@ -52,6 +52,7 @@ export function SoulWinningStatistics() {
                 pathname: "/cell-reports",
                 query: {
                   cellType: CellType.SOULWINNING,
+                  dateRange: "year_to_date",
                 },
               }}
             >

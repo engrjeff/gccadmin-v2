@@ -24,6 +24,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSoulWinningStatistics } from "@/hooks/use-soul-winning-statistics";
+import { cn } from "@/lib/utils";
 
 export function SoulWinningStatistics() {
   const query = useSoulWinningStatistics();
@@ -128,6 +129,8 @@ function SoulWinningStatCard({
     return (input / total) * 100;
   }
 
+  const percent = calcPercent(currentValue);
+
   return (
     <div className="relative flex flex-col gap-3 p-4">
       <p className="font-semibold text-sm">{title}</p>
@@ -137,8 +140,13 @@ function SoulWinningStatCard({
         </div>
         <p className="text-muted-foreground text-sm">{description}</p>
         {total === 0 ? null : (
-          <span className="font-semibold text-green-500 text-xs">
-            ({calcPercent(currentValue).toFixed(1)}%)
+          <span
+            className={cn(
+              "font-semibold text-xs",
+              percent < 50 ? "text-red-500" : "text-green-500",
+            )}
+          >
+            ({percent.toFixed(1)}%)
           </span>
         )}
       </div>

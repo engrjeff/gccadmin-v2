@@ -32,7 +32,7 @@ import { DiscipleChangeStatusDialog } from "./disciple-change-status-dialog";
 import { DiscipleDeleteDialog } from "./disciple-delete-dialog";
 import { DiscipleEditForm } from "./disciple-edit-form";
 
-type RowAction = "edit" | "delete" | "change-status";
+type RowAction = "edit" | "delete" | "change-status" | "promote";
 
 interface DiscipleActionContextState {
   action: RowAction | undefined;

@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  ArrowUpIcon,
   BookIcon,
   HomeIcon,
   ListIcon,
@@ -36,15 +37,19 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
+import { useIsAdmin } from "@/hooks/use-is-admin";
 import { useDiscipleAction } from "./disciple-action-provider";
 import { DiscipleChangeStatusDialog } from "./disciple-change-status-dialog";
 import { DiscipleDeleteDialog } from "./disciple-delete-dialog";
 import { DiscipleEditForm } from "./disciple-edit-form";
+import { PromoteToPrimaryDialog } from "./promote-to-primary-dialog";
 
-type RowAction = "edit" | "delete" | "change-status";
+type RowAction = "edit" | "delete" | "change-status" | "promote";
 
 export function DiscipleRowActions({ disciple }: { disciple: Disciple }) {
   const [action, setAction] = useState<RowAction>();
+
+  const isAdmin = useIsAdmin();
 
   return (
     <>
@@ -81,12 +86,19 @@ export function DiscipleRowActions({ disciple }: { disciple: Disciple }) {
             <PencilIcon />
             Update
           </DropdownMenuItem>
+
           {disciple.isPrimary ? null : (
             <>
               <DropdownMenuItem onClick={() => setAction("change-status")}>
                 <RotateCcwIcon />
                 {disciple.isActive ? "Make Inactive" : "Make Active"}
               </DropdownMenuItem>
+              {isAdmin ? (
+                <DropdownMenuItem onClick={() => setAction("promote")}>
+                  <ArrowUpIcon />
+                  Promote as Primary
+                </DropdownMenuItem>
+              ) : null}
               <DropdownMenuItem
                 variant="destructive"
                 onClick={() => setAction("delete")}
@@ -115,6 +127,17 @@ export function DiscipleRowActions({ disciple }: { disciple: Disciple }) {
         discipleName={disciple.name}
         isActive={disciple.isActive}
         open={action === "change-status"}
+        onOpenChange={(isOpen) => {
+          if (!isOpen) {
+            setAction(undefined);
+          }
+        }}
+      />
+
+      <PromoteToPrimaryDialog
+        discipleId={disciple.id}
+        discipleName={disciple.name}
+        open={action === "promote"}
         onOpenChange={(isOpen) => {
           if (!isOpen) {
             setAction(undefined);
@@ -177,6 +200,8 @@ export function DiscipleRowMobileActions() {
     setOpen,
     resetState,
   } = useDiscipleAction();
+
+  const isAdmin = useIsAdmin();
 
   return (
     <>
@@ -260,6 +285,17 @@ export function DiscipleRowMobileActions() {
                   <RotateCcwIcon />
                   {disciple?.isActive ? "Make Inactive" : "Make Active"}
                 </Button>
+                {isAdmin ? (
+                  <Button
+                    size="lg"
+                    variant="ghost"
+                    className="w-full justify-start"
+                    onClick={() => handleAction("promote")}
+                  >
+                    <ArrowUpIcon />
+                    Promote as Primary
+                  </Button>
+                ) : null}
                 <Button
                   size="lg"
                   className="w-full justify-start text-destructive hover:text-destructive"

@@ -183,3 +183,57 @@ export const promoteAsDisciple = leaderActionClient
       disciple,
     };
   });
+
+export const promoteAsPrimaryLeader = authActionClient
+  .metadata({ actionName: "promoteAsPrimaryLeader" })
+  .inputSchema(discipleIdSchema)
+  .action(async ({ parsedInput: { id: discipleId } }) => {
+    const result = await prisma.$transaction(async (tx) => {
+      // find the id of pastor
+      const pastor = await tx.disciple.findFirst({
+        where: {
+          name: {
+            contains: "John De Guzman",
+            mode: "insensitive",
+          },
+          isPrimary: true,
+        },
+      });
+
+      if (!pastor) {
+        throw new Error("Pastor record not found.");
+      }
+
+      // update the disciple leader id
+      const promotedDisciple = await tx.disciple.update({
+        where: { id: discipleId },
+        data: {
+          leaderId: pastor.id,
+          isPrimary: true,
+        },
+      });
+
+      // get all disciples under the disciple being promoted
+      const disciplesToUpdate = await tx.disciple.findMany({
+        where: {
+          handledById: discipleId,
+        },
+      });
+
+      // update their leader id to the pastor id
+      for (const disciple of disciplesToUpdate) {
+        await tx.disciple.update({
+          where: { id: disciple.id },
+          data: {
+            leaderId: discipleId,
+          },
+        });
+      }
+
+      return promotedDisciple;
+    });
+
+    revalidatePath("/disciples");
+
+    return result;
+  });

@@ -6,7 +6,7 @@ export async function GET() {
   try {
     // get the cell reports of type soul-winning
     const year = new Date().getFullYear();
-    const startDate = new Date(`${year}-01-01`);
+    const startDate = new Date(`2025-01-01`);
     const endDate = new Date(`${year}-12-31T23:59:59`);
 
     const cellReports = await prisma.cellReport.findMany({

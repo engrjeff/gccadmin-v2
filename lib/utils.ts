@@ -4,6 +4,7 @@ import {
   endOfMonth,
   endOfToday,
   endOfWeek,
+  endOfYear,
   format,
   intlFormatDistance,
   isSunday,
@@ -13,6 +14,7 @@ import {
   startOfYear,
   subDays,
   subMonths,
+  subYears,
 } from "date-fns";
 import { toZonedTime } from "date-fns-tz";
 import { twMerge } from "tailwind-merge";
@@ -119,6 +121,13 @@ export function getClientDateRange(
     return {
       start: startOfYear(now),
       end: endOfToday(),
+    };
+  }
+
+  if (preset === "last_year") {
+    return {
+      start: startOfYear(subYears(now, 1)),
+      end: endOfYear(subYears(now, 1)),
     };
   }
 }

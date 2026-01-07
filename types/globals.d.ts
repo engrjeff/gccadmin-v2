@@ -39,6 +39,7 @@ export type DateRange =
   | "last_month"
   | "last_last_month"
   | "year_to_date"
+  | "last_year"
   | "custom";
 
 export interface DiscipleRecord extends Disciple {

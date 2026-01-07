@@ -3,11 +3,13 @@ import {
   endOfMonth,
   endOfToday,
   endOfWeek,
+  endOfYear,
   startOfMonth,
   startOfWeek,
   startOfYear,
   subDays,
   subMonths,
+  subYears,
 } from "date-fns";
 import { toZonedTime } from "date-fns-tz";
 import type { CellStatus } from "@/app/generated/prisma";
@@ -102,6 +104,13 @@ export function getDateRange(
     return {
       start: startOfYear(now),
       end: endOfToday(),
+    };
+  }
+
+  if (preset === "last_year") {
+    return {
+      start: startOfYear(subYears(now, 1)),
+      end: endOfYear(subYears(now, 1)),
     };
   }
 }

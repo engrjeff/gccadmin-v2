@@ -61,6 +61,7 @@ function DateRangeContent({
   const thisMonth = getClientDateRange("this_month");
   const lastMonth = getClientDateRange("last_month");
   const ytd = getClientDateRange("year_to_date");
+  const lastYear = getClientDateRange("last_year");
 
   const [date, setDate] = useState<DateRange | undefined>(
     dateRangeValue
@@ -169,6 +170,20 @@ function DateRangeContent({
               }}
             >
               Year to date
+            </Button>
+            <Button
+              variant={preset === "last_year" ? "secondary" : "ghost"}
+              size="sm"
+              className="w-full justify-start"
+              onClick={() => {
+                handleDateRangeChange({
+                  from: lastYear?.start,
+                  to: lastYear?.end,
+                });
+                setPreset("last_year");
+              }}
+            >
+              Last Year
             </Button>
           </div>
         </div>

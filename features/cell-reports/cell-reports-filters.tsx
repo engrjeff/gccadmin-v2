@@ -33,6 +33,7 @@ export function CellReportsFilters() {
           { label: "This Month", value: "this_month" },
           { label: "Last Month", value: "last_month" },
           { label: "Year To Date (YTD)", value: "year_to_date" },
+          { label: "Last Year", value: "last_year" },
         ]}
       />
 

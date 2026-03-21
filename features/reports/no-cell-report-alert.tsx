@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -10,6 +11,9 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { useCellGroupStatistics } from "@/hooks/use-cell-group-statistics";
 import { useLeaders } from "@/hooks/use-leaders";
 import { getClientDateRange } from "@/lib/utils";
@@ -17,6 +21,8 @@ import { getClientDateRange } from "@/lib/utils";
 export function NoCellReportAlert() {
   const lastWeek = getClientDateRange("last_week");
   const lastMonth = getClientDateRange("last_month");
+  const [reason, setReason] = useState("");
+  const [ididnot, setIdidNot] = useState(false);
 
   const leadersQuery = useLeaders({ enabled: true });
 
@@ -137,10 +143,37 @@ export function NoCellReportAlert() {
             ) : null}
           </div>
         </AlertDialogHeader>
+        <div className="space-y-2">
+          <div className="space-y-0.5">
+            <Input
+              name="reason"
+              placeholder="Any reason why?"
+              value={reason}
+              onChange={(e) => setReason(e.currentTarget.value ?? "")}
+            />
+            <span className="text-muted-foreground text-xs">
+              Min of 10 characters
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Checkbox
+              id="ididnot"
+              checked={ididnot}
+              onCheckedChange={(checked) => setIdidNot(checked === true)}
+            />
+            <Label className="text-xs" htmlFor="ididnot">
+              I did not type in an unintelligible answer
+            </Label>
+          </div>
+        </div>
         <AlertDialogFooter>
           <AlertDialogAction asChild>
-            <Button type="button" variant="destructive">
-              I will inform them
+            <Button
+              type="button"
+              disabled={!ididnot || !reason || reason.length < 10}
+              variant="destructive"
+            >
+              I will really inform them
             </Button>
           </AlertDialogAction>
         </AlertDialogFooter>

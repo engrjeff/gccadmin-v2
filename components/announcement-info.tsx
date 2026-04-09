@@ -1,7 +1,7 @@
 export function AnnouncementInfo() {
   return (
     <div className="flex flex-col items-start gap-1.5 border-b bg-secondary px-3 py-2 md:flex-row md:items-center md:justify-between">
-      <p className="text-xs">Using this app requires responsibility.</p>
+      <p className="text-xs">Gawa tayo lagi ng Cell Reports 🙏.</p>
     </div>
   );
   // return (

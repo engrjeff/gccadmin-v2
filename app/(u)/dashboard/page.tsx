@@ -7,7 +7,7 @@ import { DisciplesWithCellGroups } from "@/features/reports/disciples-with-cellg
 import { MemberStatistics } from "@/features/reports/member-statistics";
 import { MemberStatisticsByStatus } from "@/features/reports/member-statistics-by-status";
 import { RecentCellGroups } from "@/features/reports/recent-cell-groups";
-import { SoulWinningStatistics } from "@/features/reports/soul-winning-statistics";
+import { SoulWinningStatisticsV2 } from "@/features/reports/soul-winning-statistics-v2";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -31,7 +31,7 @@ export default function DashboardPage() {
           <DashboardRefreshButton />
         </div>
       </div>
-      <SoulWinningStatistics />
+      <SoulWinningStatisticsV2 />
       <CellGroupStatistics />
       <CellReportTrend />
       <MemberStatisticsByStatus />

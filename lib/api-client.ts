@@ -16,6 +16,7 @@ export const API_ENDPOINTS = {
   GET_STATISTICS_BY_MEMBER_TYPE: "/reports/member-type-statistics",
   GET_CELLREPORT_TREND: "/reports/cell-report-trend",
   GET_SOUL_WINNING_STATISTICS: "/reports/soul-winning-statistics",
+  GET_SOUL_WINNING_STATISTICS_V2: "/reports/soul-winning-statistics-v2",
   GET_CHURCH_MEMBERS: "/attendance/church-members",
   GET_RETURNEES: "/attendance/returnees",
   GET_ATTENDANCE: "/attendance",

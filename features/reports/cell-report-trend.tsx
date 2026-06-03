@@ -38,10 +38,10 @@ const chartConfig = {
     label: "Open Cell",
     color: "var(--chart-2)",
   },
-  soulwinning: {
-    label: "Soul Winning",
-    color: "var(--chart-3)",
-  },
+  // soulwinning: {
+  //   label: "Soul Winning",
+  //   color: "var(--chart-3)",
+  // },
 } satisfies ChartConfig;
 
 export function CellReportTrend() {
@@ -82,7 +82,7 @@ export function CellReportTrend() {
               <TabsTrigger value="all">All</TabsTrigger>
               <TabsTrigger value="discipleship">Discipleship</TabsTrigger>
               <TabsTrigger value="opencell">Open Cell</TabsTrigger>
-              <TabsTrigger value="soulwinning">Soul Winning</TabsTrigger>
+              {/* <TabsTrigger value="soulwinning">Soul Winning</TabsTrigger> */}
             </TabsList>
           </Tabs>
           <Select value={view} onValueChange={setView}>
@@ -103,9 +103,9 @@ export function CellReportTrend() {
               <SelectItem value="opencell" className="rounded-lg">
                 Open Cell
               </SelectItem>
-              <SelectItem value="soulwinning" className="rounded-lg">
+              {/* <SelectItem value="soulwinning" className="rounded-lg">
                 Soul Winning
-              </SelectItem>
+              </SelectItem> */}
             </SelectContent>
           </Select>
         </CardAction>
@@ -143,13 +143,13 @@ export function CellReportTrend() {
             {view === "opencell" || view === "all" ? (
               <Bar dataKey="open" fill="var(--color-open)" radius={0} />
             ) : null}
-            {view === "soulwinning" || view === "all" ? (
+            {/* {view === "soulwinning" || view === "all" ? (
               <Bar
                 dataKey="soulwinning"
                 fill="var(--color-soulwinning)"
                 radius={0}
               />
-            ) : null}
+            ) : null} */}
           </BarChart>
         </ChartContainer>
       </CardContent>

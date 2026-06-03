@@ -17,14 +17,14 @@ export function CellGroupByType({
     (cg) => cg.type === CellType.DISCIPLESHIP,
   );
 
-  const soulwinning = cellReports?.filter(
-    (cg) => cg.type === CellType.SOULWINNING,
-  );
+  // const soulwinning = cellReports?.filter(
+  //   (cg) => cg.type === CellType.SOULWINNING,
+  // );
 
   const count = {
     openCell: openCell?.length ?? 0,
     discipleshipCell: discipleshipCell?.length ?? 0,
-    soulwinning: soulwinning?.length ?? 0,
+    // soulwinning: soulwinning?.length ?? 0,
   };
 
   function calcPercent(input: number) {
@@ -69,12 +69,12 @@ export function CellGroupByType({
           }}
         ></div>
 
-        <div
+        {/* <div
           className="h-full bg-yellow-500"
           style={{
             width: `${calcPercent(count.soulwinning)}%`,
           }}
-        ></div>
+        ></div> */}
       </div>
       <ul className="mt-auto flex items-center justify-between">
         <li className="flex flex-col gap-2 text-xs">
@@ -99,7 +99,7 @@ export function CellGroupByType({
             </span>
           </div>
         </li>
-        <li className="flex flex-col gap-2 text-xs">
+        {/* <li className="flex flex-col gap-2 text-xs">
           <span className="font-bold text-base">
             {calcPercent(count.soulwinning).toFixed(1)}%
           </span>
@@ -109,7 +109,7 @@ export function CellGroupByType({
               Soul Winning ({count.soulwinning})
             </span>
           </div>
-        </li>
+        </li> */}
       </ul>
     </div>
   );

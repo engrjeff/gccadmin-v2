@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import prisma from "@/lib/prisma";
 import { authActionClient, leaderActionClient } from "@/lib/safe-action";
 import {
+  demoteFromPrimaryLeaderSchema,
   discipleCreateSchema,
   discipleIdSchema,
   discipleProfileSchema,
@@ -231,6 +232,48 @@ export const promoteAsPrimaryLeader = authActionClient
       }
 
       return promotedDisciple;
+    });
+
+    revalidatePath("/disciples");
+
+    return result;
+  });
+
+export const demoteFromPrimaryLeader = authActionClient
+  .metadata({ actionName: "demoteFromPrimaryLeader" })
+  .inputSchema(demoteFromPrimaryLeaderSchema)
+  .action(async ({ parsedInput: { id: discipleId, newLeaderId } }) => {
+    const result = await prisma.$transaction(async (tx) => {
+      const demotedLeader = await tx.disciple.findUnique({
+        where: { id: discipleId },
+        select: { isPrimary: true },
+      });
+
+      if (!demotedLeader) {
+        throw new Error("Disciple record not found.");
+      }
+
+      if (!demotedLeader.isPrimary) {
+        throw new Error("Disciple is not a primary leader.");
+      }
+
+      // demote the leader and assign them a new network leader
+      const demotedDisciple = await tx.disciple.update({
+        where: { id: discipleId },
+        data: {
+          isPrimary: false,
+          leaderId: newLeaderId,
+        },
+      });
+
+      // reassign all disciples under the demoted leader so their network leader
+      // becomes the demoted leader's new network leader
+      await tx.disciple.updateMany({
+        where: { handledById: discipleId },
+        data: { leaderId: newLeaderId },
+      });
+
+      return demotedDisciple;
     });
 
     revalidatePath("/disciples");

@@ -75,6 +75,12 @@ export const promoteAsDiscipleSchema = discipleCreateSchema.extend({
   newComerId: z.string().optional(),
 });
 
+export const demoteFromPrimaryLeaderSchema = discipleIdSchema.extend({
+  newLeaderId: z
+    .string({ error: "New leader ID is required." })
+    .min(1, { error: "New leader ID is required." }),
+});
+
 export type DiscipleCreateInputs = z.infer<typeof discipleCreateSchema>;
 
 export type DiscipleImportInputs = z.infer<typeof importDisciplesSchema>;

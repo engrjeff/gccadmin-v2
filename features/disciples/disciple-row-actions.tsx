@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  ArrowDownIcon,
   ArrowUpIcon,
   BookIcon,
   HomeIcon,
@@ -38,13 +39,14 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { useIsAdmin } from "@/hooks/use-is-admin";
+import { DemoteFromPrimaryDialog } from "./demote-from-primary-dialog";
 import { useDiscipleAction } from "./disciple-action-provider";
 import { DiscipleChangeStatusDialog } from "./disciple-change-status-dialog";
 import { DiscipleDeleteDialog } from "./disciple-delete-dialog";
 import { DiscipleEditForm } from "./disciple-edit-form";
 import { PromoteToPrimaryDialog } from "./promote-to-primary-dialog";
 
-type RowAction = "edit" | "delete" | "change-status" | "promote";
+type RowAction = "edit" | "delete" | "change-status" | "promote" | "demote";
 
 export function DiscipleRowActions({ disciple }: { disciple: Disciple }) {
   const [action, setAction] = useState<RowAction>();
@@ -87,7 +89,14 @@ export function DiscipleRowActions({ disciple }: { disciple: Disciple }) {
             Update
           </DropdownMenuItem>
 
-          {disciple.isPrimary ? null : (
+          {disciple.isPrimary ? (
+            isAdmin ? (
+              <DropdownMenuItem onClick={() => setAction("demote")}>
+                <ArrowDownIcon />
+                Demote from Primary
+              </DropdownMenuItem>
+            ) : null
+          ) : (
             <>
               <DropdownMenuItem onClick={() => setAction("change-status")}>
                 <RotateCcwIcon />
@@ -138,6 +147,17 @@ export function DiscipleRowActions({ disciple }: { disciple: Disciple }) {
         discipleId={disciple.id}
         discipleName={disciple.name}
         open={action === "promote"}
+        onOpenChange={(isOpen) => {
+          if (!isOpen) {
+            setAction(undefined);
+          }
+        }}
+      />
+
+      <DemoteFromPrimaryDialog
+        discipleId={disciple.id}
+        discipleName={disciple.name}
+        open={action === "demote"}
         onOpenChange={(isOpen) => {
           if (!isOpen) {
             setAction(undefined);
@@ -274,7 +294,19 @@ export function DiscipleRowMobileActions() {
               <PencilIcon />
               Update
             </Button>
-            {disciple?.isPrimary ? null : (
+            {disciple?.isPrimary ? (
+              isAdmin ? (
+                <Button
+                  size="lg"
+                  variant="ghost"
+                  className="w-full justify-start"
+                  onClick={() => handleAction("demote")}
+                >
+                  <ArrowDownIcon />
+                  Demote from Primary
+                </Button>
+              ) : null
+            ) : (
               <>
                 <Button
                   size="lg"
@@ -329,6 +361,17 @@ export function DiscipleRowMobileActions() {
             discipleName={disciple.name}
             isActive={disciple.isActive}
             open={action === "change-status"}
+            onOpenChange={(isOpen) => {
+              if (!isOpen) {
+                resetState();
+              }
+            }}
+          />
+
+          <DemoteFromPrimaryDialog
+            discipleId={disciple.id}
+            discipleName={disciple.name}
+            open={action === "demote"}
             onOpenChange={(isOpen) => {
               if (!isOpen) {
                 resetState();

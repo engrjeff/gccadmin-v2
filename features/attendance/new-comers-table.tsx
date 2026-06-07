@@ -22,6 +22,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useChurchMembers } from "@/hooks/use-church-members";
+import { useLeaders } from "@/hooks/use-leaders";
 import { cn } from "@/lib/utils";
 import type { AddAttendeesInputs } from "./schema";
 
@@ -36,11 +37,19 @@ export function NewComersTable() {
   });
 
   const churchMembersQuery = useChurchMembers({ gender: "all" });
+  const leadersQuery = useLeaders({ enabled: true });
 
-  const invitedByOptions =
+  let invitedByOptions =
     churchMembersQuery.data?.churchMembers.flatMap((m) =>
       m.members.map((m) => ({ label: m.name, value: m.id })),
     ) ?? [];
+
+  invitedByOptions = invitedByOptions.concat(
+    leadersQuery.data?.map((leader) => ({
+      label: leader.name,
+      value: leader.id,
+    })) ?? [],
+  );
 
   return (
     <div

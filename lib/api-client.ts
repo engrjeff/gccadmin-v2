@@ -21,6 +21,7 @@ export const API_ENDPOINTS = {
   GET_RETURNEES: "/attendance/returnees",
   GET_ATTENDANCE: "/attendance",
   GET_NEW_BELIEVERS: "/new-believers",
+  GET_NEW_COMERS: "/attendance/new-comers",
 
   // GCC Resources
   GET_PREACHING_FOLDERS: "/gcc-resources/preaching-folders",

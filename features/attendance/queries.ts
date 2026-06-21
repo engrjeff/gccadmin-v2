@@ -61,3 +61,34 @@ export async function getAttendanceRecordById(id: string) {
 
   return { attendanceRecord };
 }
+
+export type NewChurchAttendeesQueryArgs = {
+  q?: string;
+};
+
+export async function getNewChurchAttendees(args: NewChurchAttendeesQueryArgs) {
+  const newComers = await prisma.newComer.findMany({
+    where: {
+      name: args.q
+        ? {
+            contains: args.q,
+            mode: "insensitive",
+          }
+        : undefined,
+    },
+    include: {
+      invitedBy: {
+        select: {
+          id: true,
+          name: true,
+          leader: { select: { id: true, name: true } },
+        },
+      },
+      attendances: {
+        select: { id: true },
+      },
+    },
+  });
+
+  return newComers ?? [];
+}

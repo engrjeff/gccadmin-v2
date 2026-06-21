@@ -1,11 +1,25 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { SearchField } from "@/components/ui/search-field";
+import { NewAttendeeesTable } from "@/features/attendance/new-attendees-table";
+import {
+  getNewChurchAttendees,
+  type NewChurchAttendeesQueryArgs,
+} from "@/features/attendance/queries";
 
 export const metadata: Metadata = {
-  title: "New Attendees",
+  title: "New Church Attendees",
 };
 
-function NewAttendeesPage() {
+interface PageProps {
+  searchParams: Promise<NewChurchAttendeesQueryArgs>;
+}
+
+async function NewAttendeesPage(props: PageProps) {
+  const pageParams = await props.searchParams;
+
+  const newChurchAttendees = await getNewChurchAttendees(pageParams);
+
   return (
     <div className="flex max-w-6xl flex-1 flex-col gap-4 p-4">
       <Link
@@ -20,7 +34,10 @@ function NewAttendeesPage() {
           View, manage, convert to disciples the new church attendees
         </p>
       </div>
-      <div>WIP</div>
+      <div>
+        <SearchField paramName="q" />
+      </div>
+      <NewAttendeeesTable newChurchAttendees={newChurchAttendees} />
     </div>
   );
 }
